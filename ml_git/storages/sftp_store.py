@@ -29,7 +29,16 @@ class SFtpStore(Store):
         ssh_client = paramiko.SSHClient()
         ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-        user_private_key = paramiko.RSAKey.from_private_key_file(self._private_key)
+        #user_private_key = paramiko.RSAKey.from_private_key_file(self._private_key)
+
+        user_private_key = None
+
+        try:
+            user_private_key = paramiko.RSAKey.from_private_key_file(self._private_key)
+        except:
+            private_key_password = input("Enter passprhrase for key '" + self._private_key + "': ") 
+            user_private_key = paramiko.RSAKey.from_private_key_file(self._private_key, password=private_key_password)
+
         ssh_client.connect(self._host, port=self._port, username=self._username, pkey=user_private_key)
 
         open_session = ssh_client.get_transport().open_session()
