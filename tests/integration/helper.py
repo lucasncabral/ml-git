@@ -29,6 +29,7 @@ GIT_PATH = 'local_git_server.git'
 MINIO_BUCKET_PATH = os.path.join(PATH_TEST, 'data', 'mlgit')
 SFTP_BUCKET_PATH = os.path.join(PATH_TEST, 'sftp', 'mlgit')
 FAKE_SSH_KEY_PATH = os.path.join(os.getcwd(), 'tests', 'integration', 'fake_ssh_key', 'id_rsa')
+FAKE_SSH_KEY_PATH_WITH_PASS = os.path.join(os.getcwd(), 'tests', 'integration', 'fake_ssh_key', 'id_rsa_with_pass')
 GIT_WRONG_REP = 'https://github.com/wrong_repository/wrong_repository.git'
 BUCKET_NAME = 'mlgit'
 STORE_TYPE = StoreType.S3H.value
@@ -95,9 +96,8 @@ def __wait_dir_removal(path):
         checks += 1
 
 
-def check_output(command):
-    return subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, shell=True).stdout
-
+def check_output(command, input=''):
+    return subprocess.run(command, input=input, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, shell=True).stdout
 
 def init_repository(entity, self, version=1, store_type='s3h', profile=PROFILE, artifact_name=None, category='images'):
     if not artifact_name:
