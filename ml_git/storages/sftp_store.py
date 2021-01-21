@@ -37,8 +37,7 @@ class SFtpStore(Store):
             private_key_password = input(output_messages['INFO_ENTER_PASSPRHRASE'] % self._private_key) 
             user_private_key = paramiko.RSAKey.from_private_key_file(self._private_key, password=private_key_password)
 
-        #ssh_client.connect(self._host, port=self._port, username=self._username, pkey=user_private_key)
-        ssh_client.connect(self._host, port=self._port, username='muniz', password='saosao')
+        ssh_client.connect(self._host, port=self._port, username=self._username, pkey=user_private_key)
 
         open_session = ssh_client.get_transport().open_session()
         paramiko.agent.AgentRequestHandler(open_session)
