@@ -33,7 +33,7 @@ test_requirements = tests_require
 setup(
     name='ml-git',
     version=get_version(),
-    url='',
+    url='https://github.com/HPInc/ml-git',
     license='GNU General Public License v2.0',
     author="Sebastien Tandel",
     description='ml-git: version control for ML artefacts',
