@@ -10,15 +10,15 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.1">
     
     
       
-        <title>Working With Tabular Data - ML Git</title>
+        <title>Working With Tabular Data - ML-Git</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.33e2939f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.9299cb39.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -74,7 +74,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="ML Git" class="md-header__button md-logo" aria-label="ML Git" data-md-component="logo">
+    <a href="../.." title="ML-Git" class="md-header__button md-logo" aria-label="ML-Git" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -87,7 +87,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            ML Git
+            ML-Git
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -247,13 +247,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="ML Git" class="md-nav__button md-logo" aria-label="ML Git" data-md-component="logo">
+    <a href="../.." title="ML-Git" class="md-nav__button md-logo" aria-label="ML-Git" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
-    ML Git
+    ML-Git
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -797,8 +797,8 @@ In tabular data, cells within the same column provide values for the same proper
 <p>An example of a tabular data structure can be seen below:</p>
 <p><img alt="tabular_data_example" src="../tabular_data.png" /></p>
 <h3 id="versioning"><a name="versioning-tabular-data"> Versioning </a><a class="headerlink" href="#versioning" title="Permanent link">&para;</a></h3>
-<p>Due to the way the data is versioned by ml-git (see <a href="../../mlgit_internals/">internals documentation</a>) the data organization structure can influence the performance and optimization of the data storage that ml-git has.</p>
-<p>When ml-git is dealing with tabular data, in order to obtain higher storage usage efficiency, it is recommended to avoid actions that edit data that were previously added.​</p>
+<p>Due to the way the data is versioned by ML-Git (see <a href="../../mlgit_internals/">internals documentation</a>) the data organization structure can influence the performance and optimization of the data storage that ML-Git has.</p>
+<p>When ML-Git is dealing with tabular data, in order to obtain higher storage usage efficiency, it is recommended to avoid actions that edit data that were previously added.​</p>
 <p>We strongly recommend that the user organize their data in such a way that the entry of new data into the set is done without changing the data already added. Examples of this type of organization is to partition the data by insertion date. This way, each partition should not be modified by future data insertions.​</p>
 <p>One good way how we can achieve partitioning is using the folders structure to split data in different physical sets, even with several levels, 
 with a part of the information of the table. As we can see in the picture, the name of each folder should contain the concrete value of the column 
@@ -823,7 +823,7 @@ The increment of new data must be given by the creation of new files.</p>
 <p>One way to make these changes without modifying the data is to use the append save mode if you are working with parquet data.
 Using append save mode, you can append a dataframe to an existing parquet file. See more in this <a href="https://spark.apache.org/docs/1.4.0/api/java/org/apache/spark/sql/SaveMode.html">link</a>.</p>
 <p><strong>Note:</strong> 
-In exploratory tests it was observed that the use of parquet data with the append writing mode is the most efficient in terms of performance and optimization for ml-git, since this writing mode avoids the modification of previous files.</p>
+In exploratory tests it was observed that the use of parquet data with the append writing mode is the most efficient in terms of performance and optimization for ML-Git, since this writing mode avoids the modification of previous files.</p>
 <p>If you are working with another type of data, such as CSV, whenever new data is added to your dataset you must create a new file for that data.</p>
 <p><strong>Note:</strong>
 CSV format files are generally not recommended for large volumes of data. It is recommended to use a more efficient data structure, such as parquet. </p>
@@ -835,7 +835,7 @@ CSV format files are generally not recommended for large volumes of data. It is 
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 18, 2020</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 7, 2021</span>
     
   </small>
 </div>
@@ -911,7 +911,7 @@ CSV format files are generally not recommended for large volumes of data. It is 
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d892486b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.7353b375.min.js"></script>
       
     
   </body>
