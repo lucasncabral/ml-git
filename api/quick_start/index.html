@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
     
     
       
@@ -18,7 +18,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.9299cb39.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -627,6 +627,7 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+      
         
       
       
@@ -701,6 +702,7 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
     
   
   
@@ -734,7 +736,7 @@ INFO - Metadata: Successfully loaded configuration files!
 <h4 id="checkout-dataset">Checkout dataset<a class="headerlink" href="#checkout-dataset" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;computer-vision__images__imagenet__1&#39;</span>
 
 <span class="n">data_path</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
@@ -770,7 +772,7 @@ files into workspace: 100%|██████████| 4.00/4.00 [00:00&lt;0
 <h4 id="group-sample">Group-Sample<a class="headerlink" href="#group-sample" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;computer-vision__images__imagenet__1&#39;</span>
 
 <span class="n">sampling</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;1:2&#39;</span><span class="p">,</span> <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">}</span>
@@ -787,7 +789,7 @@ files into workspace: 100%|██████████| 2.00/2.00 [00:00&lt;0
 <h4 id="range-sample">Range-Sample<a class="headerlink" href="#range-sample" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;computer-vision__images__imagenet__1&#39;</span>
 
 <span class="n">sampling</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="s1">&#39;0:4:3&#39;</span><span class="p">}</span>
@@ -804,7 +806,7 @@ files into workspace: 100%|██████████| 2.00/2.00 [00:00&lt;0
 <h4 id="random-sample">Random-Sample<a class="headerlink" href="#random-sample" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 <span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;computer-vision__images__imagenet__1&#39;</span>
 
 <span class="n">sampling</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;random&#39;</span><span class="p">:</span> <span class="s1">&#39;1:2&#39;</span><span class="p">,</span> <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">}</span>
@@ -821,7 +823,7 @@ files into workspace: 100%|██████████| 2.00/2.00 [00:00&lt;0
 <h2 id="add">Add<a class="headerlink" href="#add" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">api</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;dataset-ex&#39;</span><span class="p">)</span>
+<span class="n">api</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;datasets&#39;</span><span class="p">,</span> <span class="s1">&#39;dataset-ex&#39;</span><span class="p">)</span>
 </code></pre></div>
 <p>output:</p>
 <pre><code>INFO - Metadata Manager: Pull [/home/user/Documentos/mlgit-api/mlgit/.ml-git/dataset/metadata]
@@ -831,7 +833,7 @@ files: 100%|██████████| 1.00/1.00 [00:00&lt;00:00, 381files/
 <h2 id="commit">Commit<a class="headerlink" href="#commit" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 <span class="n">entity_name</span> <span class="o">=</span> <span class="s1">&#39;dataset-ex&#39;</span>
 <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Commit example&#39;</span>
 
@@ -843,7 +845,7 @@ files: 100%|██████████| 1.00/1.00 [00:00&lt;00:00, 381files/
 <h2 id="push">Push<a class="headerlink" href="#push" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 <span class="n">spec</span> <span class="o">=</span> <span class="s1">&#39;dataset-ex&#39;</span>
 
 <span class="n">api</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
@@ -854,7 +856,7 @@ files: 100%|██████████| 1.00/1.00 [00:00&lt;00:00, 381files/
 <h2 id="create">Create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 <span class="n">spec</span> <span class="o">=</span> <span class="s1">&#39;dataset-ex&#39;</span>
 <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;computer-vision&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">]</span>
 <span class="n">mutability</span> <span class="o">=</span> <span class="s1">&#39;strict&#39;</span>
@@ -876,7 +878,7 @@ files: 100%|██████████| 1.00/1.00 [00:00&lt;00:00, 381files/
 <h4 id="entity">Entity<a class="headerlink" href="#entity" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span>
+<span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 
 <span class="n">api</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">entity_type</span><span class="p">)</span>
 </code></pre></div>
@@ -886,7 +888,7 @@ files: 100%|██████████| 1.00/1.00 [00:00&lt;00:00, 381files/
 <h2 id="remote-add">Remote add<a class="headerlink" href="#remote-add" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;dataset&#39;</span>
+<span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 <span class="n">datasets_repository</span> <span class="o">=</span> <span class="s1">&#39;https://git@github.com/mlgit-datasets&#39;</span>
 
 <span class="n">api</span><span class="o">.</span><span class="n">remote_add</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">datasets_repository</span><span class="p">)</span>
@@ -901,10 +903,10 @@ files: 100%|██████████| 1.00/1.00 [00:00&lt;00:00, 381files/
 <span class="n">bucket_type</span><span class="o">=</span><span class="s1">&#39;s3h&#39;</span>
 <span class="n">endpoint_url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:9000/&#39;</span>
 
-<span class="n">api</span><span class="o">.</span><span class="n">store_add</span><span class="p">(</span><span class="n">bucket_name</span><span class="o">=</span><span class="n">bucket_name</span><span class="p">,</span><span class="n">bucket_type</span><span class="o">=</span><span class="n">bucket_type</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="n">endpoint_url</span><span class="p">)</span>
+<span class="n">api</span><span class="o">.</span><span class="n">storage_add</span><span class="p">(</span><span class="n">bucket_name</span><span class="o">=</span><span class="n">bucket_name</span><span class="p">,</span><span class="n">bucket_type</span><span class="o">=</span><span class="n">bucket_type</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="n">endpoint_url</span><span class="p">)</span>
 </code></pre></div>
 <p>output:</p>
-<pre><code>INFO - Admin: Add store [s3h://minio]
+<pre><code>INFO - Admin: Add storage [s3h://minio]
 </code></pre>
                 
                   
@@ -914,7 +916,7 @@ files: 100%|██████████| 1.00/1.00 [00:00&lt;00:00, 381files/
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 7, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2021</span>
     
   </small>
 </div>
@@ -990,7 +992,7 @@ files: 100%|██████████| 1.00/1.00 [00:00&lt;00:00, 381files/
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.7353b375.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
       
     
   </body>

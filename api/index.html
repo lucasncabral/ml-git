@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
     
     
       
@@ -18,7 +18,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.9299cb39.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -615,6 +615,7 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+      
         
       
       
@@ -701,6 +702,7 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
     
   
   
@@ -720,18 +722,20 @@
 <details>
 <p><summary><code> add </code></summary>
 <br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">,</span> <span class="n">bumpversion</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fsck</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="p">[]):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">,</span> <span class="n">bumpversion</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fsck</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="p">[],</span> <span class="n">metric</span><span class="o">=</span><span class="p">[],</span> <span class="n">metrics_file</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This command will add all the files under the directory into the ml-git index/staging area.</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        add(&#39;dataset&#39;, &#39;dataset-ex&#39;, bumpversion=True)</span>
+<span class="sd">        add(&#39;datasets&#39;, &#39;dataset-ex&#39;, bumpversion=True)</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        entity_type (str): The type of an ML entity. (dataset, labels or model)</span>
+<span class="sd">        entity_type (str): The type of an ML entity. (datasets, labels or models)</span>
 <span class="sd">        entity_name (str): The name of the ML entity you want to add the files.</span>
 <span class="sd">        bumpversion (bool, optional): Increment the entity version number when adding more files [default: False].</span>
 <span class="sd">        fsck (bool, optional): Run fsck after command execution [default: False].</span>
 <span class="sd">        file_path (list, optional): List of files that must be added by the command [default: all files].</span>
+<span class="sd">        metric (dictionary, optional): The metric dictionary, example: { &#39;metric&#39;: value } [default: empty].</span>
+<span class="sd">        metrics_file (str, optional): The metrics file path. It is expected a CSV file containing the metric names in the header and the values in the next line [default: empty].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 </code></pre></div>
 </details>
@@ -742,10 +746,10 @@
     <span class="sd">&quot;&quot;&quot;This command allows retrieving the data of a specific version of an ML entity.</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        checkout(&#39;dataset&#39;, &#39;computer-vision__images3__imagenet__1&#39;)</span>
+<span class="sd">        checkout(&#39;datasets&#39;, &#39;computer-vision__images3__imagenet__1&#39;)</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        entity (str): The type of an ML entity. (dataset, labels or model)</span>
+<span class="sd">        entity (str): The type of an ML entity. (datasets, labels or models)</span>
 <span class="sd">        tag (str): An ml-git tag to identify a specific version of an ML entity.</span>
 <span class="sd">        sampling (dict): group: &lt;amount&gt;:&lt;group&gt; The group sample option consists of amount and group used to</span>
 <span class="sd">                                 download a sample.\n</span>
@@ -790,10 +794,10 @@
     <span class="sd">&quot;&quot;&quot;This command commits the index / staging area to the local repository.</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        commit(&#39;dataset&#39;, &#39;dataset-ex&#39;)</span>
+<span class="sd">        commit(&#39;datasets&#39;, &#39;dataset-ex&#39;)</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        entity (str): The type of an ML entity. (dataset, labels or model).</span>
+<span class="sd">        entity (str): The type of an ML entity. (datasets, labels or models)</span>
 <span class="sd">        ml_entity_name (str): Artefact name to commit.</span>
 <span class="sd">        commit_message (str, optional): Message of commit.</span>
 <span class="sd">        related_dataset (str, optional): Artefact name of dataset related to commit.</span>
@@ -805,23 +809,24 @@
 <p><summary><code> create </code></summary>
 <br></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">mutability</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command will create the workspace structure with data and spec file for an entity and set the store configurations.</span>
+    <span class="sd">&quot;&quot;&quot;This command will create the workspace structure with data and spec file for an entity and set the storage configurations.</span>
 
 <span class="sd">        Example:</span>
-<span class="sd">            create(&#39;dataset&#39;, &#39;dataset-ex&#39;, categories=[&#39;computer-vision&#39;, &#39;images&#39;], mutability=&#39;strict&#39;)</span>
+<span class="sd">            create(&#39;datasets&#39;, &#39;dataset-ex&#39;, categories=[&#39;computer-vision&#39;, &#39;images&#39;], mutability=&#39;strict&#39;)</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            entity (str): The type of an ML entity. (dataset, labels or model).</span>
+<span class="sd">            entity (str): The type of an ML entity. (datasets, labels or models).</span>
 <span class="sd">            entity_name (str): An ml-git entity name to identify a ML entity.</span>
 <span class="sd">            categories (list): Artifact&#39;s category name.</span>
 <span class="sd">            mutability (str): Mutability type. The mutability options are strict, flexible and mutable.</span>
-<span class="sd">            store_type (str, optional): Data store type [default: s3h].</span>
+<span class="sd">            storage_type (str, optional): Data storage type [default: s3h].</span>
 <span class="sd">            version (int, optional): Number of artifact version [default: 1].</span>
 <span class="sd">            import_path (str, optional): Path to be imported to the project.</span>
 <span class="sd">            bucket_name (str, optional): Bucket name.</span>
 <span class="sd">            import_url (str, optional): Import data from a google drive url.</span>
 <span class="sd">            credentials_path (str, optional): Directory of credentials.json.</span>
 <span class="sd">            unzip (bool, optional): Unzip imported zipped files [default: False].</span>
+<span class="sd">            entity_dir (str, optional): The relative path where the entity will be created inside the ml entity directory [default: empty].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 </code></pre></div>
 </details>
@@ -833,10 +838,26 @@
 
 <span class="sd">        Examples:</span>
 <span class="sd">            init(&#39;repository&#39;)</span>
-<span class="sd">            init(&#39;dataset&#39;)</span>
+<span class="sd">            init(&#39;datasets&#39;)</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            entity (str): The type of entity that will be initialized. (repository, dataset, labels or model).</span>
+<span class="sd">            entity (str): The type of entity that will be initialized. (repository, datasets, labels or models).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div>
+</details>
+<details>
+<p><summary><code> models metrics </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_models_metrics</span><span class="p">(</span><span class="n">entity_name</span><span class="p">,</span> <span class="n">export_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">export_type</span><span class="o">=</span><span class="n">FileType</span><span class="o">.</span><span class="n">JSON</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get metrics information for each tag of the entity.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            get_models_metrics(&#39;model-ex&#39;, export_type=&#39;csv&#39;)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            entity_name (str): An ml-git entity name to identify a ML entity.</span>
+<span class="sd">            export_path(str, optional): Set the path to export metrics to a file.</span>
+<span class="sd">            export_type (str, optional): Choose the format of the file that will be generated with the metrics [default: json].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 </code></pre></div>
 </details>
@@ -847,13 +868,13 @@
     <span class="sd">&quot;&quot;&quot;This command allows pushing the data of a specific version of an ML entity.</span>
 
 <span class="sd">        Example:</span>
-<span class="sd">            push(&#39;dataset&#39;, &#39;dataset-ex&#39;)</span>
+<span class="sd">            push(&#39;datasets&#39;, &#39;dataset-ex&#39;)</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            entity (str): The type of an ML entity. (dataset, labels or model).</span>
+<span class="sd">            entity (str): The type of an ML entity. (datasets, labels or models)</span>
 <span class="sd">            entity_name (str): An ml-git entity name to identify a ML entity.</span>
 <span class="sd">            retries (int, optional): Number of retries to upload the files to the storage [default: 2].</span>
-<span class="sd">            clear_on_fail (bool, optional): Remove the files from the store in case of failure during the push operation [default: False].</span>
+<span class="sd">            clear_on_fail (bool, optional): Remove the files from the storage in case of failure during the push operation [default: False].</span>
 <span class="sd">         &quot;&quot;&quot;</span>
 </code></pre></div>
 </details>
@@ -864,23 +885,23 @@
     <span class="sd">&quot;&quot;&quot;This command will add a remote to store the metadata from this ml-git project.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            remote_add(&#39;dataset&#39;, &#39;https://git@github.com/mlgit-datasets&#39;)</span>
+<span class="sd">            remote_add(&#39;datasets&#39;, &#39;https://git@github.com/mlgit-datasets&#39;)</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            entity (str): The type of an ML entity. (repository, dataset, labels or model).</span>
+<span class="sd">            entity (str): The type of an ML entity. (repository, datasets, labels or models).</span>
 <span class="sd">            remote_url(str): URL of an existing remote git repository.</span>
 <span class="sd">            global_configuration (bool, optional): Use this option to set configuration at global level [default: False].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 </code></pre></div>
 </details>
 <details>
-<p><summary><code> store add </code></summary>
+<p><summary><code> storage add </code></summary>
 <br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">store_add</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">,</span> <span class="n">bucket_type</span><span class="o">=</span><span class="n">StoreType</span><span class="o">.</span><span class="n">S3H</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">global_configuration</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command will add a store to the ml-git project.</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">storage_add</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">,</span> <span class="n">bucket_type</span><span class="o">=</span><span class="n">StorageType</span><span class="o">.</span><span class="n">S3H</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">global_configuration</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This command will add a storage to the ml-git project.</span>
 
 <span class="sd">        Examples:</span>
-<span class="sd">            store_add(&#39;my-bucket&#39;, type=&#39;s3h&#39;)</span>
+<span class="sd">            storage_add(&#39;my-bucket&#39;, type=&#39;s3h&#39;)</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            bucket_name (str): The name of the bucket in the storage.</span>
@@ -902,7 +923,7 @@ To run them, you just need to boot the jupyter notebook in an environment with M
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 24, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2021</span>
     
   </small>
 </div>
@@ -978,7 +999,7 @@ To run them, you just need to boot the jupyter notebook in an environment with M
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.7353b375.min.js"></script>
+      <script src="../assets/javascripts/bundle.4ea5477f.min.js"></script>
       
     
   </body>

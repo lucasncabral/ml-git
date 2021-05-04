@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
     
     
       
@@ -18,7 +18,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.9299cb39.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -459,6 +459,7 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+      
         
       
       
@@ -473,6 +474,7 @@
       
         
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
@@ -804,6 +806,7 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
     
   
   
@@ -915,7 +918,7 @@
 <p>The metadata management, is responsible for organize the ML entities (Models, Datasets, and Labels) through specification files. Then, these files are managed by a git repository to store and retrieve versions of the ML entities. </p>
 </li>
 <li>
-<p>The data store, is responsible to keep the files of the ML entities.</p>
+<p>The data storage, is responsible to keep the files of the ML entities.</p>
 </li>
 </ol>
 <table>
@@ -969,9 +972,9 @@ An argument why multihash is a valuable feature is that any cryptographic functi
 <ol>
 <li>Slide the file in piece of, say, 256KB.</li>
 <li>For each slice, compute its digest (currently, ml-git uses sha2-256).</li>
-<li>Obtain the CID for all these digests. These slice of files will be saved in a data store with the computed CID as their filename. </li>
+<li>Obtain the CID for all these digests. These slice of files will be saved in a data storage with the computed CID as their filename. </li>
 <li>Build a json describing all the chunks of the file.</li>
-<li>Obtain the CID of that json. That json will also be saved in the data store with the computed CID as its filename.</li>
+<li>Obtain the CID of that json. That json will also be saved in the data storage with the computed CID as its filename.</li>
 </ol>
 <p>Note that this last CID is the only piece of information you need to keep to retrieve the whole image.jpg file.
 And last but not least, one can ensure the integrity of the file while downloading by computing the digests of all downloaded chunks and checking against the digest encoded in their CID.</p>
@@ -1181,7 +1184,7 @@ data/2.jpg:
 </details>
 <details>
 <p><summary> <code>ml-git &lt;ml-entity&gt; checkout</code> </summary></p>
-<div class="highlight"><pre><span></span><code>ml-git (dataset|labels|model) checkout ML_ENTITY_TAG|ML_ENTITY
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) checkout ML_ENTITY_TAG|ML_ENTITY
 </code></pre></div>
 <p>You can use this command by passing a specific tag or just the name of the entity as an argument.</p>
 <p>If you use the name of the entity, ml-git will checkout the latest available version of that entity.</p>
@@ -1192,7 +1195,7 @@ data/2.jpg:
        └── cache/
           └── hashfs/ &lt;-- Objects here
 </code></pre></div>
-<p>When objects not found in cache, the command download the blobs from data store to the workspace:</p>
+<p>When objects not found in cache, the command download the blobs from data storage to the workspace:</p>
 <div class="highlight"><pre><span></span><code>ml-git_project/
 └── .ml-git/
 |   └── &lt;ml-entity&gt;/
@@ -1220,11 +1223,11 @@ If you use this option ml-git will not allow you to make changes to the entity a
 <h4 id="exemple">Exemple:<a class="headerlink" href="#exemple" title="Permanent link">&para;</a></h4>
 <p><img alt="dataset" src="../dataset.png" /></p>
 <p>Let's assume that we have a dataset that contains 12 files.</p>
-<p><code>ml-git dataset checkout computer-vision__images__dataset-ex__22 --sample-type=group --sampling=2:5 --seed=1</code> : This command selects 2 files randomly from every group of five files to download.</p>
+<p><code>ml-git datasets checkout computer-vision__images__dataset-ex__22 --sample-type=group --sampling=2:5 --seed=1</code> : This command selects 2 files randomly from every group of five files to download.</p>
 <p><img alt="group-sample" src="../group-sample.png" /></p>
-<p><code>ml-git dataset checkout computer-vision__images__dataset-ex__22 --sample-type=random --sampling=2:6 --seed=1</code> : This command makes a sample = (amount * len (dataset))% frequency ratio, sample = 4, so four files are selected randomly to download.  </p>
+<p><code>ml-git datasets checkout computer-vision__images__dataset-ex__22 --sample-type=random --sampling=2:6 --seed=1</code> : This command makes a sample = (amount * len (dataset))% frequency ratio, sample = 4, so four files are selected randomly to download.  </p>
 <p><img alt="random-sample" src="../random-sample.png" /></p>
-<p><code>ml-git dataset checkout computer-vision__images__dataset-ex__22 --sample-type=range --sampling=2:11:2</code> : This command selects the files at indexes generated by <code>range(start=2, stop=11, step=2)</code>.</p>
+<p><code>ml-git datasets checkout computer-vision__images__dataset-ex__22 --sample-type=range --sampling=2:11:2</code> : This command selects the files at indexes generated by <code>range(start=2, stop=11, step=2)</code>.</p>
 <p><img alt="range-sample" src="../range-sample.png" /></p>
 </details>
 <details>
@@ -1267,7 +1270,7 @@ data/2.jpg:
     - images
   mutability: strict
   manifest:
-    store: s3h://mlgit-datasets
+    storage: s3h://mlgit-datasets
   name: imagenet8
   version: 1
 </code></pre></div>
@@ -1279,7 +1282,7 @@ data/2.jpg:
   mutability: strict
   manifest:
     files: MANIFEST.yaml
-    store: s3h://mlgit-datasets
+    storage: s3h://mlgit-datasets
   name: imagenet8
   version: 1
 </code></pre></div>
@@ -1315,16 +1318,16 @@ HEAD directory:</p>
 |      |  └── &lt;ml-entity-name&gt;/
 |      |      ├── HEAD  &lt;-- Update tag with SHA-1 here.
 |      └── metadata/
-|         └── &lt;categopries&gt;*/
+|         └── &lt;entity-dir&gt;*/
 |            ├── MANIFEST.yaml
 |            ├── &lt;ml-entity-name&gt;.spec &lt; -- Save here
 └── &lt;ml-entity&gt;/
 </code></pre></div>
-<p><strong>*</strong> <em>Categories path is a tree of categories paths described in .spec file. (Ex: categories/images/MANIFEST.yaml)</em>.</p>
+<p><strong>*</strong> <em>Entity dir path is a tree of directories in which the entity was versioned (Ex: folderA/folderB/MANIFEST.yaml)</em>.</p>
 </details>
 <details>
 <p><summary> <code>ml-git &lt;ml-entity&gt; create </code></summary></p>
-<div class="highlight"><pre><span></span><code>ml-git (dataset|labels|model) create ARTEFACT_NAME
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) create ARTEFACT_NAME
 </code></pre></div>
 <p>Create the the workspace structure as follow:</p>
 <div class="highlight"><pre><span></span><code>ml-git_project/
@@ -1340,22 +1343,22 @@ HEAD directory:</p>
 <p>The parameter <code>--mutability</code> must be used to define the entity's mutability, which can be: strict, flexible, mutable.
 If you want to know more about each type of mutability and how it works, please take a look at <a href="../mutability_helper/">mutability helper documentation</a>.</p>
 <p>The parameter <code>--import</code> is used to import files from a src folder to data folder.
-The optional parameter <code>--wizard-questions</code> if passed, ask interactive questions at console for git &amp; store configurations and update the config.yaml file.
-The parameter <code>--store-type</code> must be used to define the entity's storage, which can be: s3h, azureblobh, gdriveh.</p>
+The optional parameter <code>--wizard-questions</code> if passed, ask interactive questions at console for git &amp; storage configurations and update the config.yaml file.
+The parameter <code>--storage-type</code> must be used to define the entity's storage, which can be: s3h, azureblobh, gdriveh.</p>
 <p>The parameter <code>--import-url</code> is used to import files from Google Drive to data folder. 
 Using this option it will be necessary to inform the path to your google drive credentials through the <code>credentials-path</code> argument. 
 In addition, you can use the <code>--unzip</code> option to unzip the files imported.</p>
 </details>
 <details>
 <p><summary> <code>ml-git &lt;ml-entity&gt; export</code> </summary></p>
-<p>This command allows you to export files from one store (S3|MinIO) to another (S3|MinIO).</p>
-<div class="highlight"><pre><span></span><code>ml-git (dataset|labels|model) export ML_ENTITY_TAG BUCKET_NAME
+<p>This command allows you to export files from one storage (S3|MinIO) to another (S3|MinIO).</p>
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) export ML_ENTITY_TAG BUCKET_NAME
 </code></pre></div>
-<p>Initially, it checks if the user is in an initialized ml-git project. With the <code>entity tag</code>, <code>--credentials</code>, <code>--region</code>, <code>--endpoint</code>, <code>--retry</code> and <code>bucket name</code>  arguments, ml-git connects to the store (S3|MinIO) bucket. Then the files are exported to the target store (S3|MinIO) bucket.</p>
+<p>Initially, it checks if the user is in an initialized ml-git project. With the <code>entity tag</code>, <code>--credentials</code>, <code>--region</code>, <code>--endpoint</code>, <code>--retry</code> and <code>bucket name</code>  arguments, ml-git connects to the storage (S3|MinIO) bucket. Then the files are exported to the target storage (S3|MinIO) bucket.</p>
 </details>
 <details>
 <p><summary> <code>ml-git &lt;ml-entity&gt; fetch</code> </summary></p>
-<div class="highlight"><pre><span></span><code>ml-git (dataset|labels|model) fetch ML_ENTITY_TAG
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) fetch ML_ENTITY_TAG
 </code></pre></div>
 <p>Break up the ML_ENTITY_TAG into categories, specname and version, then verify if cache has tag's objects, if not, download the blobs.</p>
 <div class="highlight"><pre><span></span><code>ml-git_project/
@@ -1382,7 +1385,7 @@ In addition, you can use the <code>--unzip</code> option to unzip the files impo
 <details>
 <p><summary> <code>ml-git &lt;ml-entity&gt; import</code> </summary>
 This command allows you to download a file or directory from the S3 bucket.</p>
-<div class="highlight"><pre><span></span><code>ml-git (dataset|labels|model) import BUCKET_NAME ENTITY_DIR
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) import BUCKET_NAME ENTITY_DIR
 </code></pre></div>
 <p>Initially checks if the user is in an initialized ml-git project. With the --credentials, --region (optional), --path and bucket name arguments ml-git connects to the S3 bucket. The S3 files for the file or directory specified in --path or --object will be downloaded. The files will be saved in the directory specified by the user in ENTITY_DIR, if not exists, the path will be created.</p>
 </details>
@@ -1398,7 +1401,7 @@ This command allows you to download a file or directory from the S3 bucket.</p>
 </details>
 <details>
 <p><summary> <code>ml-git &lt;ml-entity&gt; list </code></summary></p>
-<p>That command will list all \&lt;ml-entity> under management in the ml-git repository. To do this, ml-git goes through the metadata directory to identify the structure of categories and entities that are under management.</p>
+<p>That command will list all \&lt;ml-entity> under management in the ml-git repository. To do this, ml-git goes through the metadata directory to identify the structure of directories and entities that are under management.</p>
 <div class="highlight"><pre><span></span><code>ml-git_project/
 └── .ml-git/
 |   └── &lt;ml-entity&gt;/
@@ -1407,7 +1410,7 @@ This command allows you to download a file or directory from the S3 bucket.</p>
 |            └── images/
 |               └── imagenet8/
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>$ ml-git dataset list
+<div class="highlight"><pre><span></span><code>$ ml-git datasets list
 ML dataset
 |-- computer-vision
 |   |-- images
@@ -1433,16 +1436,16 @@ Options:
 </details>
 <details>
 <p><summary> <code>ml-git &lt;ml-entity&gt; push</code> </summary></p>
-<div class="highlight"><pre><span></span><code>ml-git (dataset|labels|model) push ML_ENTITY_NAME
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) push ML_ENTITY_NAME
 </code></pre></div>
-<p>Verify the git global configuration, and try upload <strong>objects</strong> from local repository to data store creating a thread pool with maximum of ten workers. This process use store configuration from spec file and AWS credentials.</p>
+<p>Verify the git global configuration, and try upload <strong>objects</strong> from local repository to data storage creating a thread pool with maximum of ten workers. This process use stored configuration from spec file and AWS credentials.</p>
 <p>.spec file:</p>
 <div class="highlight"><pre><span></span><code>dataset:
   categories:
     - computer-vision
     - images
   manifest:
-    store: s3h://mlgit-datasets &lt; -- store configuration
+    storage: s3h://mlgit-datasets &lt; -- storage configuration
   name: imagenet8
   version: 1
 </code></pre></div>
@@ -1455,7 +1458,7 @@ Options:
 |      └── objects/ &lt; -- Files to be uploaded.
 └── &lt;ml-entity&gt;/
     └── &lt;ml-entity-name&gt;/
-       ├── &lt;ml-entity-name&gt;.spec &lt; -- Spec file with store configuration.
+       ├── &lt;ml-entity-name&gt;.spec &lt; -- Spec file with storage configuration.
 </code></pre></div>
 <p>After the upload process, ml-git executes <strong>git push</strong> from local repository <strong>.ml-git/dataset/metadata</strong> to the remote repository configured in <strong>config.yaml</strong>.</p>
 </details>
@@ -1463,21 +1466,21 @@ Options:
 <p><summary> <code>ml-git &lt;ml-entity&gt; remote-fsck </code></summary></p>
 <p>Starting point of a remote fsck is to identify all the IPLD files contained in the MANIFEST file associated with the specified artefact spec (\&lt;ml-artefact-name>) and then executes the following steps:</p>
 <ul>
-<li>Verify the existence of all these IPLDs in the remote store<ul>
-<li>If one IPLD does not exist and it is present in the local repository, upload it to the remote store</li>
+<li>Verify the existence of all these IPLDs in the remote storage<ul>
+<li>If one IPLD does not exist and it is present in the local repository, upload it to the remote storage</li>
 </ul>
 </li>
 <li>If the IPLD is present in the local repository:<ul>
 <li>Open it and identify all blobs associated with that IPLD.</li>
-<li>Verify the existence of these blobs in the remote store.</li>
-<li>If one blob does not exist and it is present in the local repository, upload it to the remote store.</li>
+<li>Verify the existence of these blobs in the remote storage.</li>
+<li>If one blob does not exist and it is present in the local repository, upload it to the remote storage.</li>
 </ul>
 </li>
 <li>If the IPLD is NOT present in the local repository and --thorough option is set<ul>
 <li>Download the IPLD</li>
 <li>Open it and identify all blobs associated with that IPLD.</li>
-<li>Verify the existence of these blobs in the remote store.</li>
-<li>If one blob does not exist and it is present in the local repository, upload it to the remote store.</li>
+<li>Verify the existence of these blobs in the remote storage.</li>
+<li>If one blob does not exist and it is present in the local repository, upload it to the remote storage.</li>
 </ul>
 </li>
 </ul>
@@ -1535,13 +1538,13 @@ The Default option is HEAD.</p>
     └── &lt;ml-entity&gt;/
        └── index/
        └── metadata/
-       |  └── &lt;categories&gt;*/
+       |  └── &lt;entity-dir&gt;*/
        |     └── &lt;ml-entity-name&gt;/ &lt;-- Search all .spec file here
        └── objects/
        └── refs/
 </code></pre></div>
 <p>After found all .spec files the command show each one contents, then execute git checkout to branch <em>master</em>.</p>
-<p><strong>*</strong> <em>Categories path is a tree of categories paths described in .spec file.</em></p>
+<p><strong>*</strong> <em>Entity dir path is a tree of directories in which the entity was versioned (Ex: folderA/folderB/MANIFEST.yaml)</em>.</p>
 </details>
 <details>
 <p><summary> <code>ml-git &lt;ml-entity&gt; status </code></summary></p>
@@ -1574,7 +1577,7 @@ These files are located under the entities directory and listed if they have mor
 </details>
 <details>
 <p><summary> <code>ml-git &lt;ml-entity&gt; tag add</code></summary></p>
-<div class="highlight"><pre><span></span><code>ml-git (dataset|model|label) tag add dataset-ex my_tag
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) tag add dataset-ex my_tag
 </code></pre></div>
 <p>You can use this command to associate a tag to a commit.</p>
 </details>
@@ -1667,10 +1670,10 @@ After this check, objects that are not being used and that are contained in the 
     ├─── config.yaml
 </code></pre></div></p>
 <p><strong>config.yaml structure</strong>:
-<div class="highlight"><pre><span></span><code>dataset:
+<div class="highlight"><pre><span></span><code>datasets:
   git: git@github.com:standel/ml-datasets.git &lt;-- git project url
-store:
-  s3: &lt;-- store type (AWS)
+storages:
+  s3: &lt;-- storage type (AWS)
     mlgit-datasets: &lt;-- bucket name
       aws-credentials:
         profile: mlgit
@@ -1690,47 +1693,6 @@ store:
        └── metadata/ 
           └── .git &lt;- Change actual origin url to a blank url.
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> ml-git repository store add </code> (DEPRECATED)</summary>
-<br></p>
-<div class="highlight"><pre><span></span><code>Usage: ml-git repository store add [OPTIONS] BUCKET_NAME
-
-  [DEPRECATED]: Add a storage BUCKET_NAME to ml-git
-
-Options:
-  --credentials TEXT              Profile name for storage credentials
-  --region TEXT                   Aws region name for S3 bucket
-  --type [s3h|s3|azureblobh|gdriveh]
-                                  Storage type (s3h, s3, azureblobh, gdriveh
-                                  ...) [default: s3h]
-  --endpoint-url TEXT             Storage endpoint url
-  -g, --global                    Use this option to set configuration at
-                                  global level
-  --verbose                       Debug mode
-</code></pre></div>
-<p>Example:
-<div class="highlight"><pre><span></span><code>$ ml-git repository store add minio --endpoint-url=&lt;minio-endpoint-url&gt;
-</code></pre></div></p>
-<p>Use this command to add a data storage to a ML-Git project.</p>
-<p><strong>Note: Command deprecated, use storage instead store.</strong></p>
-</details>
-<details>
-<p><summary><code> ml-git repository store del </code>(DEPRECATED)</summary>
-<br></p>
-<div class="highlight"><pre><span></span><code>Usage: ml-git repository store del [OPTIONS] BUCKET_NAME
-
-  [DEPRECATED]: Delete a store BUCKET_NAME from ml-git
-
-Options:
-  --type [s3h|s3|azureblobh|gdriveh]  Store type (s3h, s3, azureblobh, gdriveh ...) [default:
-                              s3h]
-  --help                      Show this message and exit.
-</code></pre></div>
-<p>Example:
-<div class="highlight"><pre><span></span><code>$ ml-git repository store del minio
-</code></pre></div></p>
-<p><strong>Note: Command deprecated, use storage instead store.</strong></p>
 </details>
 <details>
 <p><summary><code> ml-git repository storage add </code></summary>
@@ -1790,7 +1752,7 @@ Options:
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 24, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2021</span>
     
   </small>
 </div>
@@ -1866,7 +1828,7 @@ Options:
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.7353b375.min.js"></script>
+      <script src="../assets/javascripts/bundle.4ea5477f.min.js"></script>
       
     
   </body>

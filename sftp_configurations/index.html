@@ -14,7 +14,7 @@
     
     
       
-        <title>MinIO - ML-Git</title>
+        <title>SFTP bucket configuration # - ML-Git</title>
       
     
     
@@ -63,7 +63,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#s3-bucket-configuration" class="md-skip">
+        <a href="#sftp-bucket-configuration" class="md-skip">
           Skip to content
         </a>
       
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MinIO
+              SFTP bucket configuration #
             
           </span>
         </div>
@@ -148,15 +148,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link md-tabs__link--active">
+      <a href=".." class="md-tabs__link">
         Home
       </a>
     </li>
@@ -264,14 +262,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
       
       <label class="md-nav__link" for="__nav_1">
         Home
@@ -323,14 +319,12 @@
             
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" >
       
       <label class="md-nav__link" for="__nav_1_4">
         Storages
@@ -384,7 +378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="./" class="md-nav__link">
+      <a href="../s3_configurations/" class="md-nav__link">
         S3
       </a>
     </li>
@@ -394,58 +388,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          MinIO
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../s3_configurations/" class="md-nav__link">
         MinIO
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#aws" class="md-nav__link">
-    AWS
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#minio" class="md-nav__link">
-    MinIO
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -745,28 +692,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#aws" class="md-nav__link">
-    AWS
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#minio" class="md-nav__link">
-    MinIO
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -778,78 +703,15 @@
               
                 
                 
-                <h1 id="s3-bucket-configuration">S3 bucket configuration<a class="headerlink" href="#s3-bucket-configuration" title="Permanent link">&para;</a></h1>
-<p>This section explains how to configure the settings that the ML-Git uses to interact with your bucket. This requires that you have the following data:</p>
-<ol>
-<li>Profile Name</li>
-<li>Access Key ID</li>
-<li>Secret Access Key</li>
-<li>Region Name</li>
-<li>Output Format</li>
-</ol>
-<p>The <em>Access Key ID</em> and <em>Secret Access Key</em> are your credentials. The <em>Region Name</em> identifies the AWS Region whose servers you want to send your requests. The <em>Output Format</em> specifies how the results are formatted.</p>
-<p>ML-Git allows you to have your bucket directly on AWS infrastructure or through MinIO. This document is divided into two sections wich describe how configure each one of these.</p>
-<h2 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link">&para;</a></h2>
-<p>Internally ML-Git uses <a href="https://github.com/boto/boto3">Boto3</a> to communicate with AWS services. Boto3 is the Amazon Web Services (AWS) SDK for Python. 
-It enables Python developers to create, configure, and manage AWS services.</p>
-<p>Boto3 looks at various configuration locations until it finds configuration values. The following lookup order is used searching through sources for configuration values:</p>
-<ul>
-<li>Environment variables</li>
-<li>The ~/.aws/config file</li>
-</ul>
-<p><code>Note:</code> 
-If, when creating a storage, you define a specific profile to be used, Boto3 will only search for that profile in the ~/.aws/config file.</p>
-<p>You can configure the AWS in three ways (environment variables, through the console or with the <a href="https://aws.amazon.com/cli/?nc1=h_ls">AWS Command Line Interface</a>). These are described in the following sections.</p>
-<p>1 - Environment Variables</p>
-<p><strong>Linux or macOS</strong>:</p>
-<pre><code>```
-$ export AWS_ACCESS_KEY_ID=your-access-key
-$ export AWS_SECRET_ACCESS_KEY=your-secret-access-key
-$ export AWS_DEFAULT_REGION=us-west-2
-```
-</code></pre>
-<p><strong>Windows</strong>:</p>
-<pre><code>```
-C:\&gt; setx AWS_ACCESS_KEY_ID your-access-key
-C:\&gt; setx AWS_SECRET_ACCESS_KEY your-secret-access-key
-C:\&gt; setx AWS_DEFAULT_REGION us-west-2
-```
-</code></pre>
-<p>2 -  Console </p>
-<p>From the home directory (UserProfile) execute:   </p>
-<div class="highlight"><pre><span></span><code>$ mkdir .aws
+                <h1 id="sftp-bucket-configuration">SFTP bucket configuration<a class="headerlink" href="#sftp-bucket-configuration" title="Permanent link">&para;</a></h1>
+<p>This section explains how to configure the settings that the ml-git uses to interact with your bucket using the SFTP storage. This requires you to have configured a public key in your SFTP server and use the private key pair to connect through ml-git.</p>
+<h1 id="setting-up-a-ml-git-project-with-sftp">Setting up a ML-Git project with SFTP<a class="headerlink" href="#setting-up-a-ml-git-project-with-sftp" title="Permanent link">&para;</a></h1>
+<p>Add store configurations example:</p>
+<div class="highlight"><pre><span></span><code>$ ml-git repository storage add path-in-your-sftp-server --type=sftph --username=your-user-name --endpoint-url=your-host --private-key=/home/profile/your_private_key
 </code></pre></div>
-<p>You need to create two files to store the sensitive credential information (~/.aws/credentials) separated from the less sensitive configuration options (~/.aws/config). To create these two files type the following commands:</p>
-<p>For config file:</p>
-<div class="highlight"><pre><span></span><code>$ echo &quot;
-[your-profile-name]
-region=bucket-region
-output=json 
-&quot; &gt; .aws/config
+<p>After that initialize the metadata repository:</p>
+<div class="highlight"><pre><span></span><code>$ ml-git datasets init
 </code></pre></div>
-<p>For credentials file:
-   <div class="highlight"><pre><span></span><code>$ echo &quot;
-[your-profile-name]
-aws_access_key_id = your-access-key
-aws_secret_access_key = your-secret-access-key     
-&quot; &gt; .aws/credentials
-</code></pre></div></p>
-<p>3 - AWS CLI</p>
-<p>For general use, the <em>aws configure</em> command is the fastest way to set up, but requires the AWS CLI installed. For install and configure type the following commands:</p>
-<div class="highlight"><pre><span></span><code>$ pip install awscli
-$ aws configure
-AWS Access Key ID [None]: your-access-key
-AWS Secret Access Key [None]: your-secret-access-key
-Default region name [None]: bucket-region
-Default output format [None]: json
-</code></pre></div>
-<p>These commands will create the files ~/.aws/credentials and ~/.aws/config.</p>
-<ul>
-<li>Demonstrating AWS Configure</li>
-</ul>
-<p><a href="https://asciinema.org/a/371052"><img alt="asciicast" src="https://asciinema.org/a/371052.svg" /></a></p>
-<h2 id="minio">MinIO<a class="headerlink" href="#minio" title="Permanent link">&para;</a></h2>
-<p><a href="https://min.io/">MinIO</a> is a cloud storage server compatible with Amazon S3. That said, you can configure it in the same way as described above by placing Access Key and Secret Access Key of your MinIO bucket.</p>
                 
                   
                     
@@ -858,7 +720,7 @@ Default output format [None]: json
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 7, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2021</span>
     
   </small>
 </div>
@@ -878,39 +740,6 @@ Default output format [None]: json
       
         
 <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        <a href="./" class="md-footer__link md-footer__link--prev" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              S3
-            </div>
-          </div>
-        </a>
-      
-      
-        <a href="../tabular_data/tabular_data/" class="md-footer__link md-footer__link--next" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Working With Tabular Data
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

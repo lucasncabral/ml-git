@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
     
     
       
@@ -18,7 +18,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.9299cb39.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.e35208c4.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ef6f36e2.min.css">
@@ -294,6 +294,7 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+      
         
       
       
@@ -308,6 +309,7 @@
       
         
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
@@ -765,6 +767,7 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
     
   
   
@@ -869,7 +872,7 @@ $ git config --global user.email &quot;your_email@example.com&quot;
 <p>2 - Storage:</p>
 <p>ML-Git needs a configured storage to store data from managed artifacts. Please take a look at the <a href="mlgit_internals">ML-Git architecture and internals documentation</a> to better understand how ML-Git works internally with data.</p>
 <ul>
-<li>To configure the storage <a href="storage_configurations">see documentation about supported stores and how to configure each one.</a></li>
+<li>To configure the storage <a href="storage_configurations">see documentation about supported storages and how to configure each one.</a></li>
 </ul>
 <p>3 - ML-Git project:</p>
 <ul>
@@ -881,14 +884,14 @@ To configure it you can use the basic steps to configure the project described i
 Usage: ml-git [OPTIONS] COMMAND [ARGS]...
 
 Options:
-   --version  Show the version and exit.
+  --version  Show the version and exit.
 
 Commands:
-  clone       clone a ml-git repository ML_GIT_REPOSITORY_URL
-  dataset     management of datasets within this ml-git repository
-  labels      management of labels sets within this ml-git repository
-  model       management of models within this ml-git repository
-  repository  management of this ml-git repository
+  clone       Clone a ml-git repository ML_GIT_REPOSITORY_URL
+  datasets    Management of datasets within this ml-git repository.
+  labels      Management of labels sets within this ml-git repository.
+  models      Management of models within this ml-git repository.
+  repository  Management of this ml-git repository.
 </code></pre></div>
 <h3 id="basic-commands">Basic commands<a class="headerlink" href="#basic-commands" title="Permanent link">&para;</a></h3>
 <details>
@@ -910,56 +913,56 @@ $ ml-git clone https://github.com/user/ml_git_configuration_file_example.git --t
 <details>
 <p><summary><code>ml-git &lt;ml-entity&gt; create</code></summary>
 This command will help you to start a new project, it creates your project artifact metadata:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git dataset create --category=computer-vision --category=images --bucket-name=your_bucket --import=../import-path --mutability=strict dataset-ex 
+<div class="highlight"><pre><span></span><code>$ ml-git datasets create --category=computer-vision --category=images --bucket-name=your_bucket --import=../import-path --mutability=strict dataset-ex 
 </code></pre></div>
 <p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/371042"><img alt="asciicast" src="https://asciinema.org/a/371042.svg" /></a></p>
+<p><a href="https://asciinema.org/a/385779"><img alt="asciicast" src="https://asciinema.org/a/385779.svg" /></a></p>
 </details>
 <details>
 <p><summary><code>ml-git &lt;ml-entity&gt; status</code></summary>
 Show changes in project workspace:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git dataset status dataset-ex
+<div class="highlight"><pre><span></span><code>$ ml-git datasets status dataset-ex
 </code></pre></div>
 <p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/371043"><img alt="asciicast" src="https://asciinema.org/a/371043.svg" /></a></p>
+<p><a href="https://asciinema.org/a/385780"><img alt="asciicast" src="https://asciinema.org/a/385780.svg" /></a></p>
 </details>
 <details>
 <p><summary><code>ml-git &lt;ml-entity&gt; add</code></summary>
 Add new files to index:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git dataset add dataset-ex
+<div class="highlight"><pre><span></span><code>$ ml-git datasets add dataset-ex
 </code></pre></div>
 <p>To increment version:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git dataset add dataset-ex --bumpversion
+<div class="highlight"><pre><span></span><code>$ ml-git datasets add dataset-ex --bumpversion
 </code></pre></div>
 <p>Add an specific file:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git dataset add dataset-ex data/file_name.ex
+<div class="highlight"><pre><span></span><code>$ ml-git datasets add dataset-ex data/file_name.ex
 </code></pre></div>
 <p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/371045"><img alt="asciicast" src="https://asciinema.org/a/371045.svg" /></a></p>
+<p><a href="https://asciinema.org/a/385781"><img alt="asciicast" src="https://asciinema.org/a/385781.svg" /></a></p>
 </details>
 <details>
 <p><summary><code>ml-git &lt;ml-entity&gt; commit</code></summary>
 Consolidate added files in the index to repository:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git dataset commit dataset-ex
+<div class="highlight"><pre><span></span><code>$ ml-git datasets commit dataset-ex
 </code></pre></div>
 <p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/371046"><img alt="asciicast" src="https://asciinema.org/a/371046.svg" /></a></p>
+<p><a href="https://asciinema.org/a/385782"><img alt="asciicast" src="https://asciinema.org/a/385782.svg" /></a></p>
 </details>
 <details>
 <p><summary><code>ml-git &lt;ml-entity&gt; push</code></summary>
-Upload metadata to remote repository and send <a href="mlgit_internals">chunks</a> to store:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git dataset push dataset-ex
+Upload metadata to remote repository and send <a href="mlgit_internals">chunks</a> to storage:</p>
+<div class="highlight"><pre><span></span><code>$ ml-git datasets push dataset-ex
 </code></pre></div>
 <p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/371048"><img alt="asciicast" src="https://asciinema.org/a/371048.svg" /></a></p>
+<p><a href="https://asciinema.org/a/385783"><img alt="asciicast" src="https://asciinema.org/a/385783.svg" /></a></p>
 </details>
 <details>
 <p><summary><code>ml-git &lt;ml-entity&gt; checkout</code></summary>
 Change workspace and metadata to versioned ml-entity tag:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git dataset checkout computer-vision__images__dataset-ex__1
+<div class="highlight"><pre><span></span><code>$ ml-git datasets checkout computer-vision__images__dataset-ex__1
 </code></pre></div>
 <p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/371049"><img alt="asciicast" src="https://asciinema.org/a/371049.svg" /></a></p>
+<p><a href="https://asciinema.org/a/385784"><img alt="asciicast" src="https://asciinema.org/a/385784.svg" /></a></p>
 </details>
 <p><a href="mlgit_commands">More about commands in documentation</a></p>
 <h3 id="how-to-contribute">How to contribute<a class="headerlink" href="#how-to-contribute" title="Permanent link">&para;</a></h3>
@@ -985,7 +988,7 @@ If an issue with the same topic already exists, discuss on the issue.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 12, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 4, 2021</span>
     
   </small>
 </div>
@@ -1047,7 +1050,7 @@ If an issue with the same topic already exists, discuss on the issue.</p>
     <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.7353b375.min.js"></script>
+      <script src="assets/javascripts/bundle.4ea5477f.min.js"></script>
       
     
   </body>

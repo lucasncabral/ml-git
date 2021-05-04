@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
     
     
       
@@ -18,7 +18,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.9299cb39.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -537,6 +537,7 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+      
         
       
       
@@ -551,6 +552,7 @@
       
         
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
@@ -744,6 +746,7 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
     
   
   
@@ -805,6 +808,50 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 </code></pre></div>
 </details>
+<details>
+<summary><code> compare_metadata </code></summary>
+</br>
+
+This method is responsible for displaying a formatted output containing the comparison of the information that was added by the plugin in the specification file for each version of the entity.
+If the plugin is installed and configured correctly, this signature will be triggered during the execution of the ml-git log command.
+
+*Definition:*
+
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compare_metadata</span><span class="p">(</span><span class="n">specs_to_compare</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        specs_to_compare (Iterator[dict]): List containing current spec file and predecessors to be compared for each version.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div>
+</details>
+
+<details>
+<summary><code> get_status_output </code></summary>
+</br>
+
+Responsible for generating status outputs for files in the user's workspace.
+Returns two lists containing the formatted status output for untracked and added files and a summarized output string for the total added.
+This signature will be triggered during the execution of the ml-git status command.
+
+*Definition:*
+
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_status_output</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">untracked_files</span><span class="p">,</span> <span class="n">files_to_be_commited</span><span class="p">,</span> <span class="n">full_option</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        path (str): The path where the data is in the user workspace.</span>
+<span class="sd">        files_to_be_commited (list): The list of files to be commited in the user workspace.</span>
+<span class="sd">        untracked_files (list): The list of untracked files in the user workspace.</span>
+<span class="sd">        full_option (bool): Option to show the entire files or summarized by path.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        output_untracked_data (list): List of strings formatted with the number of rows for each untracked file.</span>
+<span class="sd">        output_to_be_commited_data (list): List of strings formatted with the number of rows for each added file to be commited.</span>
+<span class="sd">        output_total_rows (str): String formatted with the sum of the rows for each file to be commited.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div>
+</details>
+
 <p><strong>Note:</strong>
 The plugin doesn't need to implement all methods defined in the plugin contract.</p>
 <h2 id="how-to-create-a-plugin">How to create a plugin<a class="headerlink" href="#how-to-create-a-plugin" title="Permanent link">&para;</a></h2>
@@ -858,7 +905,7 @@ pip3 install --user .
   <span class="nt">manifest</span><span class="p">:</span>
     <span class="nt">data-plugin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">package_name &lt;-- type here the package name in your plugin project.</span>
     <span class="nt">files</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MANIFEST.yaml</span>
-    <span class="nt">store</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">s3h://mlgit</span>
+    <span class="nt">storage</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">s3h://mlgit</span>
   <span class="nt">mutability</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">strict</span>
   <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dataset-ex</span>
   <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
@@ -871,7 +918,7 @@ pip3 install --user .
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 24, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2021</span>
     
   </small>
 </div>
@@ -947,7 +994,7 @@ pip3 install --user .
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.7353b375.min.js"></script>
+      <script src="../assets/javascripts/bundle.4ea5477f.min.js"></script>
       
     
   </body>

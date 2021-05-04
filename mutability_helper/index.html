@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
     
     
       
@@ -18,7 +18,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.9299cb39.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -525,6 +525,7 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+      
         
       
       
@@ -539,6 +540,7 @@
       
         
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
@@ -751,6 +753,7 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
     
   
   
@@ -808,7 +811,7 @@
 <p>You must define carefully because once mutability is defined, it cannot be changed.</p>
 <h3 id="where-to-define-mutability-policy">Where to define mutability policy?<a class="headerlink" href="#where-to-define-mutability-policy" title="Permanent link">&para;</a></h3>
 <p>Mutability is defined when creating a new entity. </p>
-<p>With the command <code>ml-git (dataset|label|model) create</code> you must pass the mandatory attribute <code>mutability</code> to define the type of mutability for the created entity.</p>
+<p>With the command <code>ml-git (datasets|labels|models) create</code> you must pass the mandatory attribute <code>mutability</code> to define the type of mutability for the created entity.</p>
 <p>Your entity specification file (.spec) should look like this:</p>
 <div class="highlight"><pre><span></span><code>dataset:
   categories:
@@ -816,11 +819,11 @@
     - images
   mutability: flexible
   manifest:
-    store: s3h://mlgit-datasets
+    storage: s3h://mlgit-datasets
   name: imagenet8
   version: 1
 </code></pre></div>
-<p>If you create an entity without using the create command and without mutability, when trying to perform the <code>ml-git (dataset|label|model) add</code> the command will not be executed and you will be informed that you must define a mutability for that new entity.</p>
+<p>If you create an entity without using the create command and without mutability, when trying to perform the <code>ml-git (datasets|labels|models) add</code> the command will not be executed and you will be informed that you must define a mutability for that new entity.</p>
 <p>Note:
 <div class="highlight"><pre><span></span><code>For entities that were created before the mutability parameter became mandatory and that did not define mutability, ml-git treats these entities as strict.
 </code></pre></div></p>
@@ -869,7 +872,7 @@ You must define carefully because once mutability is defined, it cannot be chang
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 22, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2021</span>
     
   </small>
 </div>
@@ -945,7 +948,7 @@ You must define carefully because once mutability is defined, it cannot be chang
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.7353b375.min.js"></script>
+      <script src="../assets/javascripts/bundle.4ea5477f.min.js"></script>
       
     
   </body>
