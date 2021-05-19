@@ -8,7 +8,7 @@ from click_didyoumean import DYMGroup
 
 from ml_git.commands.general import mlgit
 from ml_git.commands.utils import repositories, LABELS, DATASETS, MODELS
-from ml_git.constants import EntityType
+from ml_git.constants import EntityType, DATASET_SPEC_KEY, LABELS_SPEC_KEY, MODEL_SPEC_KEY
 
 
 @mlgit.group(DATASETS, help='Management of datasets within this ml-git repository.', cls=DYMGroup)
@@ -124,27 +124,19 @@ def add(context, **kwargs):
 
 def commit(context, **kwargs):
     repo_type = context.parent.command.name
-    linked_dataset_key = 'dataset'
     msg = kwargs['message']
     version = kwargs['version']
     run_fsck = kwargs['fsck']
     entity_name = kwargs['ml_entity_name']
-    dataset_tag = None
-    labels_tag = None
 
-    if repo_type == MODELS:
-        dataset_tag = kwargs[linked_dataset_key]
-        labels_tag = kwargs[EntityType.LABELS.value]
-    elif repo_type == LABELS:
-        dataset_tag = kwargs[linked_dataset_key]
-    tags = {}
-    if dataset_tag is not None:
-        tags[EntityType.DATASETS.value] = dataset_tag
-    if labels_tag is not None:
-        tags[EntityType.LABELS.value] = labels_tag
-
-    repositories[repo_type].commit(entity_name, tags, version, run_fsck, msg)
-
+    related_entities = {}
+    if DATASET_SPEC_KEY in kwargs and len(kwargs[DATASET_SPEC_KEY]) > 0:
+        related_entities[EntityType.DATASETS.value] = kwargs[DATASET_SPEC_KEY]
+    if LABELS_SPEC_KEY in kwargs and len(kwargs[LABELS_SPEC_KEY]) > 0:
+        related_entities[EntityType.LABELS.value] = kwargs[LABELS_SPEC_KEY]
+    if MODEL_SPEC_KEY in kwargs and len(kwargs[MODEL_SPEC_KEY]) > 0:
+        related_entities[EntityType.MODELS.value] = kwargs[MODEL_SPEC_KEY]
+    repositories[repo_type].commit(entity_name, related_entities, version, run_fsck, msg)
 
 def tag_list(context, **kwargs):
     parent = context.parent

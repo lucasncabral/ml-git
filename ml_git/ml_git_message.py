@@ -90,7 +90,7 @@ output_messages = {
     'INFO_ENTITY_DELETED': 'Entity %s was deleted',
     'INFO_WRONG_ENTITY_TYPE': 'Metrics cannot be added to this entity: [%s].',
     'INFO_PROJECT_UPDATE_SUCCESSFULLY': 'Project updated successfully',
-    'INFO_ASSOCIATE_DATASETS': 'Associate datasets [%s]-[%s] to the %s.',
+    'INFO_ASSOCIATE_ENTITY': 'Associate %s [%s]-[%s] to the %s.',
     'INFO_UPDATE_THE_PROJECT': 'It was observed that the directories of this project follow the scheme of old versions of ml-git.\n' +
                                '\tTo continue using this project it is necessary to update the directories.',
     'INFO_REMOVED_STORAGE': 'Removed storage [%s://%s] from configuration file.',
@@ -288,6 +288,8 @@ output_messages = {
     'ERROR_INVALID_SPEC_VALUE_IN': 'Invalid %s spec in %s.  It should look something like this:\n%s',
     'ERROR_SPEC_FILE_NOT_FOUND': '\nCan\'t find  spec file to increment version.  Are you in the '
                                   'root of the repo?\n     %s\n',
+    'ERROR_TWICE_THE_SAME_ENTITIE': 'You cannot refer to the same entity twice',
+    'ERROR_WITHOUT_TAG_FOR_THIS_RELATED_ENTITY': 'No entity with that name (%s) was found to establish relationship.',
 
     'WARN_CORRUPTED_CANNOT_BE_ADD': 'The following files cannot be added because they are corrupted:',
     'WARN_HAS_CONFIGURED_REMOTE': 'YOU ALREADY HAS A CONFIGURED REMOTE. All data stored in this repository will be sent to the new one on the first push.',

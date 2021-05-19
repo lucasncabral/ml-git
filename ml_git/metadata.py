@@ -10,9 +10,9 @@ from halo import Halo
 
 from ml_git import log
 from ml_git._metadata import MetadataManager
-from ml_git.config import get_refs_path, get_sample_spec_doc
+from ml_git.config import get_refs_path, get_sample_spec_doc, get_metadata_path
 from ml_git.constants import METADATA_CLASS_NAME, LOCAL_REPOSITORY_CLASS_NAME, ROOT_FILE_NAME, MutabilityType, \
-    SPEC_EXTENSION, MANIFEST_FILE, EntityType, STORAGE_SPEC_KEY, DATASET_SPEC_KEY, LABELS_SPEC_KEY
+    SPEC_EXTENSION, MANIFEST_FILE, EntityType, STORAGE_SPEC_KEY, DATASET_SPEC_KEY, LABELS_SPEC_KEY, MODEL_SPEC_KEY
 from ml_git.manifest import Manifest
 from ml_git.ml_git_message import output_messages
 from ml_git.plugin_interface.data_plugin_constants import ADD_METADATA
@@ -46,7 +46,7 @@ class Metadata(MetadataManager):
             return None, None, None
         return full_metadata_path, entity_sub_path, metadata
 
-    def commit_metadata(self, index_path, tags, commit_msg, changed_files, mutability, ws_path):
+    def commit_metadata(self, index_path, related_entities, commit_msg, changed_files, mutability, ws_path):
         spec_file = os.path.join(index_path, 'metadata', self._spec, self._spec + SPEC_EXTENSION)
         full_metadata_path, entity_sub_path, metadata = self._full_metadata_path(spec_file)
         log.debug(output_messages['DEBUG_METADATA_PATH'] % full_metadata_path, class_name=METADATA_CLASS_NAME)
@@ -64,8 +64,9 @@ class Metadata(MetadataManager):
             return None, None
 
         try:
-            self.__commit_metadata(full_metadata_path, index_path, metadata, tags, ws_path)
-        except Exception:
+            self.__commit_metadata(full_metadata_path, index_path, metadata, related_entities, ws_path)
+        except Exception as e:
+            log.error(e, class_name=METADATA_CLASS_NAME)
             return None, None
         # generates a tag to associate to the commit
         tag = self.metadata_tag(metadata)
@@ -127,7 +128,7 @@ class Metadata(MetadataManager):
         entity_dir = get_entity_dir(self.__repo_type, specname)
         return os.path.join(self.__path, entity_dir)
 
-    def __commit_metadata(self, full_metadata_path, index_path, metadata, specs, ws_path):
+    def __commit_metadata(self, full_metadata_path, index_path, metadata, related_entities, ws_path):
         idx_path = os.path.join(index_path, 'metadata', self._spec)
         log.debug(output_messages['DEBUG_COMMIT_SPEC'] % self._spec, class_name=METADATA_CLASS_NAME)
         # saves README.md if any
@@ -154,39 +155,58 @@ class Metadata(MetadataManager):
         PluginCaller(manifest).call(ADD_METADATA, ws_path, manifest)
 
         # Add metadata specific to labels ML entity type
-        self._add_associate_entity_metadata(metadata, specs)
+        self._add_associate_entity_metadata(metadata, related_entities)
         self.__commit_spec(full_metadata_path, metadata)
 
         return storage
 
-    def _add_associate_entity_metadata(self, metadata, specs):
+    @staticmethod
+    def _remove_old_relationship(metadata, entity_spec_key, related_entity_type):
+        if related_entity_type in metadata[entity_spec_key]:
+            metadata[entity_spec_key].pop(related_entity_type)
+        if related_entity_type == EntityType.DATASETS.value and DATASET_SPEC_KEY in metadata[entity_spec_key]:
+            metadata[entity_spec_key].pop(DATASET_SPEC_KEY)
+        elif related_entity_type == EntityType.MODELS.value and MODEL_SPEC_KEY in metadata[entity_spec_key]:
+            metadata[entity_spec_key].pop(MODEL_SPEC_KEY)
+
+    def _core_related_entity(self, metadata, related_entity_values, entity_spec_key, related_entity_type):
+        self._remove_old_relationship(metadata, entity_spec_key, related_entity_type)
+        metadata_path = get_metadata_path(self.__config, related_entity_type)
+        metadata_manager = Metadata(related_entity_type, metadata_path, self.__config, related_entity_type)
+
+        related_tags = []
+        entities_names = []
+        for value in related_entity_values:
+            entity_name = value
+            version = -1
+            if ':' in value:
+                entity_name, version = value.split(':')
+            if entity_name in entities_names:
+                raise RuntimeError(output_messages['ERROR_TWICE_THE_SAME_ENTITIE'])
+            entities_names.append(entity_name)
+            target_tag = self.get_tag(entity_name, int(version), metadata_manager)
+            if target_tag is None:
+                raise RuntimeError(output_messages['ERROR_WITHOUT_TAG_FOR_THIS_RELATED_ENTITY'] % entity_name)
+            related_tags.append(target_tag)
+            log.info(output_messages['INFO_ASSOCIATE_ENTITY'] % (related_entity_type, entity_name, target_tag, self.__repo_type),
+                     class_name=LOCAL_REPOSITORY_CLASS_NAME)
+
+        metadata[entity_spec_key][related_entity_type] = related_tags
+
+    def _add_associate_entity_metadata(self, metadata, related_entities):
         dataset = EntityType.DATASETS.value
         labels = EntityType.LABELS.value
         model = EntityType.MODELS.value
         entity_spec_key = get_spec_key(self.__repo_type)
-        if dataset in specs and self.__repo_type in [labels, model]:
-            d_spec = specs[dataset]
-            refs_path = get_refs_path(self.__config, dataset)
-            r = Refs(refs_path, d_spec, dataset)
-            tag, sha = r.head()
-            if tag is not None:
-                log.info(output_messages['INFO_ASSOCIATE_DATASETS'] % (d_spec, tag, self.__repo_type),
-                         class_name=LOCAL_REPOSITORY_CLASS_NAME)
-                metadata[entity_spec_key][DATASET_SPEC_KEY] = {}
-                metadata[entity_spec_key][DATASET_SPEC_KEY]['tag'] = tag
-                metadata[entity_spec_key][DATASET_SPEC_KEY]['sha'] = sha
-        if labels in specs and self.__repo_type in [model]:
-            l_spec = specs[labels]
-            refs_path = get_refs_path(self.__config, labels)
-            r = Refs(refs_path, l_spec, labels)
-            tag, sha = r.head()
-            if tag is not None:
-                log.info(
-                    'Associate labels [%s]-[%s] to the %s.' % (l_spec, tag, self.__repo_type),
-                    class_name=LOCAL_REPOSITORY_CLASS_NAME)
-                metadata[entity_spec_key][LABELS_SPEC_KEY] = {}
-                metadata[entity_spec_key][LABELS_SPEC_KEY]['tag'] = tag
-                metadata[entity_spec_key][LABELS_SPEC_KEY]['sha'] = sha
+        if dataset in related_entities:
+            tags = related_entities[dataset]
+            self._core_related_entity(metadata, tags, entity_spec_key, dataset)
+        if labels in related_entities and self.__repo_type in [labels, model]:
+            tags = related_entities[labels]
+            self._core_related_entity(metadata, tags, entity_spec_key, labels)
+        if model in related_entities and self.__repo_type in [model]:
+            tags = related_entities[model]
+            self._core_related_entity(metadata, tags, entity_spec_key, model)
 
     def _get_amount_and_size_of_workspace_files(self, full_metadata_path, ws_path):
         full_path = os.path.join(full_metadata_path, MANIFEST_FILE)
@@ -275,16 +295,20 @@ class Metadata(MetadataManager):
         except Exception as e:
             log.warn(output_messages['WARN_CANNOT_INITIALIZE_METADATA_FOR'] % (entity_type, e), class_name=METADATA_CLASS_NAME)
 
-    def get_tag(self, entity, version):
+    def get_tag(self, entity, version, metada=None):
         try:
-            tags = self.list_tags(entity)
+            if not metada:
+                tags = self.list_tags(entity)
+            else:
+                tags = metada.list_tags(entity)
             if len(tags) == 0:
                 raise RuntimeError(output_messages['ERROR_WITHOUT_TAG_FOR_THIS_ENTITY'])
             target_tag = self._get_target_tag(tags, entity, version)
-            if version == -1:
-                log.info(output_messages['INFO_CHECKOUT_LATEST_TAG'] % target_tag, class_name=METADATA_CLASS_NAME)
-            else:
-                log.info(output_messages['INFO_CHECKOUT_TAG'] % target_tag, class_name=METADATA_CLASS_NAME)
+            if not metada:
+                if version == -1:
+                    log.info(output_messages['INFO_CHECKOUT_LATEST_TAG'] % target_tag, class_name=METADATA_CLASS_NAME)
+                else:
+                    log.info(output_messages['INFO_CHECKOUT_TAG'] % target_tag, class_name=METADATA_CLASS_NAME)
             return target_tag
         except RuntimeError as e:
             log.error(e, class_name=METADATA_CLASS_NAME)

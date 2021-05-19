@@ -228,6 +228,7 @@ commands = [
             '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},
             '--fsck': {'help': help_msg.FSCK_OPTION},
+            '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET},
         },
 
         'help': 'Commit dataset change set of ML_ENTITY_NAME locally to this ml-git repository.'
@@ -244,7 +245,8 @@ commands = [
         },
 
         'options': {
-            '--dataset': {'help': 'Link dataset entity name to this label set version.'},
+            '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET},
+            '--labels': {'multiple': True, 'type': str, 'help': help_msg.LINK_LABELS},
             '--tag': {'help': help_msg.TAG_OPTION},
             '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},
@@ -265,8 +267,9 @@ commands = [
         },
 
         'options': {
-            '--dataset': {'help': help_msg.LINK_DATASET},
-            '--labels': {'help': help_msg.LINK_LABELS},
+            '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET},
+            '--labels': {'multiple': True, 'type': str, 'help': help_msg.LINK_LABELS},
+            '--model': {'multiple': True, 'type': str, 'help': help_msg.LINK_LABELS},
             '--tag': {'help': help_msg.TAG_OPTION},
             '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},
