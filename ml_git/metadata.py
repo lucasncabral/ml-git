@@ -160,17 +160,7 @@ class Metadata(MetadataManager):
 
         return storage
 
-    @staticmethod
-    def _remove_old_relationship(metadata, entity_spec_key, related_entity_type):
-        if related_entity_type in metadata[entity_spec_key]:
-            metadata[entity_spec_key].pop(related_entity_type)
-        if related_entity_type == EntityType.DATASETS.value and DATASET_SPEC_KEY in metadata[entity_spec_key]:
-            metadata[entity_spec_key].pop(DATASET_SPEC_KEY)
-        elif related_entity_type == EntityType.MODELS.value and MODEL_SPEC_KEY in metadata[entity_spec_key]:
-            metadata[entity_spec_key].pop(MODEL_SPEC_KEY)
-
     def _core_related_entity(self, metadata, related_entity_values, entity_spec_key, related_entity_type):
-        self._remove_old_relationship(metadata, entity_spec_key, related_entity_type)
         metadata_path = get_metadata_path(self.__config, related_entity_type)
         metadata_manager = Metadata(related_entity_type, metadata_path, self.__config, related_entity_type)
 
@@ -200,12 +190,16 @@ class Metadata(MetadataManager):
         entity_spec_key = get_spec_key(self.__repo_type)
         if dataset in related_entities:
             tags = related_entities[dataset]
+            if DATASET_SPEC_KEY in metadata[entity_spec_key]:
+                metadata[entity_spec_key].pop(DATASET_SPEC_KEY)
             self._core_related_entity(metadata, tags, entity_spec_key, dataset)
         if labels in related_entities and self.__repo_type in [labels, model]:
             tags = related_entities[labels]
             self._core_related_entity(metadata, tags, entity_spec_key, labels)
         if model in related_entities and self.__repo_type in [model]:
             tags = related_entities[model]
+            if MODEL_SPEC_KEY in metadata[entity_spec_key]:
+                metadata[entity_spec_key].pop(MODEL_SPEC_KEY)
             self._core_related_entity(metadata, tags, entity_spec_key, model)
 
     def _get_amount_and_size_of_workspace_files(self, full_metadata_path, ws_path):
