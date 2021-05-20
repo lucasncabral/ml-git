@@ -154,7 +154,7 @@ class Metadata(MetadataManager):
         manifest = metadata[entity_spec_key]['manifest']
         PluginCaller(manifest).call(ADD_METADATA, ws_path, manifest)
 
-        # Add metadata specific to labels ML entity type
+        # Add metadata specific to labels ML entity type'
         self._add_associate_entity_metadata(metadata, related_entities)
         self.__commit_spec(full_metadata_path, metadata)
 

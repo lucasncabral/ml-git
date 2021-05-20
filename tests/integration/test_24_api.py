@@ -269,7 +269,7 @@ class APIAcceptanceTests(unittest.TestCase):
         init_repository(LABELS, self)
         self.create_file_in_ws(LABELS, 'file', '0')
         api.add(LABELS, 'labels-ex', bumpversion=True, fsck=False, file_path=['file'])
-        api.commit(LABELS, 'labels-ex', related_dataset=DATASET_NAME)
+        api.commit(LABELS, 'labels-ex', related_dataset=[DATASET_NAME])
 
         labels_metadata = os.path.join(self.tmp_dir, ML_GIT_DIR, LABELS, 'metadata')
 
@@ -279,7 +279,7 @@ class APIAcceptanceTests(unittest.TestCase):
         HEAD = os.path.join(self.tmp_dir, ML_GIT_DIR, LABELS, 'refs', 'labels-ex', 'HEAD')
         self.assertTrue(os.path.exists(HEAD))
 
-        self.assertEqual('computer-vision__images__datasets-ex__2', spec[LABELS_SPEC_KEY][DATASET_SPEC_KEY]['tag'])
+        self.assertIn('computer-vision__images__datasets-ex__2', spec[LABELS_SPEC_KEY][DATASETS])
 
     def check_created_folders(self, entity_type, storage_type=S3H, version=1, bucket_name='fake_storage'):
         folder_data = os.path.join(self.tmp_dir, entity_type, entity_type + '-ex', 'data')

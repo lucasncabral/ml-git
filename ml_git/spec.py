@@ -128,15 +128,21 @@ def increment_version_in_spec(entity_name, repotype=DATASETS):
 
 
 def get_entity_tag(specpath, repo_type, entity):
-    entity_tag = None
+    related_tags = None
     entity_spec_key = get_spec_key(repo_type)
     try:
         spec = yaml_load(specpath)
-        related_entity_spec_key = get_spec_key(entity)
-        entity_tag = spec[entity_spec_key][related_entity_spec_key]['tag']
+        related_entity_spec_key_V1 = get_spec_key(entity)
+        if related_entity_spec_key_V1 in spec[entity_spec_key]:
+            if 'tag' in spec[entity_spec_key][related_entity_spec_key_V1]:
+                return spec[entity_spec_key][related_entity_spec_key_V1]['tag']
+        if entity in spec[entity_spec_key]:
+            related_tags = []
+            for value in spec[entity_spec_key][entity]:
+                related_tags.append(value)
     except Exception:
         log.warn(output_messages['WARN_NOT_EXIST_FOR_RELATED_DOWNLOAD'] % entity)
-    return entity_tag
+    return related_tags
 
 
 def update_storage_spec(repo_type, artifact_name, storage_type, bucket, entity_dir=''):

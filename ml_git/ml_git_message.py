@@ -155,6 +155,7 @@ output_messages = {
     'INFO_REMOTE_FSCK_TOTAL': 'remote-fsck -- total   : ipld[%d] / blob[%d]',
     'INFO_LISTING_BLOBS': '\nListing blobs in container:',
     'INFO_FILE_LOCATED_IN_TRASH': 'File [{}] located in trash.',
+    'INFO_PERFORMING_DOWNLOAD': 'Performing dowload of %s',
 
     'ERROR_PATH_NOT_EMPTY': 'The path [%s] is not an empty directory. Consider using --folder to create an empty folder.',
     'ERROR_WITHOUT_TAG_FOR_THIS_ENTITY': 'No entity with that name was found.',

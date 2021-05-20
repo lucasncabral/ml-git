@@ -376,7 +376,6 @@ class Repository(object):
         if version:
             set_version_in_spec(version, spec_path, self.__repo_type)
             idx.add_metadata(path, file)
-
         # Check tag before anything to avoid creating unstable state
         log.debug(output_messages['DEBUG_TAG_CHECK'], class_name=REPOSITORY_CLASS_NAME)
         m = Metadata(spec, metadata_path, self.__config, repo_type)
@@ -672,35 +671,36 @@ class Repository(object):
             return metadata_path
         raise RootPathException(output_messages['INFO_ARE_NOT_IN_INITIALIZED_PROJECT'])
 
+    def _checkout_related_entity(self, repo_type, metadata_path, tags, samples, options):
+        try:
+            self.__repo_type = repo_type
+            m = Metadata('', metadata_path, self.__config, self.__repo_type)
+            log.info(output_messages['INFO_INITIALIZING_ENTITY_DOWNLOAD'] % self.__repo_type,
+                     class_name=REPOSITORY_CLASS_NAME)
+            if not m.check_exists():
+                m.init()
+            for tag in tags:
+                log.info(output_messages['INFO_PERFORMING_DOWNLOAD'] % tag, class_name=REPOSITORY_CLASS_NAME)
+                self._checkout(tag, samples, options)
+        except Exception as e:
+            log.error(output_messages['ERROR_LOCALREPOSITORY_MESSAGE'] % e, class_name=REPOSITORY_CLASS_NAME)
+
     def checkout(self, tag, samples, options):
         try:
             metadata_path = get_metadata_path(self.__config)
         except RootPathException as e:
             log.warn(e, class_name=REPOSITORY_CLASS_NAME)
             metadata_path = self._initialize_repository_on_the_fly()
-        dt_tag, lb_tag = self._checkout(tag, samples, options)
+        dt_tags, lb_tags, md_tags = self._checkout(tag, samples, options)
         options['with_dataset'] = False
         options['with_labels'] = False
-        if dt_tag is not None:
-            try:
-                self.__repo_type = EntityType.DATASETS.value
-                m = Metadata('', metadata_path, self.__config, self.__repo_type)
-                log.info(output_messages['INFO_INITIALIZING_ENTITY_DOWNLOAD'] % self.__repo_type, class_name=REPOSITORY_CLASS_NAME)
-                if not m.check_exists():
-                    m.init()
-                self._checkout(dt_tag, samples, options)
-            except Exception as e:
-                log.error(output_messages['ERROR_LOCALREPOSITORY_MESSAGE'] % e, class_name=REPOSITORY_CLASS_NAME)
-        if lb_tag is not None:
-            try:
-                self.__repo_type = EntityType.LABELS.value
-                m = Metadata('', metadata_path, self.__config, self.__repo_type)
-                log.info(output_messages['INFO_INITIALIZING_ENTITY_DOWNLOAD'] % self.__repo_type, class_name=REPOSITORY_CLASS_NAME)
-                if not m.check_exists():
-                    m.init()
-                self._checkout(lb_tag, samples, options)
-            except Exception as e:
-                log.error(output_messages['ERROR_LOCALREPOSITORY_MESSAGE'] % e, class_name=REPOSITORY_CLASS_NAME)
+        options['with_model'] = False
+        if dt_tags is not None:
+            self._checkout_related_entity(EntityType.DATASETS.value, metadata_path, dt_tags, samples, options)
+        if lb_tags is not None:
+            self._checkout_related_entity(EntityType.LABELS.value, metadata_path, lb_tags, samples, options)
+        if md_tags is not None:
+            self._checkout_related_entity(EntityType.MODELS.value, metadata_path, md_tags, samples, options)
 
     '''Performs a fsck on remote storage w.r.t. some specific ML artefact version'''
 
@@ -750,6 +750,7 @@ class Repository(object):
     def _checkout(self, tag, samples, options):
         dataset = options['with_dataset']
         labels = options['with_labels']
+        model = options['with_model']
         retries = options['retry']
         force_get = options['force']
         bare = options['bare']
@@ -766,42 +767,42 @@ class Repository(object):
                 metadata = Metadata(tag, metadata_path, self.__config, repo_type)
                 tag = metadata.get_tag(tag, version)
                 if not tag:
-                    return None, None
+                    return None, None, None
             elif not self._tag_exists(tag):
-                return None, None
+                return None, None, None
             _, spec_name, _ = spec_parse(tag)
             root_path = get_root_path()
         except Exception as e:
             log.error(e, class_name=LOCAL_REPOSITORY_CLASS_NAME)
-            return None, None
+            return None, None, None
 
         ref = Refs(refs_path, spec_name, repo_type)
         cur_tag, _ = ref.branch()
 
         if cur_tag == tag:
             log.info(output_messages['INFO_ALREADY_TAG'] % tag, class_name=REPOSITORY_CLASS_NAME)
-            return None, None
+            return None, None, None
 
         local_rep = LocalRepository(self.__config, objects_path, repo_type)
         # check if no data left untracked/uncommitted. otherwise, stop.
         if not force_get and local_rep.exist_local_changes(spec_name) is True:
-            return None, None
+            return None, None, None
 
         try:
             self._checkout_ref(tag)
         except Exception:
             log.error(output_messages['ERROR_UNABLE_CHECKOUT'] % tag, class_name=REPOSITORY_CLASS_NAME)
-            return None, None
+            return None, None, None
 
         entity_dir = get_entity_dir(repo_type, spec_name, root_path=metadata_path)
 
-        dataset_tag, labels_tag = self._get_related_tags(entity_dir, dataset, labels, metadata_path, repo_type, spec_name)
+        dataset_tag, labels_tag, model_tag = self._get_related_tags(entity_dir, dataset, labels, model, metadata_path, repo_type, spec_name)
         fetch_success = self._fetch(tag, samples, retries, bare)
         if not fetch_success:
             objs = Objects('', objects_path)
             objs.fsck(remove_corrupted=True)
             self._checkout_ref()
-            return None, None
+            return None, None, None
 
         ws_path = self._update_entity_ws_path(spec_name, entity_dir, root_path)
         ensure_path_exists(ws_path)
@@ -822,12 +823,12 @@ class Repository(object):
             else:
                 log.error(output_messages['ERROR_WHILE_CREATING_FILES'] % e,
                           class_name=REPOSITORY_CLASS_NAME)
-                return None, None
+                return None, None, None
         except Exception as e:
             self._checkout_ref()
             log.error(output_messages['ERROR_WHILE_CREATING_FILES'] % e,
                       class_name=REPOSITORY_CLASS_NAME)
-            return None, None
+            return None, None, None
 
         m = Metadata('', metadata_path, self.__config, repo_type)
         sha = m.sha_from_tag(tag)
@@ -835,7 +836,7 @@ class Repository(object):
 
         # restore to master/head
         self._checkout_ref()
-        return dataset_tag, labels_tag
+        return dataset_tag, labels_tag, model_tag
 
     def _delete_spec_and_readme(self, spec_index_path, spec_name):
         if os.path.exists(spec_index_path):
@@ -844,14 +845,16 @@ class Repository(object):
             if os.path.exists(os.path.join(spec_index_path, 'README.md')):
                 os.unlink(os.path.join(spec_index_path, 'README.md'))
 
-    def _get_related_tags(self, entity_dir, dataset, labels, metadata_path, repo_type, spec_name):
-        dataset_tag, labels_tag = None, None
+    def _get_related_tags(self, entity_dir, dataset, labels, model, metadata_path, repo_type, spec_name):
+        dataset_tag, labels_tag, model_tag = None, None, None
         spec_path = os.path.join(metadata_path, entity_dir, spec_name + '.spec')
         if dataset is True:
             dataset_tag = get_entity_tag(spec_path, repo_type, EntityType.DATASETS.value)
         if labels is True:
             labels_tag = get_entity_tag(spec_path, repo_type, EntityType.LABELS.value)
-        return dataset_tag, labels_tag
+        if model:
+            model_tag = get_entity_tag(spec_path, repo_type, EntityType.MODELS.value)
+        return dataset_tag, labels_tag, model_tag
 
     def reset(self, spec, reset_type, head):
         log.info(output_messages['INFO_INITIALIZING_RESET'] % (reset_type, head), class_name=REPOSITORY_CLASS_NAME)

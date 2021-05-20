@@ -40,7 +40,7 @@ def validate_sample(sampling):
     return True
 
 
-def checkout(entity, tag, sampling=None, retries=2, force=False, dataset=False, labels=False, version=-1):
+def checkout(entity, tag, sampling=None, retries=2, force=False, dataset=False, labels=False, version=-1, model=False):
     """This command allows retrieving the data of a specific version of an ML entity.
 
     Example:
@@ -59,8 +59,9 @@ def checkout(entity, tag, sampling=None, retries=2, force=False, dataset=False, 
                          seed: The seed is used to initialize the pseudorandom numbers.
         retries (int, optional): Number of retries to download the files from the storage [default: 2].
         force (bool, optional): Force checkout command to delete untracked/uncommitted files from the local repository [default: False].
-        dataset (bool, optional): If exist a dataset related with the model or labels, this one must be downloaded [default: False].
-        labels (bool, optional): If exist labels related with the model, they must be downloaded [default: False].
+        dataset (bool, optional): If exist a dataset related with the entity, this one must be downloaded [default: False].
+        labels (bool, optional): If exist labels related with the entity, they must be downloaded [default: False].
+        model (bool, optional): If exist models related with the entity, they must be downloaded [default: False].
 
     Returns:
         str: Return the path where the data was checked out.
@@ -74,6 +75,7 @@ def checkout(entity, tag, sampling=None, retries=2, force=False, dataset=False, 
     options = {}
     options['with_dataset'] = dataset
     options['with_labels'] = labels
+    options['with_model'] = model
     options['retry'] = retries
     options['force'] = force
     options['bare'] = False
@@ -144,7 +146,7 @@ def add(entity_type, entity_name, bumpversion=False, fsck=False, file_path=[], m
     repo.add(entity_name, file_path, bumpversion, fsck, tuple(metrics), metrics_file)
 
 
-def commit(entity, ml_entity_name, commit_message=None, related_dataset=None, related_labels=None):
+def commit(entity, ml_entity_name, commit_message=None, related_dataset=None, related_labels=None, related_model=None):
     """That command commits the index / staging area to the local repository.
 
     Example:
@@ -154,19 +156,23 @@ def commit(entity, ml_entity_name, commit_message=None, related_dataset=None, re
         entity (str): The type of an ML entity. (datasets, labels or models)
         ml_entity_name (str): Artefact name to commit.
         commit_message (str, optional): Message of commit.
-        related_dataset (str, optional): Artefact name of dataset related to commit.
-        related_labels (str, optional): Artefact name of labels related to commit.
+        related_dataset (list, optional): List of artefact names of datasets related to commit.
+        related_labels (list, optional): List of artefact names of labels related to commit.
+        related_model (list, optional): List of artefact names of models related to commit.
     """
 
+    if related_dataset is None:
+        related_dataset = []
     repo = get_repository_instance(entity)
 
     specs = dict()
 
-    if related_dataset:
+    if related_dataset is not None:
         specs[EntityType.DATASETS.value] = related_dataset
-
-    if related_labels:
+    if related_labels is not None:
         specs[EntityType.LABELS.value] = related_labels
+    if related_model is not None:
+        specs[EntityType.MODELS.value] = related_labels
 
     repo.commit(ml_entity_name, specs, msg=commit_message)
 

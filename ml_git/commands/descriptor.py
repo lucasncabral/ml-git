@@ -10,7 +10,7 @@ import click
 from ml_git.commands import entity, help_msg, storage
 from ml_git.commands.custom_options import MutuallyExclusiveOption, OptionRequiredIf, DeprecatedOptionsCommand
 from ml_git.commands.utils import set_verbose_mode
-from ml_git.constants import MutabilityType, StorageType, FileType
+from ml_git.constants import MutabilityType, StorageType, FileType, EntityType
 
 commands = [
 
@@ -68,6 +68,7 @@ commands = [
         'groups': [entity.datasets],
 
         'options': {
+            ('--with-dataset', '-d'): {'is_flag': True, 'default': False, 'help': help_msg.ASSOCIATED_WITH_DATASET},
             '--sample-type': {'type': click.Choice(['group', 'range', 'random'])},
             '--sampling': {'default': '1:1000', 'help': help_msg.SAMPLING_OPTION},
 
@@ -101,6 +102,7 @@ commands = [
 
         'options': {
             ('--with-dataset', '-d'): {'is_flag': True, 'default': False, 'help': help_msg.ASSOCIATED_WITH_DATASET},
+            ('--with-labels', '-l'): {'is_flag': True, 'default': False, 'help': help_msg.ASSOCIATED_WITH_LABELS},
             '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
 
             '--force': {'is_flag': True, 'default': False, 'help': help_msg.FORCE_CHECKOUT},
@@ -119,6 +121,7 @@ commands = [
         'options': {
             ('--with-labels', '-l'): {'is_flag': True, 'default': False, 'help': help_msg.ASSOCIATED_WITH_LABELS},
             ('--with-dataset', '-d'): {'is_flag': True, 'default': False, 'help': help_msg.ASSOCIATED_WITH_DATASET},
+            ('--with-model', '-m'): {'is_flag': True, 'default': False, 'help': help_msg.ASSOCIATED_WITH_MODEL},
             '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
 
             '--force': {'default': False, 'is_flag': True, 'help': help_msg.FORCE_CHECKOUT},
@@ -228,7 +231,7 @@ commands = [
             '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},
             '--fsck': {'help': help_msg.FSCK_OPTION},
-            '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET},
+            '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET % EntityType.DATASETS.value},
         },
 
         'help': 'Commit dataset change set of ML_ENTITY_NAME locally to this ml-git repository.'
@@ -245,8 +248,8 @@ commands = [
         },
 
         'options': {
-            '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET},
-            '--labels': {'multiple': True, 'type': str, 'help': help_msg.LINK_LABELS},
+            '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET % EntityType.LABELS.value},
+            '--labels': {'multiple': True, 'type': str, 'help': help_msg.LINK_LABELS % EntityType.LABELS.value},
             '--tag': {'help': help_msg.TAG_OPTION},
             '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},
@@ -267,9 +270,9 @@ commands = [
         },
 
         'options': {
-            '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET},
-            '--labels': {'multiple': True, 'type': str, 'help': help_msg.LINK_LABELS},
-            '--model': {'multiple': True, 'type': str, 'help': help_msg.LINK_LABELS},
+            '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET % EntityType.MODELS.value},
+            '--labels': {'multiple': True, 'type': str, 'help': help_msg.LINK_LABELS % EntityType.MODELS.value},
+            '--model': {'multiple': True, 'type': str, 'help': help_msg.LINK_MODELS  % EntityType.MODELS.value},
             '--tag': {'help': help_msg.TAG_OPTION},
             '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},

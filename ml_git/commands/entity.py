@@ -89,6 +89,7 @@ def checkout(context, **kwargs):
     options = {}
     options['with_dataset'] = kwargs.get('with_dataset', False)
     options['with_labels'] = kwargs.get('with_labels', False)
+    options['with_model'] = kwargs.get('with_model', False)
     options['retry'] = kwargs['retry']
     options['force'] = kwargs['force']
     options['bare'] = kwargs['bare']
