@@ -25,9 +25,12 @@ ASSOCIATED_WITH_DATASET = 'The checkout associated dataset in user workspace as 
 ASSOCIATED_WITH_MODEL = 'The checkout associated model in user workspace as well.'
 ASSOCIATED_WITH_LABELS = 'The checkout associated labels  in user workspace as well.'
 BUMP_VERSION = 'Increment the version number when adding more files.'
-LINK_DATASET = 'Link dataset entity name to this %s set version.'
-LINK_LABELS = 'Link labels entity name to this %s set version.'
-LINK_MODELS = 'Link model entity name to this %s set version.'
+LINK_DATASET = 'Link dataset entity to this %s set version. Format: <entity-name>:<version>. ' \
+               'If the version is not informed, the last one available will be used.'
+LINK_LABELS = 'Link labels entity to this %s set version. Format: <entity-name>:<version>. ' \
+              'If the version is not informed, the last one available will be used.'
+LINK_MODELS = 'Link model entity to this %s set version. Format: <entity-name>:<version>. ' \
+              'If the version is not informed, the last one available will be used.'
 RESET_HARD = 'Remove untracked files from workspace, files to be committed from staging area as well '\
              'as committed files upto <reference>.'
 RESET_MIXED = 'Revert the committed files and the staged files to \'Untracked Files\'. This is the default action.'
