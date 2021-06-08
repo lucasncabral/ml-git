@@ -14,7 +14,7 @@
     
     
       
-        <title>Methods - ML-Git</title>
+        <title>Quick Start - ML-Git</title>
       
     
     
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Methods
+              Quick Start
             
           </span>
         </div>
@@ -608,6 +608,18 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -619,22 +631,10 @@
         
       
       
-      <a href="index.html" class="md-nav__link md-nav__link--active">
-        Methods
-      </a>
-      
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="quick_start.html" class="md-nav__link">
+      <a href="quick_start.html" class="md-nav__link md-nav__link--active">
         Quick Start
       </a>
+      
     </li>
   
 
@@ -718,203 +718,196 @@
                 
                 
                 <h1 id="ml-git-api">ML-Git API<a class="headerlink" href="#ml-git-api" title="Permanent link">&para;</a></h1>
-<h1 id="methods-available-in-the-api"><a name="methods"> Methods available in the API </a><a class="headerlink" href="#methods-available-in-the-api" title="Permanent link">&para;</a></h1>
-<details>
-<p><summary><code> add </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">,</span> <span class="n">bumpversion</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fsck</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="p">[],</span> <span class="n">metric</span><span class="o">=</span><span class="p">[],</span> <span class="n">metrics_file</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command will add all the files under the directory into the ml-git index/staging area.</span>
+<h1 id="quick-start"><a name="api"> Quick start </a><a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h1>
+<p>To use the ML-Git API, it is necessary to have ML-Git in the environment that will be executed and be inside a directory with an initialized ML-Git project (you can also perform this initialization using the api clone command if you already have a repository configured).</p>
+<h2 id="clone">Clone<a class="headerlink" href="#clone" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">    Example:</span>
-<span class="sd">        add(&#39;datasets&#39;, &#39;dataset-ex&#39;, bumpversion=True)</span>
+<span class="n">repository_url</span> <span class="o">=</span> <span class="s1">&#39;https://git@github.com/mlgit-repository&#39;</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        entity_type (str): The type of an ML entity. (datasets, labels or models)</span>
-<span class="sd">        entity_name (str): The name of the ML entity you want to add the files.</span>
-<span class="sd">        bumpversion (bool, optional): Increment the entity version number when adding more files [default: False].</span>
-<span class="sd">        fsck (bool, optional): Run fsck after command execution [default: False].</span>
-<span class="sd">        file_path (list, optional): List of files that must be added by the command [default: all files].</span>
-<span class="sd">        metric (dictionary, optional): The metric dictionary, example: { &#39;metric&#39;: value } [default: empty].</span>
-<span class="sd">        metrics_file (str, optional): The metrics file path. It is expected a CSV file containing the metric names in the header and the values in the next line [default: empty].</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="n">api</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">repository_url</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> checkout </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">checkout</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">sampling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command allows retrieving the data of a specific version of an ML entity.</span>
+<p>output:</p>
+<pre><code>INFO - Metadata Manager: Metadata init [https://git@github.com/mlgit-repository] @ [/home/user/Documentos/mlgit-api/mlgit/.ml-git/dataset/metadata]
+INFO - Metadata: Successfully loaded configuration files!
+</code></pre>
+<h2 id="checkout">Checkout<a class="headerlink" href="#checkout" title="Permanent link">&para;</a></h2>
+<p>We assume there is an initialized ML-Git project in the directory.</p>
+<h4 id="checkout-dataset">Checkout dataset<a class="headerlink" href="#checkout-dataset" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">    Example:</span>
-<span class="sd">        checkout(&#39;datasets&#39;, &#39;computer-vision__images3__imagenet__1&#39;)</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;computer-vision__images__imagenet__1&#39;</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        entity (str): The type of an ML entity. (datasets, labels or models)</span>
-<span class="sd">        tag (str): An ml-git tag to identify a specific version of an ML entity.</span>
-<span class="sd">        sampling (dict): group: &lt;amount&gt;:&lt;group&gt; The group sample option consists of amount and group used to</span>
-<span class="sd">                                 download a sample.\n</span>
-<span class="sd">                         range: &lt;start:stop:step&gt; The range sample option consists of start, stop and step used</span>
-<span class="sd">                                to download a sample. The start parameter can be equal or greater than zero. The</span>
-<span class="sd">                                stop parameter can be &#39;all&#39;, -1 or any integer above zero.\n</span>
-<span class="sd">                         random: &lt;amount:frequency&gt; The random sample option consists of amount and frequency</span>
-<span class="sd">                                used to download a sample.</span>
-<span class="sd">                         seed: The seed is used to initialize the pseudorandom numbers.</span>
-<span class="sd">        retries (int, optional): Number of retries to download the files from the storage [default: 2].</span>
-<span class="sd">        force (bool, optional): Force checkout command to delete untracked/uncommitted files from the local repository [default: False].</span>
-<span class="sd">        dataset (bool, optional): If exist a dataset related with the model or labels, this one must be downloaded [default: False].</span>
-<span class="sd">        labels (bool, optional): If exist labels related with the model, they must be downloaded [default: False].</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        str: Return the path where the data was checked out.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> clone </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">clone</span><span class="p">(</span><span class="n">repository_url</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">track</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
- <span class="sd">&quot;&quot;&quot;This command will clone minimal configuration files from repository-url with valid .ml-git/config.yaml,</span>
-<span class="sd">    then initialize the metadata according to configurations.</span>
+<p>output:</p>
+<pre><code>INFO - Metadata Manager: Pull [/home/user/Documentos/project/.ml-git/dataset/metadata]
+blobs: 100%|██████████| 4.00/4.00 [00:00&lt;00:00, 2.87kblobs/s]
+chunks: 100%|██████████| 4.00/4.00 [00:00&lt;00:00, 2.35kchunks/s]
+files into cache: 100%|██████████| 4.00/4.00 [00:00&lt;00:00, 3.00kfiles into cache/s]
+files into workspace: 100%|██████████| 4.00/4.00 [00:00&lt;00:00, 1.72kfiles into workspace/s]
+</code></pre>
+<h4 id="checkout-labels-with-dataset">Checkout labels with dataset<a class="headerlink" href="#checkout-labels-with-dataset" title="Permanent link">&para;</a></h4>
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">    Example:</span>
-<span class="sd">        clone(&#39;https://git@github.com/mlgit-repository&#39;)</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;labels&#39;</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;computer-vision__images__mscoco__2&#39;</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        repository_url (str): The git repository that will be cloned.</span>
-<span class="sd">        folder (str, optional): Directory that can be created to execute the clone command. [Default: current path]</span>
-<span class="sd">        track (bool, optional): Set if the tracking of the cloned repository should be kept. [Default: False]</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> commit </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">commit</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">ml_entity_name</span><span class="p">,</span> <span class="n">commit_message</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">related_dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">related_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command commits the index / staging area to the local repository.</span>
+output:</p>
+<pre><code>INFO - Metadata Manager: Pull [/home/user/Documentos/project/.ml-git/labels/metadata]
+blobs: 100%|██████████| 6.00/6.00 [00:00&lt;00:00, 205blobs/s]
+chunks: 100%|██████████| 6.00/6.00 [00:00&lt;00:00, 173chunks/s]
+files into cache: 100%|██████████| 6.00/6.00 [00:00&lt;00:00, 788files into cache/s]
+files into workspace: 100%|██████████| 6.00/6.00 [00:00&lt;00:00, 1.28kfiles into workspace/s]
+INFO - Repository: Initializing related dataset download
+blobs: 100%|██████████| 4.00/4.00 [00:00&lt;00:00, 3.27kblobs/s]
+chunks: 100%|██████████| 4.00/4.00 [00:00&lt;00:00, 2.37kchunks/s]
+files into cache: 100%|██████████| 4.00/4.00 [00:00&lt;00:00, 2.40kfiles into cache/s]
+files into workspace: 100%|██████████| 4.00/4.00 [00:00&lt;00:00, 1.72kfiles into workspace/s]
+</code></pre>
+<h2 id="checkout-dataset-with-sample">Checkout dataset with sample<a class="headerlink" href="#checkout-dataset-with-sample" title="Permanent link">&para;</a></h2>
+<h4 id="group-sample">Group-Sample<a class="headerlink" href="#group-sample" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">    Example:</span>
-<span class="sd">        commit(&#39;datasets&#39;, &#39;dataset-ex&#39;)</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;computer-vision__images__imagenet__1&#39;</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        entity (str): The type of an ML entity. (datasets, labels or models)</span>
-<span class="sd">        ml_entity_name (str): Artefact name to commit.</span>
-<span class="sd">        commit_message (str, optional): Message of commit.</span>
-<span class="sd">        related_dataset (str, optional): Artefact name of dataset related to commit.</span>
-<span class="sd">        related_labels (str, optional): Artefact name of labels related to commit.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="n">sampling</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;1:2&#39;</span><span class="p">,</span> <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">}</span>
+
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">sampling</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> create </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">mutability</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command will create the workspace structure with data and spec file for an entity and set the storage configurations.</span>
+<p>output:</p>
+<pre><code>INFO - Metadata Manager: Pull [/home/user/Documentos/project/.ml-git/dataset/metadata]
+blobs: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 2.04kblobs/s]
+chunks: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 1.83kchunks/s]
+files into cache: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 2.09kfiles into cache/s]
+files into workspace: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 1.16kfiles into workspace/s]
+</code></pre>
+<h4 id="range-sample">Range-Sample<a class="headerlink" href="#range-sample" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">        Example:</span>
-<span class="sd">            create(&#39;datasets&#39;, &#39;dataset-ex&#39;, categories=[&#39;computer-vision&#39;, &#39;images&#39;], mutability=&#39;strict&#39;)</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;computer-vision__images__imagenet__1&#39;</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            entity (str): The type of an ML entity. (datasets, labels or models).</span>
-<span class="sd">            entity_name (str): An ml-git entity name to identify a ML entity.</span>
-<span class="sd">            categories (list): Artifact&#39;s category name.</span>
-<span class="sd">            mutability (str): Mutability type. The mutability options are strict, flexible and mutable.</span>
-<span class="sd">            storage_type (str, optional): Data storage type [default: s3h].</span>
-<span class="sd">            version (int, optional): Number of artifact version [default: 1].</span>
-<span class="sd">            import_path (str, optional): Path to be imported to the project.</span>
-<span class="sd">            bucket_name (str, optional): Bucket name.</span>
-<span class="sd">            import_url (str, optional): Import data from a google drive url.</span>
-<span class="sd">            credentials_path (str, optional): Directory of credentials.json.</span>
-<span class="sd">            unzip (bool, optional): Unzip imported zipped files [default: False].</span>
-<span class="sd">            entity_dir (str, optional): The relative path where the entity will be created inside the ml entity directory [default: empty].</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="n">sampling</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;range&#39;</span><span class="p">:</span> <span class="s1">&#39;0:4:3&#39;</span><span class="p">}</span>
+
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">sampling</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> init </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">entity</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command will start the ml-git entity.</span>
+<p>output:</p>
+<pre><code>INFO - Metadata Manager: Pull [/home/user/Documentos/project/.ml-git/dataset/metadata]
+blobs: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 2.71kblobs/s]
+chunks: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 1.54kchunks/s]
+files into cache: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 2.22kfiles into cache/s]
+files into workspace: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 1.55kfiles into workspace/s]
+</code></pre>
+<h4 id="random-sample">Random-Sample<a class="headerlink" href="#random-sample" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">        Examples:</span>
-<span class="sd">            init(&#39;repository&#39;)</span>
-<span class="sd">            init(&#39;datasets&#39;)</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;computer-vision__images__imagenet__1&#39;</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            entity (str): The type of entity that will be initialized. (repository, datasets, labels or models).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="n">sampling</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;random&#39;</span><span class="p">:</span> <span class="s1">&#39;1:2&#39;</span><span class="p">,</span> <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">}</span>
+
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">sampling</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> models metrics </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_models_metrics</span><span class="p">(</span><span class="n">entity_name</span><span class="p">,</span> <span class="n">export_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">export_type</span><span class="o">=</span><span class="n">FileType</span><span class="o">.</span><span class="n">JSON</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get metrics information for each tag of the entity.</span>
+<p>output:</p>
+<pre><code>INFO - Metadata Manager: Pull [/home/user/Documentos/project/.ml-git/dataset/metadata]
+blobs: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 2.47kblobs/s]
+chunks: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 2.00kchunks/s]
+files into cache: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 3.77kfiles into cache/s]
+files into workspace: 100%|██████████| 2.00/2.00 [00:00&lt;00:00, 1.17kfiles into workspace/s]
+</code></pre>
+<h2 id="add">Add<a class="headerlink" href="#add" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">        Examples:</span>
-<span class="sd">            get_models_metrics(&#39;model-ex&#39;, export_type=&#39;csv&#39;)</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            entity_name (str): An ml-git entity name to identify a ML entity.</span>
-<span class="sd">            export_path(str, optional): Set the path to export metrics to a file.</span>
-<span class="sd">            export_type (str, optional): Choose the format of the file that will be generated with the metrics [default: json].</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="n">api</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;datasets&#39;</span><span class="p">,</span> <span class="s1">&#39;dataset-ex&#39;</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> push </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">,</span>  <span class="n">retries</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">clear_on_fail</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command allows pushing the data of a specific version of an ML entity.</span>
+<p>output:</p>
+<pre><code>INFO - Metadata Manager: Pull [/home/user/Documentos/mlgit-api/mlgit/.ml-git/dataset/metadata]
+INFO - Repository: dataset adding path [[/home/user/Documentos/mlgit-api/mlgit/dataset//dataset-ex] to ml-git index
+files: 100%|██████████| 1.00/1.00 [00:00&lt;00:00, 381files/s]
+</code></pre>
+<h2 id="commit">Commit<a class="headerlink" href="#commit" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">        Example:</span>
-<span class="sd">            push(&#39;datasets&#39;, &#39;dataset-ex&#39;)</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
+<span class="n">entity_name</span> <span class="o">=</span> <span class="s1">&#39;dataset-ex&#39;</span>
+<span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Commit example&#39;</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            entity (str): The type of an ML entity. (datasets, labels or models)</span>
-<span class="sd">            entity_name (str): An ml-git entity name to identify a ML entity.</span>
-<span class="sd">            retries (int, optional): Number of retries to upload the files to the storage [default: 2].</span>
-<span class="sd">            clear_on_fail (bool, optional): Remove the files from the storage in case of failure during the push operation [default: False].</span>
-<span class="sd">         &quot;&quot;&quot;</span>
+<span class="n">api</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">entity_name</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> remote add </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">remote_add</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">remote_url</span><span class="p">,</span> <span class="n">global_configuration</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command will add a remote to store the metadata from this ml-git project.</span>
+<p>output:</p>
+<pre><code>INFO - Metadata Manager: Commit repo[/home/user/Documentos/project/.ml-git/dataset/metadata] --- file[computer-vision/images/dataset-ex]
+</code></pre>
+<h2 id="push">Push<a class="headerlink" href="#push" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">        Examples:</span>
-<span class="sd">            remote_add(&#39;datasets&#39;, &#39;https://git@github.com/mlgit-datasets&#39;)</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
+<span class="n">spec</span> <span class="o">=</span> <span class="s1">&#39;dataset-ex&#39;</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            entity (str): The type of an ML entity. (repository, datasets, labels or models).</span>
-<span class="sd">            remote_url(str): URL of an existing remote git repository.</span>
-<span class="sd">            global_configuration (bool, optional): Use this option to set configuration at global level [default: False].</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="n">api</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<details>
-<p><summary><code> storage add </code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">storage_add</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">,</span> <span class="n">bucket_type</span><span class="o">=</span><span class="n">StorageType</span><span class="o">.</span><span class="n">S3H</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">global_configuration</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This command will add a storage to the ml-git project.</span>
+<p>output:</p>
+<pre><code>files: 100%|##########| 24.0/24.0 [00:00&lt;00:00, 34.3files/s]
+</code></pre>
+<h2 id="create">Create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
 
-<span class="sd">        Examples:</span>
-<span class="sd">            storage_add(&#39;my-bucket&#39;, type=&#39;s3h&#39;)</span>
+<span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
+<span class="n">spec</span> <span class="o">=</span> <span class="s1">&#39;dataset-ex&#39;</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;computer-vision&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">]</span>
+<span class="n">mutability</span> <span class="o">=</span> <span class="s1">&#39;strict&#39;</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            bucket_name (str): The name of the bucket in the storage.</span>
-<span class="sd">            bucket_type (str, optional): Store type (s3h, azureblobh or gdriveh) [default: s3h].</span>
-<span class="sd">            credentials (str, optional): Name of the profile that stores the credentials or the path to the credentials.</span>
-<span class="sd">            global_configuration (bool, optional): Use this option to set configuration at global level [default: False].</span>
-<span class="sd">            endpoint_url (str, optional): Store endpoint url.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="n">api</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">mutability</span><span class="p">,</span> <span class="n">import_path</span><span class="o">=</span><span class="s1">&#39;/path/to/dataset&#39;</span><span class="p">,</span> <span class="n">unzip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </code></pre></div>
-</details>
-<h1 id="api-notebooks"><a name="methods"> API notebooks </a><a class="headerlink" href="#api-notebooks" title="Permanent link">&para;</a></h1>
-<p>In the api_scripts directory you can find notebooks running the ML-Git api for some scenarios. 
-To run them, you just need to boot the jupyter notebook in an environment with ML-Git installed and navigate to the notebook.</p>
+<p>output:</p>
+<pre><code>INFO - MLGit: Project Created.
+</code></pre>
+<h2 id="init">Init<a class="headerlink" href="#init" title="Permanent link">&para;</a></h2>
+<h4 id="repository">Repository<a class="headerlink" href="#repository" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
+
+<span class="n">api</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s1">&#39;repository&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>output:</p>
+<pre><code>INFO - Admin: Initialized empty ml-git repository in /home/user/Documentos/project/.ml-git
+</code></pre>
+<h4 id="entity">Entity<a class="headerlink" href="#entity" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
+
+<span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
+
+<span class="n">api</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">entity_type</span><span class="p">)</span>
+</code></pre></div>
+<p>output:</p>
+<pre><code>INFO - Metadata Manager: Metadata init [https://git@github.com/mlgit-datasets] @ [/home/user/Documentos/project/.ml-git/dataset/metadata]
+</code></pre>
+<h2 id="remote-add">Remote add<a class="headerlink" href="#remote-add" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
+
+<span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
+<span class="n">datasets_repository</span> <span class="o">=</span> <span class="s1">&#39;https://git@github.com/mlgit-datasets&#39;</span>
+
+<span class="n">api</span><span class="o">.</span><span class="n">remote_add</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">datasets_repository</span><span class="p">)</span>
+</code></pre></div>
+<p>output:</p>
+<pre><code>INFO - Admin: Add remote repository [https://git@github.com/mlgit-datasets] for [dataset]
+</code></pre>
+<h2 id="store-add">Store add<a class="headerlink" href="#store-add" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
+
+<span class="n">bucket_name</span> <span class="o">=</span> <span class="s1">&#39;minio&#39;</span>
+<span class="n">bucket_type</span><span class="o">=</span><span class="s1">&#39;s3h&#39;</span>
+<span class="n">endpoint_url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:9000/&#39;</span>
+
+<span class="n">api</span><span class="o">.</span><span class="n">storage_add</span><span class="p">(</span><span class="n">bucket_name</span><span class="o">=</span><span class="n">bucket_name</span><span class="p">,</span><span class="n">bucket_type</span><span class="o">=</span><span class="n">bucket_type</span><span class="p">,</span> <span class="n">endpoint_url</span><span class="o">=</span><span class="n">endpoint_url</span><span class="p">)</span>
+</code></pre></div>
+<p>output:</p>
+<pre><code>INFO - Admin: Add storage [s3h://minio]
+</code></pre>
                 
                   
                     
@@ -948,7 +941,7 @@ To run them, you just need to boot the jupyter notebook in an environment with M
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../resources_initialization.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Resources Initialization" rel="prev">
+        <a href="index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Methods" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -957,20 +950,20 @@ To run them, you just need to boot the jupyter notebook in an environment with M
               <span class="md-footer__direction">
                 Previous
               </span>
-              Resources Initialization
+              Methods
             </div>
           </div>
         </a>
       
       
         
-        <a href="quick_start.html" class="md-footer__link md-footer__link--next" aria-label="Next: Quick Start" rel="next">
+        <a href="../developer_info.html" class="md-footer__link md-footer__link--next" aria-label="Next: Info for ML-Git Developers" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Quick Start
+              Info for ML-Git Developers
             </div>
           </div>
           <div class="md-footer__button md-icon">

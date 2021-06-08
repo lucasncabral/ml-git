@@ -1,0 +1,1838 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2, mkdocs-material-7.1.7">
+    
+    
+      
+        <title>Internals - ML-Git</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ca7ac06f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.f1a3b89f.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#02a6f2">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="light-blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ml-git-architecture-and-internals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="ML-Git" class="md-header__button md-logo" aria-label="ML-Git" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ML-Git
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Internals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="index.html" class="md-tabs__link">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="mlgit_internals.html" class="md-tabs__link md-tabs__link--active">
+        Architecture
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="mlgit_commands.html" class="md-tabs__link">
+        Features
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="api/index.html" class="md-tabs__link">
+        Api
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="developer_info.html" class="md-tabs__link">
+        Developer Info
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="ML-Git" class="md-nav__button md-logo" aria-label="ML-Git" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ML-Git
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        Home
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="first_project.html" class="md-nav__link">
+        Creating Your First Project
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="downloadable_environment.html" class="md-nav__link">
+        Docker Environment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" >
+      
+      <label class="md-nav__link" for="__nav_1_4">
+        Storages
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Storages" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          Storages
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="storage_configurations.html" class="md-nav__link">
+        Configurations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="azure_configurations.html" class="md-nav__link">
+        Azure
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gdrive_configurations.html" class="md-nav__link">
+        Google Drive
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="s3_configurations.html" class="md-nav__link">
+        S3
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="s3_configurations.html" class="md-nav__link">
+        MinIO
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="tabular_data/tabular_data.html" class="md-nav__link">
+        Working With Tabular Data
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Architecture
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Architecture" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Architecture
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Internals
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="mlgit_internals.html" class="md-nav__link md-nav__link--active">
+        Internals
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-data-decoupling" class="md-nav__link">
+    Metadata &amp; data decoupling
+  </a>
+  
+    <nav class="md-nav" aria-label="Metadata &amp; data decoupling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#content-addressable-storage-for-ml-git" class="md-nav__link">
+    Content Addressable Storage for ML-Git
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-slicing-files-in-chunks" class="md-nav__link">
+    Why slicing files in chunks?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-git-high-level-architecture-and-metadata" class="md-nav__link">
+    ML-Git high-level architecture and metadata
+  </a>
+  
+    <nav class="md-nav" aria-label="ML-Git high-level architecture and metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ml-git-baseline-performance-numbers" class="md-nav__link">
+    ML-Git baseline performance numbers
+  </a>
+  
+    <nav class="md-nav" aria-label="ML-Git baseline performance numbers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#camseq01-under-ml-git" class="md-nav__link">
+    CamSeq01 under ML-Git
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mscoco-all-files-under-ml-git" class="md-nav__link">
+    MSCoco (all files) under ML-Git
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mscoco-zip-files-under-ml-git" class="md-nav__link">
+    MSCoco (zip files) under ML-Git
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-git-add-commit-push-commands-internals" class="md-nav__link">
+    ML-Git add, commit, push commands internals
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="centralized_cache_and_objects.html" class="md-nav__link">
+        Cache and Objects
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Features
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Features" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Features
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mlgit_commands.html" class="md-nav__link">
+        Commands
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mutability_helper.html" class="md-nav__link">
+        Mutability Helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plugins.html" class="md-nav__link">
+        Plugins
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="qs_checkout.html" class="md-nav__link">
+        QS Checkout
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="qs_configure_repository.html" class="md-nav__link">
+        QS Configure Repository
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="resources_initialization.html" class="md-nav__link">
+        Resources Initialization
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Api
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Api" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Api
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/index.html" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/quick_start.html" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Developer Info
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Developer Info" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Developer Info
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_info.html" class="md-nav__link">
+        Info for ML-Git Developers
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-data-decoupling" class="md-nav__link">
+    Metadata &amp; data decoupling
+  </a>
+  
+    <nav class="md-nav" aria-label="Metadata &amp; data decoupling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#content-addressable-storage-for-ml-git" class="md-nav__link">
+    Content Addressable Storage for ML-Git
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-slicing-files-in-chunks" class="md-nav__link">
+    Why slicing files in chunks?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-git-high-level-architecture-and-metadata" class="md-nav__link">
+    ML-Git high-level architecture and metadata
+  </a>
+  
+    <nav class="md-nav" aria-label="ML-Git high-level architecture and metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ml-git-baseline-performance-numbers" class="md-nav__link">
+    ML-Git baseline performance numbers
+  </a>
+  
+    <nav class="md-nav" aria-label="ML-Git baseline performance numbers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#camseq01-under-ml-git" class="md-nav__link">
+    CamSeq01 under ML-Git
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mscoco-all-files-under-ml-git" class="md-nav__link">
+    MSCoco (all files) under ML-Git
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mscoco-zip-files-under-ml-git" class="md-nav__link">
+    MSCoco (zip files) under ML-Git
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-git-add-commit-push-commands-internals" class="md-nav__link">
+    ML-Git add, commit, push commands internals
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="ml-git-architecture-and-internals">ML-Git: architecture and internals<a class="headerlink" href="#ml-git-architecture-and-internals" title="Permanent link">&para;</a></h1>
+<h2 id="metadata-data-decoupling">Metadata &amp; data decoupling<a class="headerlink" href="#metadata-data-decoupling" title="Permanent link">&para;</a></h2>
+<p>ML-Git's first design concept is to decouple the ML entities' metadata management from the actual data. So, the tool has two main layers:</p>
+<ol>
+<li>
+<p>The metadata management, is responsible for organize the ML entities (Models, Datasets, and Labels) through specification files. Then, these files are managed by a git repository to store and retrieve versions of the ML entities. </p>
+</li>
+<li>
+<p>The data storage, is responsible to keep the files of the ML entities.</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center"><img alt="mlgit-cidv1" src="mlgit-metadata-data.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><em>Figure 1. Decoupling Metadata &amp; Data Management Layers</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="content-addressable-storage-for-ml-git">Content Addressable Storage for ML-Git<a class="headerlink" href="#content-addressable-storage-for-ml-git" title="Permanent link">&para;</a></h3>
+<p>ML-Git has been implemented as a Content Addressable Storage (CAS), meaning that we can retrieve the information based on the content and not based on the information's location.</p>
+<table>
+<thead>
+<tr>
+<th align="center"><img alt="mlgit-cidv1" src="cidv1.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><em>Figure 2. Self-Describing Content-Addressed ID</em></td>
+</tr>
+</tbody>
+</table>
+<p>Figure 2 shows the basic principle of multihash to obtain a Content Identifier (CID) which is used under the hood by ML-Git to implement its CAS layer.</p>
+<p>In a nutshell, CID is a self-describing content-addressed identifier that enables natural evolution and customization over simple and fixed cryptographic hashing schemes.
+An argument why multihash is a valuable feature is that any cryptographic function ultimately ends being weak. It's been a challenge for many software to use another cryptographic hash (including git). For example, when collisions have been proven with SHA-1.</p>
+<p>Summarizing, a CID is:</p>
+<ul>
+<li>A unique identifier/hash of “multihash” content.</li>
+<li>Encoding the digest of the original content enabling anyone to retrieve thatcontent wherever it lies (through some routing).</li>
+<li>Enabling the integrity check of the retrieved content (thx to multihash and the encoded digest).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center"><img alt="mlgit-cidv1" src="IPLD-CID.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><em>Figure 3. IPLD - CID for a file</em></td>
+</tr>
+</tbody>
+</table>
+<p>There are a few steps to chunk a file to get an IPLD - CID format:</p>
+<ol>
+<li>Slide the file in piece of, say, 256KB.</li>
+<li>For each slice, compute its digest (currently, ml-git uses sha2-256).</li>
+<li>Obtain the CID for all these digests. These slice of files will be saved in a data storage with the computed CID as their filename. </li>
+<li>Build a json describing all the chunks of the file.</li>
+<li>Obtain the CID of that json. That json will also be saved in the data storage with the computed CID as its filename.</li>
+</ol>
+<p>Note that this last CID is the only piece of information you need to keep to retrieve the whole image.jpg file.
+And last but not least, one can ensure the integrity of the file while downloading by computing the digests of all downloaded chunks and checking against the digest encoded in their CID.</p>
+<p>Below, you can find useful links for more information on:</p>
+<ul>
+<li><a href="https://github.com/multiformats/multihash">Multihash</a> </li>
+<li><a href="https://github.com/multiformats/cid">CID</a></li>
+<li><a href="https://github.com/ipfs/js-ipfs/tree/master/examples/traverse-ipld-graphs">IPLD</a></li>
+</ul>
+<h3 id="why-slicing-files-in-chunks">Why slicing files in chunks?<a class="headerlink" href="#why-slicing-files-in-chunks" title="Permanent link">&para;</a></h3>
+<p>IPFS uses small chunk size of 256KB … Why?</p>
+<ul>
+<li><strong>security</strong> - easy to DOS nodes without forcing small chunks</li>
+<li><strong>deduplication</strong> - small chunks can dedup. big ones effectively dont.</li>
+<li><strong>latency</strong> - can externalize small pieces already (think a stream)</li>
+<li><strong>bandwidth</strong> - optimize the use of bandwidth across many peers</li>
+<li><strong>performance</strong> - better perf to hold small pieces in memory. Hash along the dag to verify integrity of the whole thing.</li>
+</ul>
+<p>The big DOS problem with huge leaves is that malicious nodes can serve bogus stuff for a long time before a node can detect the problem (imagine having to download 4GB before you can check whether any of it is valid). This was super harmful for bittorrent (when people started choosing huge piece sizes), attackers would routinely do this, very cheaply - just serve bogus random data. This is why smaller chunks are used in our approach.</p>
+<h2 id="ml-git-high-level-architecture-and-metadata">ML-Git high-level architecture and metadata<a class="headerlink" href="#ml-git-high-level-architecture-and-metadata" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center"><img alt="mlgit-arch-metadata" src="ml-git--architecture-and-metadata.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><em>Figure 4. ML-Git high-level architecture and metadata relationships</em></td>
+</tr>
+</tbody>
+</table>
+<p>So IPLD/CID has been implemented on top of the S3 driver.
+The chunking strategy is a recommendation to turn S3 interactions more efficient when dealing with large files.
+It's also interesting to note that if ML-Git implements a Thread pool to concurrently upload &amp; download files to a S3 bucket.
+Last, it would be possible to further accelerate ML-Git interactions with a S3 bucket through the AWS CloudFront. (not implemented yet)</p>
+<h3 id="ml-git-baseline-performance-numbers">ML-Git baseline performance numbers<a class="headerlink" href="#ml-git-baseline-performance-numbers" title="Permanent link">&para;</a></h3>
+<h4 id="camseq01-under-ml-git">CamSeq01 under ML-Git<a class="headerlink" href="#camseq01-under-ml-git" title="Permanent link">&para;</a></h4>
+<ul>
+<li>CamSeq01 size : 92MB</li>
+<li>Locations: website in Cambridge -- S3 bucket in us-east-1 -- me in South Brazil</li>
+<li>Download from website: ~4min22s</li>
+<li>Upload to S3 with ml-git : 6m49s</li>
+<li>Download to S3 with ml-git : 1m11s</li>
+</ul>
+<h4 id="mscoco-all-files-under-ml-git">MSCoco (all files) under ML-Git<a class="headerlink" href="#mscoco-all-files-under-ml-git" title="Permanent link">&para;</a></h4>
+<ul>
+<li>MSCoco :<ul>
+<li>Size : 26GB</li>
+<li>Number of files : 164065 ; chunked into ~400-500K blobs (todo: exact blob count)</li>
+</ul>
+</li>
+<li>Locations: original dataset: unknown -- S3 bucket in us-east-1 -- me in South Brazil</li>
+<li>Download from website: unknown</li>
+<li>Upload to S3 with ml-git : 12h30m</li>
+<li>Download to S3 with ml-git : 10h45m</li>
+</ul>
+<h4 id="mscoco-zip-files-under-ml-git">MSCoco (zip files) under ML-Git<a class="headerlink" href="#mscoco-zip-files-under-ml-git" title="Permanent link">&para;</a></h4>
+<ul>
+<li>MSCoco :<ul>
+<li>Size : 25GB</li>
+<li>number of files : 3 (train.zip, test.zip, val.zip) ; 102299 blobs</li>
+</ul>
+</li>
+<li>Locations: original dataset: unknown -- S3 bucket in us-east-1 -- me in South Brazil</li>
+<li>Download from website: unknown</li>
+<li>Upload to S3 with ml-git : 4h35m</li>
+<li>Download to S3 with ml-git : 3h39m</li>
+</ul>
+<p>A couple of comments:</p>
+<ol>
+<li>Even though Python GIL is a challenge for true concurrency in the Python interpreter, it still is very helpful and provides a significant improvement for ML-Git performance.</li>
+<li>Not surprisingly, the number of files will affect the overall performance as it means there will be many more connections to AWS.
+However, ML-Git have an option to download some dataset partially (checkout with sampling) to enable CI/CD workflows for which some ML engineers may run some experiments locally on their own machine.
+For that reason, it is interesting to avoid downloading the full dataset if it's very large. This option is not applicable if the data set was loaded as some zip files.</li>
+</ol>
+<h2 id="ml-git-add-commit-push-commands-internals">ML-Git add, commit, push commands internals<a class="headerlink" href="#ml-git-add-commit-push-commands-internals" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center"><img alt="mlgit-command-internals" src="ml-git--command-internals.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><em>Figure 5. ML-Git commands internals</em></td>
+</tr>
+</tbody>
+</table>
+<h1 id="description-ml-git-internal-commands"><a>Description ML-Git internal commands</a><a class="headerlink" href="#description-ml-git-internal-commands" title="Permanent link">&para;</a></h1>
+<h3 id="commands"><a>Commands</a>:<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h3>
+<details>
+<p><summary> <code>ml-git --help</code> </summary>
+Display help information about ML-Git commands. 
+<br></p>
+</details>
+<details>
+<p><summary> <code>ml-git --version</code> </summary>
+Show version passed as parameter in click function.
+<br></p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; add</code> </summary></p>
+<p>ml-git add search for metadata (.spec file) inside ml-git index corresponding to ml-entity-name (mandatory use):</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── index/
+|         └── metadata/
+|            └── &lt;ml-entity-name&gt;/ &lt;-- Search .spec file
+|               ├── &lt;ml-entity-name&gt;.spec
+└── &lt;ml-entity&gt;/
+</code></pre></div>
+<p>Then compares the tag of .spec file with the tag of git repository:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── index/
+|      |  └── metadata/
+|      |     └── &lt;ml-entity-name&gt;/
+|      |        ├── &lt;ml-entity-name&gt;.spec
+|      └── metadata/ &lt;- Check tag in git repository
+└── &lt;ml-entity&gt;/
+</code></pre></div>
+<p>If the ml-git tag doesn't exist in git repository, ml-git create <strong>INDEX.yaml</strong> and <strong>MANIFEST.yaml</strong>:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── index/
+|      |  └── metadata/
+|      |     └── &lt;ml-entity-name&gt;/
+|      |        ├── &lt;ml-entity-name&gt;.spec
+|      |        ├── INDEX.yaml &lt;-- INDEX.yaml created.
+|      |        ├── MANIFEST.yaml &lt; -- Manifest created.
+|      └── metadata/ &lt;- Check tag in git repository
+└── &lt;ml-entity&gt;/
+</code></pre></div>
+<p>The content of <strong>MANIFEST.yaml</strong> is a set of added multihash's files.</p>
+<p>Then ml-git <strong>caches</strong> the file with hard links in cache path and add chunked files in <strong>objects</strong>:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── index/
+|      |  └── metadata/
+|      |     └── &lt;ml-entity-name&gt;/
+|      |        ├── &lt;entity-name&gt;.spec
+|      |        ├── INDEX.yaml &lt;-- INDEX.yaml created.
+|      |        ├── MANIFEST.yaml &lt; -- Manifest created
+|      └── metadata/
+|      └── cache/
+|         └── hashfs/ &lt;- Hard link of chunked files
+|      └── objects/
+|      |  └── hashfs/ &lt;-- Chunk files
+└── &lt;ml-entity&gt;/
+</code></pre></div>
+<p><strong>MANIFESTEST.yaml</strong> structure example:</p>
+<div class="highlight"><pre><span></span><code>zdj7WWMZbq7cgw76BGeqoNUGFRkyw59p4Y6zD5eb8cyWL6MW5: !!set
+  data/1.jpg: null
+zdj7WWgUF7spcvxkBEN49gh44ZUMzbYMG9Mm5RPGU8bsXEDTu: !!set
+  data/test.txt: null
+zdj7WX8pZHGEAHXuzdJc2dwRXpyABuZznSx3BW867DA53Vksf: !!set
+  data/8.jpg: null
+zdj7WYF38pFqHrvQPnD3FXMw76UDbMaZkSXJ4qMZci1nxWqiU: !!set
+  data/2.jpg: null
+</code></pre></div>
+<p><strong>INDEX.yaml</strong> structure example:</p>
+<div class="highlight"><pre><span></span><code>data/1.jpg:
+  ctime: 1582208519.35017 &lt;-- Creation time.
+  hash: zdj7WWMZbq7cgw76BGeqoNUGFRkyw59p4Y6zD5eb8cyWL6MW5
+  mtime: 1582208519.3581703 &lt;-- Modification time.
+  status: a &lt;-- Status file, (a, u, c)
+data/test.txt:
+  ctime: 1582208519.3521693
+  hash: zdj7WWgUF7spcvxkBEN49gh44ZUMzbYMG9Mm5RPGU8bsXEDTu
+  mtime: 1582208519.3561785
+  status: a
+data/8.jpg:
+  ctime: 1582208519.3531702
+  hash: zdj7WX8pZHGEAHXuzdJc2dwRXpyABuZznSx3BW867DA53Vksf
+  mtime: 1582208519.4149985
+  status: a
+data/2.jpg:
+  ctime: 1582208519.3551724
+  hash: zdj7WYF38pFqHrvQPnD3FXMw76UDbMaZkSXJ4qMZci1nxWqiU
+  mtime: 1582208519.5029979
+  status: a
+</code></pre></div>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; branch</code> </summary></p>
+<p>Search for <strong>HEAD</strong> file in:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── index/
+|      └── metadata/
+|      └── cache/
+|      └── refs/
+|         └── &lt;ml-entity-name&gt;/
+|            ├── HEAD &lt;-- Search here.
+└── &lt;ml-entity&gt;/
+</code></pre></div>
+<p>Parse <strong>HEAD</strong> file as yaml and list the tags and their corresponding SHA-1.</p>
+<p><strong>HEAD</strong> structure example:</p>
+<div class="highlight"><pre><span></span><code>computer-vision__images__imagenet8__1: 00da0d518914cfaeb765633f68ade09a5d80b252
+</code></pre></div>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; checkout</code> </summary></p>
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) checkout ML_ENTITY_TAG|ML_ENTITY
+</code></pre></div>
+<p>You can use this command by passing a specific tag or just the name of the entity as an argument.</p>
+<p>If you use the name of the entity, ml-git will checkout the latest available version of that entity.</p>
+<p>If you use a tag, the ml-git break up the ML_ENTITY into categories, specname and version, if the ML_ENTITY_TAG is the current tag, the command show the message <em>"Repository: already at tag [\&lt;ml-entity-tag>]"</em>, otherwise execute git checkout to the <strong>ML_ENTITY_TAG</strong>, then verify if cache has tag's objects:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── cache/
+          └── hashfs/ &lt;-- Objects here
+</code></pre></div>
+<p>When objects not found in cache, the command download the blobs from data storage to the workspace:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── cache/
+|         └── hashfs/
+└── &lt;ml-entity&gt;/
+   └── &lt;categories&gt;*/
+      └── &lt;ml-entity-name&gt;/ &lt; -- Workspace
+</code></pre></div>
+<p>When objects is found  in cache, the command update the objects hard link to the workspace:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── cache/ &lt;-- Check here
+└── &lt;ml-entity&gt;/
+   └── &lt;categories&gt;*/
+      └── &lt;ml-entity-name&gt;/ &lt;-- Update here
+</code></pre></div>
+<p>Then update the HEAD with <strong>ML_ENTITY_TAG</strong> and SHA-1, then execute git checkout to branch <em>master</em>.</p>
+<h4 id="ml-git-ml-entity-checkout-ml-entity-tag-sample-typesample-sampling-seed"><a name="mlgit_checkout_sample">ml-git \&lt;ml-entity> checkout \&lt;ml-entity-tag>  [--sample-type=\&lt;sample>] [--sampling] [--seed]</a><a class="headerlink" href="#ml-git-ml-entity-checkout-ml-entity-tag-sample-typesample-sampling-seed" title="Permanent link">&para;</a></h4>
+<p>This command has three types of sampling options available only for dataset: <code>--sample-type=group --seed</code>,<code>--sample-type=random --seed</code>,<code>--sample-type=range</code> .
+We use <a href="https://docs.python.org/3.7/library/random.html#random.sample">random.sample(population, k)</a> to return a sample of the size k from the population elements. We use <a href="https://docs.python.org/3.7/library/random.html#random.sample">random.seed()</a> to set the seed so that the sample generated by <code>random.sample()</code> can be reproduced between experiments. We use the <a href="https://docs.python.org/3.7/library/stdtypes.html?highlight=range#range">range()</a> object to take samples from a given range.</p>
+<p><code>Note:</code> 
+If you use this option ml-git will not allow you to make changes to the entity and create a new tag. </p>
+<h4 id="exemple">Exemple:<a class="headerlink" href="#exemple" title="Permanent link">&para;</a></h4>
+<p><img alt="dataset" src="dataset.png" /></p>
+<p>Let's assume that we have a dataset that contains 12 files.</p>
+<p><code>ml-git datasets checkout computer-vision__images__dataset-ex__22 --sample-type=group --sampling=2:5 --seed=1</code> : This command selects 2 files randomly from every group of five files to download.</p>
+<p><img alt="group-sample" src="group-sample.png" /></p>
+<p><code>ml-git datasets checkout computer-vision__images__dataset-ex__22 --sample-type=random --sampling=2:6 --seed=1</code> : This command makes a sample = (amount * len (dataset))% frequency ratio, sample = 4, so four files are selected randomly to download.  </p>
+<p><img alt="random-sample" src="random-sample.png" /></p>
+<p><code>ml-git datasets checkout computer-vision__images__dataset-ex__22 --sample-type=range --sampling=2:11:2</code> : This command selects the files at indexes generated by <code>range(start=2, stop=11, step=2)</code>.</p>
+<p><img alt="range-sample" src="range-sample.png" /></p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; commit </code></summary></p>
+<p>Firstly commit verifies ml-git tag existence, then updates status file in <code>.ml-git/&lt;ml-entity&gt;/index/metadata/&lt;ml-entity-name&gt;/INDEX.yaml</code> and merge the metadata <code>.ml-git/&lt;ml-entity&gt;/index/metadata/&lt;ml-entity-name&gt;/MAFINEST.yaml</code> with <code>.ml-git/&lt;ml-entity&gt;/metadata/&lt;ml-entity-name&gt;/MAFINEST.yaml</code>.</p>
+<p>Update <strong>INDEX.yaml</strong>:
+<div class="highlight"><pre><span></span><code>data/1.jpg:
+  ctime: 1582208519.35017
+  hash: zdj7WWMZbq7cgw76BGeqoNUGFRkyw59p4Y6zD5eb8cyWL6MW5
+  mtime: 1582208519.3581703
+  status: a &lt;- Change status &#39;a&#39; to &#39;u&#39;.
+data/10.jpg:
+  ctime: 1582208519.3561785
+  hash: zdj7WZrTe7SU5oFQc8kr1kNiAkb5TBeMP1vgcXM1fvfgn5jq5
+  mtime: 1582208519.6050372
+  status: u
+data/2.jpg:
+  ctime: 1582208519.3551724
+  hash: zdj7WYF38pFqHrvQPnD3FXMw76UDbMaZkSXJ4qMZci1nxWqiU
+  mtime: 1582208519.5029979
+  status: u
+</code></pre></div></p>
+<p>Merge the metadata <code>.ml-git/&lt;ml-entity&gt;/index/metadata/&lt;ml-entity-name&gt;/MAFINEST.yaml</code> with <code>.ml-git/&lt;ml-entity&gt;/metadata/&lt;ml-entity-name&gt;/MAFINEST.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── index/
+|      |  └── metadata/
+|      |     └── &lt;ml-entity-name&gt;/
+|      |        ├── MANIFEST.yaml &lt; -- (1) Get data from here
+|      └── metadata/
+|         └── &lt;categopries&gt;*/
+|            ├── MANIFEST.yaml &lt; -- Union data (1) here, and delete (1).
+└── &lt;ml-entity&gt;/
+</code></pre></div>
+<p>Get content of \&lt;ml-entity-name>.spec (structure with representational values):</p>
+<div class="highlight"><pre><span></span><code>dataset:
+  categories:
+    - computer-vision
+    - images
+  mutability: strict
+  manifest:
+    storage: s3h://mlgit-datasets
+  name: imagenet8
+  version: 1
+</code></pre></div>
+<p>And insert new attribute:</p>
+<div class="highlight"><pre><span></span><code>dataset:
+  categories:
+  - computer-vision
+  - images
+  mutability: strict
+  manifest:
+    files: MANIFEST.yaml
+    storage: s3h://mlgit-datasets
+  name: imagenet8
+  version: 1
+</code></pre></div>
+<p>Then save file in:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── index/
+|      |  └── metadata/
+|      |     └── &lt;ml-entity-name&gt;/
+|      |        ├── MANIFEST.yaml
+|      |        ├── &lt;ml-entity-name&gt;.spec &lt; -- Copy content and change
+|      └── metadata/
+|         └── &lt;categopries&gt;*/
+|            ├── MANIFEST.yaml
+|            ├── &lt;ml-entity-name&gt;.spec &lt; -- Save here
+└── &lt;ml-entity&gt;/
+</code></pre></div>
+<p>After committing the .spec file and MANIFEST.yaml, ml-git updates the HEAD of repository with tag's SHA-1.</p>
+<p>HEAD structure:</p>
+<p><div class="highlight"><pre><span></span><code>computer-vision__images__imagenet8__1: 00da0d518914cfaeb765633f68ade09a5d80b252
+</code></pre></div>
+HEAD directory:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── index/
+|      |  └── metadata/
+|      |     └── &lt;entity-name&gt;/
+|      |        ├── MANIFEST.yaml
+|      |        ├── &lt;entity-name&gt;.spec &lt; -- Copy content and change
+|      └── refs/
+|      |  └── &lt;ml-entity-name&gt;/
+|      |      ├── HEAD  &lt;-- Update tag with SHA-1 here.
+|      └── metadata/
+|         └── &lt;entity-dir&gt;*/
+|            ├── MANIFEST.yaml
+|            ├── &lt;ml-entity-name&gt;.spec &lt; -- Save here
+└── &lt;ml-entity&gt;/
+</code></pre></div>
+<p><strong>*</strong> <em>Entity dir path is a tree of directories in which the entity was versioned (Ex: folderA/folderB/MANIFEST.yaml)</em>.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; create </code></summary></p>
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) create ARTEFACT_NAME
+</code></pre></div>
+<p>Create the the workspace structure as follow:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └──config.yaml  
+    &lt;ml-entity&gt;
+    └── ARTEFACT_NAME/
+        └── data/
+        └── ARTEFACT_NAME.spec
+        └── README.md
+</code></pre></div>
+<p>The parameters passed <code>--category</code> and <code>--version</code> are used to fill the spec file.</p>
+<p>The parameter <code>--mutability</code> must be used to define the entity's mutability, which can be: strict, flexible, mutable.
+If you want to know more about each type of mutability and how it works, please take a look at <a href="mutability_helper.html">mutability helper documentation</a>.</p>
+<p>The parameter <code>--import</code> is used to import files from a src folder to data folder.
+The optional parameter <code>--wizard-questions</code> if passed, ask interactive questions at console for git &amp; storage configurations and update the config.yaml file.
+The parameter <code>--storage-type</code> must be used to define the entity's storage, which can be: s3h, azureblobh, gdriveh.</p>
+<p>The parameter <code>--import-url</code> is used to import files from Google Drive to data folder. 
+Using this option it will be necessary to inform the path to your google drive credentials through the <code>credentials-path</code> argument. 
+In addition, you can use the <code>--unzip</code> option to unzip the files imported.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; export</code> </summary></p>
+<p>This command allows you to export files from one storage (S3|MinIO) to another (S3|MinIO).</p>
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) export ML_ENTITY_TAG BUCKET_NAME
+</code></pre></div>
+<p>Initially, it checks if the user is in an initialized ml-git project. With the <code>entity tag</code>, <code>--credentials</code>, <code>--region</code>, <code>--endpoint</code>, <code>--retry</code> and <code>bucket name</code>  arguments, ml-git connects to the storage (S3|MinIO) bucket. Then the files are exported to the target storage (S3|MinIO) bucket.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; fetch</code> </summary></p>
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) fetch ML_ENTITY_TAG
+</code></pre></div>
+<p>Break up the ML_ENTITY_TAG into categories, specname and version, then verify if cache has tag's objects, if not, download the blobs.</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── cache/
+          └── hashfs/ &lt;-- Objects here
+</code></pre></div>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; fsck </code></summary>
+<br></p>
+<p>Reads objects in:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── index/
+       |  └── hashfs/ &lt;-- Objects here
+       └── objects/
+          └── hashfs/ &lt;-- Objects here
+</code></pre></div>
+<p>Applies SHA2 to content of objects , uses multihash to generate the CID, and compares the CID with the file name, if it is different it mean that the file is corrupted, so ml-git fsck show the number of corrupted files and in which directory. When object is valid but not in originally directory, ml-git accept that it's corrupted.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; import</code> </summary>
+This command allows you to download a file or directory from the S3 bucket.</p>
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) import BUCKET_NAME ENTITY_DIR
+</code></pre></div>
+<p>Initially checks if the user is in an initialized ml-git project. With the --credentials, --region (optional), --path and bucket name arguments ml-git connects to the S3 bucket. The S3 files for the file or directory specified in --path or --object will be downloaded. The files will be saved in the directory specified by the user in ENTITY_DIR, if not exists, the path will be created.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; init</code> </summary></p>
+<p>When ml-git init is executed, it will read <strong>.ml-git/config.yaml</strong> to get the git repository url. ml-git will create directory .ml-git/<strong>\&lt;ml-entity>/metadata</strong> if doesn't exists and <strong>clone</strong> the repository into it.</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+        └── metadata/ &lt;-- The example command clone git repository here.
+</code></pre></div>
+<p><em>Obs: Must have executed ml-git init before, to create ml-git initial configuration files.</em></p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; list </code></summary></p>
+<p>That command will list all \&lt;ml-entity> under management in the ml-git repository. To do this, ml-git goes through the metadata directory to identify the structure of directories and entities that are under management.</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── metadata/ &lt;-- Check here the directory structure
+|         └── computer-vision/
+|            └── images/
+|               └── imagenet8/
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>$ ml-git datasets list
+ML dataset
+|-- computer-vision
+|   |-- images
+|   |   |-- imagenet8
+</code></pre></div>
+</details>
+<details>
+<p><summary><code>ml-git &lt;ml-entity&gt; log </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git dataset log [OPTIONS] ML_ENTITY_NAME
+
+  This command shows ml-entity-name&#39;s commit information like author, date,
+  commit message.
+
+Options:
+  --stat      Show amount of files and size of an ml-entity.
+  --fullstat  Show added and deleted files.
+  --help      Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>ml-git dataset log dataset-ex
+</code></pre></div></p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; push</code> </summary></p>
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) push ML_ENTITY_NAME
+</code></pre></div>
+<p>Verify the git global configuration, and try upload <strong>objects</strong> from local repository to data storage creating a thread pool with maximum of ten workers. This process use stored configuration from spec file and AWS credentials.</p>
+<p>.spec file:</p>
+<div class="highlight"><pre><span></span><code>dataset:
+  categories:
+    - computer-vision
+    - images
+  manifest:
+    storage: s3h://mlgit-datasets &lt; -- storage configuration
+  name: imagenet8
+  version: 1
+</code></pre></div>
+<p>Directory:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+|   └── &lt;ml-entity&gt;/
+|      └── index/
+|      └── metadata/
+|      └── objects/ &lt; -- Files to be uploaded.
+└── &lt;ml-entity&gt;/
+    └── &lt;ml-entity-name&gt;/
+       ├── &lt;ml-entity-name&gt;.spec &lt; -- Spec file with storage configuration.
+</code></pre></div>
+<p>After the upload process, ml-git executes <strong>git push</strong> from local repository <strong>.ml-git/dataset/metadata</strong> to the remote repository configured in <strong>config.yaml</strong>.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; remote-fsck </code></summary></p>
+<p>Starting point of a remote fsck is to identify all the IPLD files contained in the MANIFEST file associated with the specified artefact spec (\&lt;ml-artefact-name>) and then executes the following steps:</p>
+<ul>
+<li>Verify the existence of all these IPLDs in the remote storage<ul>
+<li>If one IPLD does not exist and it is present in the local repository, upload it to the remote storage</li>
+</ul>
+</li>
+<li>If the IPLD is present in the local repository:<ul>
+<li>Open it and identify all blobs associated with that IPLD.</li>
+<li>Verify the existence of these blobs in the remote storage.</li>
+<li>If one blob does not exist and it is present in the local repository, upload it to the remote storage.</li>
+</ul>
+</li>
+<li>If the IPLD is NOT present in the local repository and --thorough option is set<ul>
+<li>Download the IPLD</li>
+<li>Open it and identify all blobs associated with that IPLD.</li>
+<li>Verify the existence of these blobs in the remote storage.</li>
+<li>If one blob does not exist and it is present in the local repository, upload it to the remote storage.</li>
+</ul>
+</li>
+</ul>
+<p><code>[--paranoid]</code>: 
+Paranoid mode adds an additional step that will download all IPLD and its associated IPLD links to verify the content by computing the multihash of all these.<br />
+<br />
+<code>[--thorough]</code>:
+Ml-git will try to download the IPLD if it is not present in the local repository to verify the existence of all contained IPLD links associated.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; reset </code></summary></p>
+<p>In ml-git project (as in git) we have three areas to manage and track the changes of the data.<br />
+The workspace - where the data itself is added, deleted or updated.
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+└── &lt;ml-entity&gt;/
+    └──&lt;ml-entity-name&gt;
+        └──HERE
+</code></pre></div>
+That staged area  - Where the changes are added and tracked.
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── index/
+           └──HERE
+       └── metadata/ 
+</code></pre></div>
+The committed area - Where the data are packed to push.
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── index/
+       └── metadata/
+           └──HERE 
+</code></pre></div></p>
+<p>Depending how to commands are passed we manage this three areas accordingly.<br />
+The Default option is HEAD.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; show</code> </summary></p>
+<p>Verify <strong>tag</strong> and <strong>SHA-1</strong> in HEAD:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── index/
+       └── metadata/
+       └── objects/
+       └── refs/
+          └── &lt;ml-entity-name&gt;/
+             ├── HEAD &lt; -- Verify tag
+</code></pre></div>
+<p>If tag was not found, the command return the message <em>"Local Repository: no HEAD for [\&lt;ml-entity-name>]"</em>, otherwise do git checkout to the <strong>tag</strong> and search for all <strong>\&lt;ml-entity-name>.spec</strong> file in: </p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── index/
+       └── metadata/
+       |  └── &lt;entity-dir&gt;*/
+       |     └── &lt;ml-entity-name&gt;/ &lt;-- Search all .spec file here
+       └── objects/
+       └── refs/
+</code></pre></div>
+<p>After found all .spec files the command show each one contents, then execute git checkout to branch <em>master</em>.</p>
+<p><strong>*</strong> <em>Entity dir path is a tree of directories in which the entity was versioned (Ex: folderA/folderB/MANIFEST.yaml)</em>.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; status </code></summary></p>
+<p>Displays paths that have differences between the index file and the current
+HEAD commit, paths that have differences between the working tree and the index
+file, and paths in the working tree that are not tracked by ML-Git.</p>
+<p>First is described the files <strong>tracked</strong> to be commited.
+Those files are those ones in the manifest file.
+There are two types:</p>
+<ul>
+<li>New files - Those files are at the entities directory and hard-linked with those ones at index directory.
+These files are also listed in manifest file.</li>
+<li>Deleted file. - Files who was deleted from the entities directory, but still are into the manifest file.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── &lt;ml-entity&gt;/
+    └── &lt;ml-entity-name&gt;/
+       ├── &lt;-- Files Checked
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── index/
+       |  └── &lt;metadata&gt;/
+       |     └── &lt;ml-entity-name&gt; &lt;-- Hard link poited to files located here
+       |         └── MANIFEST.yaml &lt;-- Files listed here
+</code></pre></div>
+<p>Then are described the <strong>untracked</strong> files.
+These files are located under the entities directory and listed if they have more than one hard-link.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; tag add</code></summary></p>
+<div class="highlight"><pre><span></span><code>ml-git (datasets|labels|models) tag add dataset-ex my_tag
+</code></pre></div>
+<p>You can use this command to associate a tag to a commit.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; tag list </code></summary></p>
+<p>This command lists the tags of an entity. To do this, it access the metadata of an entity to get the git repository and then executes git commands to list local tags.</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── index/
+       └── metadata/
+          └── .git/  &lt; -- Git repository
+       └── objects/
+       └── refs/
+</code></pre></div>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; update </code></summary>
+Locate metadata directory where is git repository:</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── metadata/
+          └── .git &lt; -- Git repository goes here.
+</code></pre></div>
+<p>Then, ML-Git execute  "git pull" on "origin" to update all metadatas from remote repository.</p>
+</details>
+<details>
+<p><summary> <code>ml-git &lt;ml-entity&gt; unlock </code></summary>
+<br></p>
+<p>This command add read and write permissions to file or directory. 
+So that if you are working with a flexible mutability repository you will be allowed to make changes to the unlocked file without making it corrupt.
+If you are working with a strict repository, changing files is not allowed, so the unlock command is not performed. In the case of a mutable repository, the files are already unlocked for modification, so it is unnecessary to execute the unlock command.
+You should only use this command for the flexible mutability option.</p>
+</details>
+<details>
+<p><summary> <code>ml-git clone &lt;repository-url&gt;</code> </summary></p>
+<p>The command clones the git repository which should contain a directory <strong>.ml-git</strong>, then initialize the metadata according to configurations. ml-git will create directory .ml-git/<strong><a href="#ml_enitity">\&lt;ml-entity></a>/metadata</strong> if doesn't exists and <strong>clone</strong> the repository into it.</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+        └── metadata/
+</code></pre></div>
+<p><strong>Options</strong>:</p>
+<p><code>--folder</code>:
+The configuration files are cloned in specified folder.</p>
+<p><code>--track</code>:
+The ml-git clone preserves <strong>.git</strong> folder in the same directory of cloned configuration files.</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── metadata/
+          └── .git
+</code></pre></div>
+</details>
+<details>
+<p><summary> <code>ml-git login</code> </summary></p>
+<p>This command generates new Aws credentials in the <strong>/.aws</strong> directory. </p>
+<p>Note: </p>
+</details>
+<details>
+<p><summary> <code>ml-git repository config </code></summary>
+Command try to load the configurations from the file <strong>.ml-git/config.yaml</strong>. </p>
+<p>If the file is found, it will show the configurations read from the file, if not it will show the default configurations in the project.</p>
+</details>
+<details>
+<p><summary> <code>ml-git repository gc</code> </summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>ml-git repository gc
+</code></pre></div>
+<p>This command will scan the metadata in each entity's index directory to identify which objects are being used by the user's worskpace.
+After this check, objects that are not being used and that are contained in the cache and object directories will be removed.</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── index/
+       |  └── metadata/
+       └── cache/
+       |  └── hashfs/ &lt;-- Objects here
+       └── objects/
+          └── hashfs/ &lt;-- Objects here
+</code></pre></div>
+</details>
+<details>
+<p><summary> <code>ml-git repository init</code> </summary></p>
+<p>ml-git repository init verify if the current directory has <strong>.ml-git</strong>, where configuration files goes, and if doesn't have it, ml-git will create the directory and save <strong>config.yaml</strong> inside, with the informations provided by a <em>dict</em> in project code. </p>
+<p><strong>Directory structure</strong>:
+<div class="highlight"><pre><span></span><code>ml-git-project/
+└── .ml-git/
+    ├─── config.yaml
+</code></pre></div></p>
+<p><strong>config.yaml structure</strong>:
+<div class="highlight"><pre><span></span><code>datasets:
+  git: git@github.com:standel/ml-datasets.git &lt;-- git project url
+storages:
+  s3: &lt;-- storage type (AWS)
+    mlgit-datasets: &lt;-- bucket name
+      aws-credentials:
+        profile: mlgit
+      region: us-east-1
+</code></pre></div></p>
+</details>
+<details>
+<p><summary> <code>ml-git repository remote &lt;ml-entity&gt; add </code></summary></p>
+<p>This command load the configuration file <strong>.ml-git/config.yaml</strong> and change the attribute <strong>git</strong> to the <strong>url</strong> specified on arguments, then save it. This command require that you have executed <code>ml-git init</code> before.</p>
+</details>
+<details>
+<p><summary> <code>ml-git repository remote &lt;ml-entity&gt; del</code> </summary></p>
+<p>This command load the configuration file <strong>.ml-git/config.yaml</strong> and change the attribute <strong>git</strong> to empty, the save it.</p>
+<div class="highlight"><pre><span></span><code>ml-git_project/
+└── .ml-git/
+    └── &lt;ml-entity&gt;/
+       └── metadata/ 
+          └── .git &lt;- Change actual origin url to a blank url.
+</code></pre></div>
+</details>
+<details>
+<p><summary><code> ml-git repository storage add </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository storage add [OPTIONS] BUCKET_NAME
+
+  Add a storage BUCKET_NAME to ml-git
+
+Options:
+  --credentials TEXT              Profile name for storage credentials
+  --region TEXT                   Aws region name for S3 bucket
+  --type [s3h|s3|azureblobh|gdriveh]
+                                  Storage type (s3h, s3, azureblobh, gdriveh
+                                  ...) [default: s3h]
+  --endpoint-url TEXT             Storage endpoint url
+  -g, --global                    Use this option to set configuration at
+                                  global level
+  --verbose                       Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository storage add minio --endpoint-url=&lt;minio-endpoint-url&gt;
+</code></pre></div></p>
+<p>Use this command to add a data storage to a ML-Git project.</p>
+</details>
+<details>
+<p><summary><code> ml-git repository storage del </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository storage del [OPTIONS] BUCKET_NAME
+
+  Delete a storage BUCKET_NAME from ml-git
+
+Options:
+  --type [s3h|s3|azureblobh|gdriveh]  Storage type (s3h, s3, azureblobh, gdriveh ...) [default:
+                              s3h]
+  --help                      Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository storage del minio
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git repository update </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository update
+
+  This command updates the metadata for all entities.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository update
+</code></pre></div></p>
+</details>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2021</span>
+      
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="tabular_data/tabular_data.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Working With Tabular Data" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Working With Tabular Data
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="centralized_cache_and_objects.html" class="md-footer__link md-footer__link--next" aria-label="Next: Cache and Objects" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Cache and Objects
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.76f349be.min.js"></script>
+      
+    
+  </body>
+</html>
