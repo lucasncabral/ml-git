@@ -76,7 +76,8 @@ def push(context, **kwargs):
     clear_on_fail = kwargs['clearonfail']
     entity = kwargs['ml_entity_name']
     retry = kwargs['retry']
-    repositories[repo_type].push(entity, retry, clear_on_fail)
+    fail_limit = kwargs['fail_limit']
+    repositories[repo_type].push(entity, retry, clear_on_fail, fail_limit)
 
 
 def checkout(context, **kwargs):
@@ -94,6 +95,7 @@ def checkout(context, **kwargs):
     options['force'] = kwargs['force']
     options['bare'] = kwargs['bare']
     options['version'] = kwargs['version']
+    options['fail_limit'] = kwargs['fail_limit']
     repo.checkout(kwargs['ml_entity_tag'], sample, options)
 
 
@@ -138,6 +140,7 @@ def commit(context, **kwargs):
     if MODEL_SPEC_KEY in kwargs and len(kwargs[MODEL_SPEC_KEY]) > 0:
         related_entities[EntityType.MODELS.value] = kwargs[MODEL_SPEC_KEY]
     repositories[repo_type].commit(entity_name, related_entities, version, run_fsck, msg)
+
 
 def tag_list(context, **kwargs):
     parent = context.parent

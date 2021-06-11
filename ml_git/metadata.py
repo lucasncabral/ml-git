@@ -10,14 +10,13 @@ from halo import Halo
 
 from ml_git import log
 from ml_git._metadata import MetadataManager
-from ml_git.config import get_refs_path, get_sample_spec_doc, get_metadata_path
+from ml_git.config import get_sample_spec_doc, get_metadata_path
 from ml_git.constants import METADATA_CLASS_NAME, LOCAL_REPOSITORY_CLASS_NAME, ROOT_FILE_NAME, MutabilityType, \
-    SPEC_EXTENSION, MANIFEST_FILE, EntityType, STORAGE_SPEC_KEY, DATASET_SPEC_KEY, LABELS_SPEC_KEY, MODEL_SPEC_KEY
+    SPEC_EXTENSION, MANIFEST_FILE, EntityType, STORAGE_SPEC_KEY, DATASET_SPEC_KEY, MODEL_SPEC_KEY
 from ml_git.manifest import Manifest
 from ml_git.ml_git_message import output_messages
 from ml_git.plugin_interface.data_plugin_constants import ADD_METADATA
 from ml_git.plugin_interface.plugin_especialization import PluginCaller
-from ml_git.refs import Refs
 from ml_git.spec import spec_parse, get_entity_dir, get_spec_key
 from ml_git.utils import ensure_path_exists, yaml_save, yaml_load, clear, get_file_size, normalize_path
 
@@ -297,7 +296,7 @@ class Metadata(MetadataManager):
                 tags = metada.list_tags(entity)
             if len(tags) == 0:
                 raise RuntimeError(output_messages['ERROR_WITHOUT_TAG_FOR_THIS_ENTITY'])
-            target_tag = self._get_target_tag(tags, entity, version)
+            target_tag = self._get_target_tag(tags, version)
             if not metada:
                 if version == -1:
                     log.info(output_messages['INFO_CHECKOUT_LATEST_TAG'] % target_tag, class_name=METADATA_CLASS_NAME)
@@ -308,11 +307,13 @@ class Metadata(MetadataManager):
             log.error(e, class_name=METADATA_CLASS_NAME)
             return None
 
-    def _get_target_tag(self, tags, entity, target_version):
+    @staticmethod
+    def _get_target_tag(tags, target_version):
         tags_versions = {}
         for tag in tags:
             splitted_tag = tag.split('__')
             version = splitted_tag[-1]
+            entity = splitted_tag[-2]
             categories_path = splitted_tag[:-2]
             if (target_version == int(version)) or (target_version == -1):
                 tags_versions['__'.join(categories_path)] = entity + '__' + version
@@ -327,3 +328,12 @@ class Metadata(MetadataManager):
 
         tag, version = tags_versions.popitem()
         return tag + '__' + version
+
+    def get_last_tag_version(self, entity):
+        tags = self.list_tags(entity)
+        if len(tags) == 0:
+            return 0
+        last_version = -1
+        last_tag = self._get_target_tag(tags, last_version)
+        last_version = last_tag.split('__')[-1]
+        return int(last_version)

@@ -56,6 +56,7 @@ commands = [
         'options': {
             '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
             '--clearonfail': {'is_flag': True, 'help': help_msg.CLEAR_ON_FAIL},
+            '--fail-limit': {'type': int, 'help': help_msg.FAIL_LIMIT}
         },
 
         'help': 'Push local commits from ML_ENTITY_NAME to remote ml-git repository & storage.'
@@ -78,7 +79,8 @@ commands = [
 
             '--force': {'default': False, 'is_flag': True, 'help': help_msg.FORCE_CHECKOUT},
             '--bare': {'default': False, 'is_flag': True, 'help': help_msg.BARE_OPTION},
-            '--version': {'default': -1, 'help': help_msg.ARTIFACT_VERSION}
+            '--version': {'default': -1, 'help': help_msg.ARTIFACT_VERSION},
+            '--fail-limit': {'type': int, 'help': help_msg.FAIL_LIMIT}
         },
 
         'arguments': {
@@ -107,7 +109,8 @@ commands = [
 
             '--force': {'is_flag': True, 'default': False, 'help': help_msg.FORCE_CHECKOUT},
             '--bare': {'default': False, 'is_flag': True, 'help': help_msg.BARE_OPTION},
-            '--version': {'default': -1, 'help': help_msg.ARTIFACT_VERSION}
+            '--version': {'default': -1, 'help': help_msg.ARTIFACT_VERSION},
+            '--fail-limit': {'type': int, 'help': help_msg.FAIL_LIMIT}
         },
 
         'help': 'Checkout the ML_ENTITY_TAG|ML_ENTITY of a label set into user workspace.'
@@ -126,7 +129,8 @@ commands = [
 
             '--force': {'default': False, 'is_flag': True, 'help': help_msg.FORCE_CHECKOUT},
             '--bare': {'default': False, 'is_flag': True, 'help': help_msg.BARE_OPTION},
-            '--version': {'default': -1, 'help': help_msg.ARTIFACT_VERSION}
+            '--version': {'default': -1, 'help': help_msg.ARTIFACT_VERSION},
+            '--fail-limit': {'type': int, 'help': help_msg.FAIL_LIMIT}
         },
 
         'arguments': {
@@ -272,7 +276,7 @@ commands = [
         'options': {
             '--dataset': {'multiple': True, 'type': str, 'help': help_msg.LINK_DATASET % EntityType.MODELS.value},
             '--labels': {'multiple': True, 'type': str, 'help': help_msg.LINK_LABELS % EntityType.MODELS.value},
-            '--model': {'multiple': True, 'type': str, 'help': help_msg.LINK_MODELS  % EntityType.MODELS.value},
+            '--model': {'multiple': True, 'type': str, 'help': help_msg.LINK_MODELS % EntityType.MODELS.value},
             '--tag': {'help': help_msg.TAG_OPTION},
             '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},

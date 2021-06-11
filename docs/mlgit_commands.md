@@ -1,4 +1,4 @@
-# ml-git commands #
+# ML-Git commands #
 
 <details markdown="1">
 <summary><code> ml-git --help </code></summary>
@@ -28,7 +28,7 @@ $ ml-git --help
 <details markdown="1">
 <summary><code> ml-git --version </code></summary>
 
-Displays the installed version of ml-git.
+Displays the installed version of ML-Git.
 
 </details>
 
@@ -109,19 +109,22 @@ Usage: ml-git models checkout [OPTIONS] ML_ENTITY_TAG|ML_ENTITY
   Checkout the ML_ENTITY_TAG|ML_ENTITY of a model set into user workspace.
 
 Options:
-  -l, --with-labels         The checkout associated labels  in user workspace
-                            as well.
-  -d, --with-dataset        The checkout associated dataset in user workspace
-                            as well.
-  --retry INTEGER           Number of retries to download the files from the
-                            storage [default: 2].
-  --force                   Force checkout command to delete
-                            untracked/uncommitted files from local repository.
-  --bare                    Ability to add/commit/push without having the ml-
-                            entity checked out.
-  --version INTEGER         Number of artifact version to be downloaded
-                            [default: latest].
-  --verbose                 Debug mode
+  -l, --with-labels     The checkout associated labels  in user workspace as
+                        well.
+  -d, --with-dataset    The checkout associated dataset in user workspace as
+                        well.
+  --retry INTEGER       Number of retries to download the files from the
+                        storage [default: 2].
+  --force               Force checkout command to delete untracked/uncommitted
+                        files from local repository.
+  --bare                Ability to add/commit/push without having the ml-
+                        entity checked out.
+  --version INTEGER     Number of artifact version to be downloaded [default:
+                        latest].
+  --fail-limit INTEGER  Number of failures before aborting the command
+                        [default: no limit].
+  --verbose             Debug mode
+
 ```
 
 Examples:
@@ -155,23 +158,27 @@ Usage: ml-git models commit [OPTIONS] ML_ENTITY_NAME
   repository.
 
 Options:
-  --dataset TEXT                  Link dataset entity name to this model set
-                                  version.
-  --labels TEXT                   Link labels entity name to this model set
-                                  version.
-  --tag TEXT                      Ml-git tag to identify a specific version of
-                                  a ML entity.
-  --version INTEGER RANGE         Set the version number of the artifact. This 
-                                  number must be in the range 0 to 999999999.
-  -m, --message TEXT              Use the provided <msg> as the commit
-                                  message.
-  --fsck TEXT                     Run fsck after command execution.
-  --verbose                       Debug mode
+  --dataset TEXT           Link dataset entity to this models set version.
+                           Format: <entity-name>:<version>. If the version is
+                           not informed, the last one available will be used.
+  --labels TEXT            Link labels entity to this models set version.
+                           Format: <entity-name>:<version>. If the version is
+                           not informed, the last one available will be used.
+  --model TEXT             Link model entity to this models set version.
+                           Format: <entity-name>:<version>. If the version is
+                           not informed, the last one available will be used.
+  --tag TEXT               Ml-git tag to identify a specific version of a ML
+                           entity.
+  --version INTEGER RANGE  Set the version number of the artifact. This number
+                           must be in the range 0 to 999999999.
+  -m, --message TEXT       Use the provided <msg> as the commit message.
+  --fsck TEXT              Run fsck after command execution.
+  --verbose                Debug mode
 ```
 
 Example:
 ```
-$ ml-git models commit model-ex --dataset=dataset-ex
+$ ml-git models commit model-ex --dataset=dataset-ex:2
 ```
 
 This command commits the index / staging area to the local repository. It is a 2-step operation in which 1) the actual data (blobs) is copied to the local repository, 2) committing the metadata to the git repository managing the metadata.
@@ -474,11 +481,13 @@ Usage: ml-git datasets push [OPTIONS] ML_ENTITY_NAME
   storage.
 
 Options:
-  --retry INTEGER  Number of retries to upload or download the files from the
-                   storage [default: 2].
-  --clearonfail    Remove the files from the storage in case of failure during
-                   the push operation.
-  --verbose        Debug mode
+  --retry INTEGER       Number of retries to download the files from the
+                        storage [default: 2].
+  --clearonfail         Remove the files from the storage in case of failure
+                        during the push operation.
+  --fail-limit INTEGER  Number of failures before aborting the command
+                        [default: no limit].
+  --verbose             Debug mode
 ```
 
 Example:
