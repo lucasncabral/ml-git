@@ -4,7 +4,7 @@ nav:
     - Introduction: index_v1.md
     - Getting Start: first_steps.md
     - Additional Use Cases: advanced_scenarios.md
-    - Arquitecture: 
+    - Architecture: 
       - Design: mlgit_internals.md
       - Cache and Objects: centralized_cache_and_objects.md
       - Mutability Helper: mutability_helper.md
