@@ -1,4 +1,37 @@
-# Info for ML-Git Developers
+# Contributing to ML-Git
+
+The ML-Git project welcomes, and depends, on contributions from developers and users in the open source community. Contributions can be made in a number of ways, a few examples are:
+
+## Installing for Development
+
+To be able to contribute with our project, you will need to have the following ... 
+
+## Running the Tests
+
+After developing ... you must run the unit and integration tests.
+
+### Running Unit Tests
+
+Unit Tests
+
+### Running Integration Tests
+
+Integration Tests
+
+#### Google Drive Integration Test
+
+Google Integration Tests
+
+## Submitting Pull Requests
+
+TODO: how to submit the pull requests
+
+
+
+
+
+
+
 
 **Requirements**:
 
