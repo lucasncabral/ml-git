@@ -12,16 +12,226 @@ pip install git+git://github.com/HPInc/ml-git.git
 
 For more details, see the [Installation Guide](installation_guide.md).
 
-## First Project
+## Setting up
 
-To create a new project, you will need some 
+As ML-Git leverages git to manage ML entities metadata, it is required that you configure git user and email address:
 
-TODO
+```
+git config --global user.name "Your User"
+git config --global user.email "your_email@example.com"
+```
 
-## Adding data
+To fully configure and use ML-Git, you will also need to create a git repository and the storage type you want to use.
+You can create manually, the git repository and storage, or use a script provided inside the ML-Git folder.
 
-TODO
+You can find the script following the step below:
 
-## Clonning an entity
+If you are using **Linux**, execute on the terminal:
 
-TODO
+```
+cd ml-git
+./scripts/resources_initialization/resources_initialization.sh
+```
+
+If you are using **Windows**, execute on the CMD or Powershell:
+
+```
+cd ml-git
+.\scripts\resources_initialization\resources_initialization.bat
+```
+
+## ML-Git First Project
+
+After completing the previous steps, you can create your first project. 
+
+### Configuring git repository and storage
+
+First, create a folder for your ML-Git project (We will use as an example the folder named "mlgit-project"):
+
+```
+mkdir mlgit-project && cd mlgit-project (or clone an existing repo from Github or Github Enterprise)
+```
+
+Then, we will initially this folder as an ML-Git repository:
+
+```
+ml-git repository init
+```
+
+The next step is configure the remote repositories and buckets that your project will use to store data.
+
+To configure the git repository:
+```
+ml-git repository remote datasets add git@github.com:user/user-mlgit-project
+```
+
+To configure the storage:
+```
+ml-git repository remote datasets add git@github.com:user/user-mlgit-project
+```
+
+### Adding your first dataset
+
+Now, you have repositories, and storage configurated for your project. 
+To create and upload your first dataset to a storage, first, run the below command:
+```
+ml-git datasets init
+```
+
+Then, you can run the below command to create your dataset
+```
+ml-git datasets create imagenet8 --category=computer-vision --mutability=strict --storage-type=s3h --bucket-name=pretto-mlgit-dataset
+```
+It will generate an output saying that the project was created. Also, it will create a series of folders and files with the specifications of the dataset. You can see the generated files looking into the root folder.
+
+After you add your dataset files inside the folder, you can run the following command to see the dataset status:
+```
+ml-git datasets status imagenet8
+```
+Below, you can see a possible output:
+```
+INFO - Repository: datasets: status of ml-git index for [imagenet8]
+Changes to be committed:
+
+Untracked files:
+	README.md
+	imagenet8.spec
+	data/	->	3 FILES
+
+Corrupted files:
+```
+
+Above, the output shows some untracked files. To commit these files, similarly to git, we can run the following sequence of commands:
+```
+# It will add all untracked files
+ml-git datasets add imagenet8
+```
+
+```
+# It will commit the metadata to the local respository
+ml-git datasets commit imagenet8
+```
+
+```
+# It will update the remote metadata repository
+ml-git datasets push imagenet8
+```
+
+### Downloading a dataset
+
+We assume there is an existing ML-Git repository with a few ML datasets under its management and you'd like to download one of the available datasets.
+
+To download a dataset, you need to be in an initialized and configured ML-Git project. If you have a repository with your saved settings, you can run the following command to set up your environment:
+
+```
+ml-git clone git@github.com:example/your-mlgit-repository.git
+```
+
+If you are in a configured ML-Git project directory, the following command will update the metadata repository, allowing visibility of what has been shared since the last update (new ML entity, new versions).
+
+```
+ml-git datasets update
+```
+Or update all metadata repository:
+```
+ml-git repository update
+```
+
+To discover which datasets are under ML-Git management, you can execute the following command:
+```
+ml-git datasets list
+```
+
+It will generate the following output. The ML-Git repository contains 3 different datasets, all falling under the same directories _folderA/folderB_ (These directories were defined when the entity was created and can be modified at any time by the user).
+``` 
+ML dataset
+|-- folderA
+|   |-- folderB
+|   |   |-- dataset-ex-minio
+|   |   |-- imagenet8
+|   |   |-- dataset-ex
+```
+
+In order for ML-Git to manage the different versions of the same dataset. It internally creates a tag based on categories, ML entity name and its version.
+To show all these tag representing the versions of a dataset, simply type the following:
+
+```
+ml-git datasets tag list imagenet8
+```
+
+A possible output:
+```
+computer-vision__images__imagenet8__1
+computer-vision__images__imagenet8__2
+```
+
+It means there are 2 versions under ML-Git management. You can check what version is checked out in the ML-Git workspace with the following command:
+
+```
+ml-git datasets branch imagenet8
+```
+
+It is simple to retrieve a specific version locally to start any experiment by executing one of the following commands:
+
+```
+$ ml-git datasets checkout computer-vision__images__imagenet8__1
+```
+or 
+```
+$ ml-git datasets checkout imagenet8 --version=1
+```
+
+If you want to get the latest available version of an entity you can just pass its name in the checkout command, as shown below:
+
+```
+$ ml-git datasets checkout imagenet8
+```
+
+Getting the data will auto-create a directory structure under _dataset_ directory as shown below. That structure _folderA/folderB_ is actually the structure in which the dataset was versioned.
+
+```
+folderA
+└── folderB
+    └── imagenet8
+        ├── README.md
+        ├── data
+        │   ├── train
+        │   │   ├── train_data_batch_1
+        │   │   ├── train_data_batch_2
+        │   │   ├── train_data_batch_3
+        │   │   ├── train_data_batch_4
+        │   │   ├── train_data_batch_5
+        │   │   ├── train_data_batch_6
+        │   │   ├── train_data_batch_7
+        │   │   ├── train_data_batch_8
+        │   │   ├── train_data_batch_9
+        │   │   └── train_data_batch_10
+        │   └── val
+        │       └── val_data
+        └── imagenet8.spec
+```
+
+**Downloading a dataset:**
+
+[![asciicast](https://asciinema.org/a/385786.svg)](https://asciinema.org/a/385786)
+
+### Checking data integrity
+
+If at some point you want to check the integrity of the metadata repository (e.g. computer shuts down during a process), simply type the following command:
+
+```
+$ ml-git datasets fsck
+INFO - HashFS: starting integrity check on [.\.ml-git\dataset\objects\hashfs]
+ERROR - HashFS: corruption detected for chunk [zdj7WVccN8cRj1RcvweX3FNUEQyBe1oKEsWsutJNJoxt12mn1] - got [zdj7WdCbyFbcqHVMarj3KCLJ7yjTM3S9X26RyXWTfXGB2czeB]
+INFO - HashFS: starting integrity check on [.\.ml-git\dataset\index\hashfs]
+[1] corrupted file(s) in Local Repository: ['zdj7WVccN8cRj1RcvweX3FNUEQyBe1oKEsWsutJNJoxt12mn1']
+[0] corrupted file(s) in Index: []
+Total of corrupted files: 1
+```
+
+That command will walk through the internal ML-Git directories (index & local repository) and will check the integrity of all blobs under its management.
+It will return the list of blobs that are corrupted.
+
+**Checking data integrity:**
+
+[![asciicast](https://asciinema.org/a/385778.svg)](https://asciinema.org/a/385778)
