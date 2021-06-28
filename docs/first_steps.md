@@ -44,7 +44,7 @@ cd ml-git
 
 After completing the previous steps, you can create your first project. 
 
-### Configuring git repository and storage
+### Configuring Git Repository and Storage
 
 First, create a folder for your ML-Git project (We will use as an example the folder named "mlgit-project"):
 
@@ -70,7 +70,7 @@ To configure the storage:
 ml-git repository remote datasets add git@github.com:user/user-mlgit-project
 ```
 
-### Adding your first dataset
+### Adding Your First Dataset
 
 Now, you have repositories, and storage configurated for your project. 
 To create and upload your first dataset to a storage, first, run the below command:
@@ -117,7 +117,7 @@ ml-git datasets commit imagenet8
 ml-git datasets push imagenet8
 ```
 
-### Downloading a dataset
+### Downloading a Dataset
 
 We assume there is an existing ML-Git repository with a few ML datasets under its management and you'd like to download one of the available datasets.
 
@@ -174,17 +174,17 @@ ml-git datasets branch imagenet8
 It is simple to retrieve a specific version locally to start any experiment by executing one of the following commands:
 
 ```
-$ ml-git datasets checkout computer-vision__images__imagenet8__1
+ml-git datasets checkout computer-vision__images__imagenet8__1
 ```
 or 
 ```
-$ ml-git datasets checkout imagenet8 --version=1
+ml-git datasets checkout imagenet8 --version=1
 ```
 
 If you want to get the latest available version of an entity you can just pass its name in the checkout command, as shown below:
 
 ```
-$ ml-git datasets checkout imagenet8
+ml-git datasets checkout imagenet8
 ```
 
 Getting the data will auto-create a directory structure under _dataset_ directory as shown below. That structure _folderA/folderB_ is actually the structure in which the dataset was versioned.
@@ -211,11 +211,11 @@ folderA
         └── imagenet8.spec
 ```
 
-**Downloading a dataset:**
+**Downloading a Dataset:**
 
 [![asciicast](https://asciinema.org/a/385786.svg)](https://asciinema.org/a/385786)
 
-### Checking data integrity
+### Checking Data Integrity
 
 If at some point you want to check the integrity of the metadata repository (e.g. computer shuts down during a process), simply type the following command:
 
@@ -232,6 +232,6 @@ Total of corrupted files: 1
 That command will walk through the internal ML-Git directories (index & local repository) and will check the integrity of all blobs under its management.
 It will return the list of blobs that are corrupted.
 
-**Checking data integrity:**
+**Checking Data Integrity:**
 
 [![asciicast](https://asciinema.org/a/385778.svg)](https://asciinema.org/a/385778)

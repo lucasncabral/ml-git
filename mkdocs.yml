@@ -9,11 +9,9 @@ nav:
       - Cache and Objects: centralized_cache_and_objects.md
       - Mutability Helper: mutability_helper.md
       - Plugins: plugins.md
-      - QS Checkout: qs_checkout.md
-      - QS Configure Repository: qs_configure_repository.md
       - Resources Initialization: resources_initialization.md
       - Working With Tabular Data: tabular_data/tabular_data.md
-    - Suppored Storages:
+    - Supported Storages:
       - Configurations: storage_configurations.md
       - S3 and MinIO: s3_configurations.md
       - Azure: azure_configurations.md
