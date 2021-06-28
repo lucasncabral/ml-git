@@ -1,7 +1,7 @@
 site_name: ML-Git
 nav:
   - Home:
-    - Introduction: index_v1.md
+    - Introduction: index.md
     - Getting Start: first_steps.md
     - Additional Use Cases: advanced_scenarios.md
     - Architecture: 
