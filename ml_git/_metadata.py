@@ -183,7 +183,7 @@ class MetadataRepo(object):
             repo = Repo(self.__path)
             r_tags = repo.tags if full_info else repo.git.tag(sort='creatordate').split('\n')
             for tag in r_tags:
-                if f'__{spec}__' in str(tag):
+                if f'{spec}__' in str(tag):
                     tags.append(tag)
 
         except Exception:

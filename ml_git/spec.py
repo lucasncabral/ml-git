@@ -85,9 +85,7 @@ def is_valid_version(the_hash, entity_key=DATASET_SPEC_KEY):
         return False
     if entity_key not in the_hash or 'version' not in the_hash[entity_key]:
         return False
-    if not isinstance(the_hash[entity_key]['version'], int):
-        return False
-    if int(the_hash[entity_key]['version']) < 0:
+    if not isinstance(the_hash[entity_key]['version'], str) and not isinstance(the_hash[entity_key]['version'], int):
         return False
     return True
 

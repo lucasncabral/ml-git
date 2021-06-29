@@ -234,9 +234,9 @@ class Metadata(MetadataManager):
         repo_type = self.__repo_type
         entity_spec_key = get_spec_key(repo_type)
         sep = '__'
-        tag = self.__metadata_spec(metadata, sep)
+        # tag = self.__metadata_spec(metadata, sep)
 
-        tag = sep.join([tag, str(metadata[entity_spec_key]['version'])])
+        tag = sep.join([metadata[entity_spec_key]['name'], str(metadata[entity_spec_key]['version'])])
 
         log.debug(output_messages['DEBUG_NEW_TAG_CREATED'] % tag, class_name=METADATA_CLASS_NAME)
         return tag
