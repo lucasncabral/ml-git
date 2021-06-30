@@ -67,7 +67,7 @@ ml-git repository remote datasets add git@github.com:user/user-mlgit-project
 
 To configure the storage:
 ```
-ml-git repository remote datasets add git@github.com:user/user-mlgit-project
+ml-git repository storage add mlgit-datasets
 ```
 
 ### Adding Your First Dataset
@@ -108,7 +108,7 @@ ml-git datasets add imagenet8
 ```
 
 ```
-# It will commit the metadata to the local respository
+# It will commit the metadata to the local repository
 ml-git datasets commit imagenet8
 ```
 
