@@ -119,30 +119,24 @@ ml-git datasets push imagenet8
 
 ### Downloading a Dataset
 
-We assume there is an existing ML-Git repository with a few ML datasets under its management and you'd like to download one of the available datasets.
+If you already have access to an existing ML-Git project. You can clone the repository and use ML-Git to bring a dataset to your workspace.
 
-To download a dataset, you need to be in an initialized and configured ML-Git project. If you have a repository with your saved settings, you can run the following command to set up your environment:
-
+To clone a repository use the command:
 ```
 ml-git clone git@github.com:example/your-mlgit-repository.git
 ```
 
-If you are in a configured ML-Git project directory, the following command will update the metadata repository, allowing visibility of what has been shared since the last update (new ML entity, new versions).
-
+The next step is initialize the project.
 ```
-ml-git datasets update
-```
-Or update all metadata repository:
-```
-ml-git repository update
+ml-git datasets init
 ```
 
-To discover which datasets are under ML-Git management, you can execute the following command:
+Then, you can discover which datasets are under ML-Git management by executing the command:
 ```
 ml-git datasets list
 ```
 
-It will generate the following output. The ML-Git repository contains 3 different datasets, all falling under the same directories _folderA/folderB_ (These directories were defined when the entity was created and can be modified at any time by the user).
+It will generate a similar output as you can see below:
 ``` 
 ML dataset
 |-- folderA
@@ -151,10 +145,10 @@ ML dataset
 |   |   |-- imagenet8
 |   |   |-- dataset-ex
 ```
+The example above represets a ML-Git repository containing 3 different datasets, all falling under the same directory _folderA/folderB_ (This hierarchy was defined when the entity was created and can be modified at any time by the user).
 
 In order for ML-Git to manage the different versions of the same dataset. It internally creates a tag based on categories, ML entity name and its version.
 To show all these tag representing the versions of a dataset, simply type the following:
-
 ```
 ml-git datasets tag list imagenet8
 ```
@@ -182,33 +176,8 @@ ml-git datasets checkout imagenet8 --version=1
 ```
 
 If you want to get the latest available version of an entity you can just pass its name in the checkout command, as shown below:
-
 ```
 ml-git datasets checkout imagenet8
-```
-
-Getting the data will auto-create a directory structure under _dataset_ directory as shown below. That structure _folderA/folderB_ is actually the structure in which the dataset was versioned.
-
-```
-folderA
-└── folderB
-    └── imagenet8
-        ├── README.md
-        ├── data
-        │   ├── train
-        │   │   ├── train_data_batch_1
-        │   │   ├── train_data_batch_2
-        │   │   ├── train_data_batch_3
-        │   │   ├── train_data_batch_4
-        │   │   ├── train_data_batch_5
-        │   │   ├── train_data_batch_6
-        │   │   ├── train_data_batch_7
-        │   │   ├── train_data_batch_8
-        │   │   ├── train_data_batch_9
-        │   │   └── train_data_batch_10
-        │   └── val
-        │       └── val_data
-        └── imagenet8.spec
 ```
 
 **Downloading a Dataset:**
@@ -217,16 +186,10 @@ folderA
 
 ### Checking Data Integrity
 
-If at some point you want to check the integrity of the metadata repository (e.g. computer shuts down during a process), simply type the following command:
+If at some point you want to check the integrity of the metadata repository (e.g. computer shutdown during a process), simply type the following command:
 
 ```
-$ ml-git datasets fsck
-INFO - HashFS: starting integrity check on [.\.ml-git\dataset\objects\hashfs]
-ERROR - HashFS: corruption detected for chunk [zdj7WVccN8cRj1RcvweX3FNUEQyBe1oKEsWsutJNJoxt12mn1] - got [zdj7WdCbyFbcqHVMarj3KCLJ7yjTM3S9X26RyXWTfXGB2czeB]
-INFO - HashFS: starting integrity check on [.\.ml-git\dataset\index\hashfs]
-[1] corrupted file(s) in Local Repository: ['zdj7WVccN8cRj1RcvweX3FNUEQyBe1oKEsWsutJNJoxt12mn1']
-[0] corrupted file(s) in Index: []
-Total of corrupted files: 1
+ml-git datasets fsck
 ```
 
 That command will walk through the internal ML-Git directories (index & local repository) and will check the integrity of all blobs under its management.
