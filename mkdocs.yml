@@ -1,4 +1,5 @@
 site_name: ML-Git
+site_url: "https://hpinc.github.io/ml-git/"
 nav:
   - Home:
     - Introduction: index.md
