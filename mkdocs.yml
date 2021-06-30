@@ -3,7 +3,7 @@ site_url: "https://hpinc.github.io/ml-git/"
 nav:
   - Home:
     - Introduction: index.md
-    - Getting Start: first_steps.md
+    - Getting Started: first_steps.md
     - Additional Use Cases: advanced_scenarios.md
     - Architecture: 
       - Design: mlgit_internals.md
