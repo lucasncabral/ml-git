@@ -49,7 +49,7 @@ After completing the previous steps, you can create your first project.
 First, create a folder for your ML-Git project (We will use as an example the folder named "mlgit-project"):
 
 ```
-mkdir mlgit-project && cd mlgit-project (or clone an existing repo from Github or Github Enterprise)
+mkdir mlgit-project && cd mlgit-project
 ```
 
 Then, we will initially this folder as an ML-Git repository:
