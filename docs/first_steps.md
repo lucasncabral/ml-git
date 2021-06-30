@@ -1,4 +1,4 @@
-# Getting Start with ML-Git
+# Getting Started with ML-Git
 
 First steps is a chapter to explore how a user should do a basic setup and first project
 
