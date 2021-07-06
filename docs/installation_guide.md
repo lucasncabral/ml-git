@@ -15,7 +15,7 @@ Python 3.8.2
 $ pip --version
 pip 20.0.2 from /usr/lib/python3/dist-packages/pip (python 3.8)
 
-$git --version
+$ git --version
 git version 2.25.1
 ```
 
