@@ -15,6 +15,7 @@ from ml_git.config import config_load
 from ml_git.constants import EntityType, StorageType, FileType, RGX_TAG_FORMAT
 from ml_git.log import init_logger
 from ml_git.ml_git_message import output_messages
+from ml_git.relationship.entity_manager import EntityManager
 from ml_git.repository import Repository
 from ml_git.spec import search_spec_file, spec_parse
 from ml_git.utils import get_root_path
@@ -94,7 +95,7 @@ def checkout(entity, tag, sampling=None, retries=2, force=False, dataset=False, 
     return data_path
 
 
-def clone(repository_url, folder=None, track=False):
+def clone(repository_url, folder=None, untracked=False):
     """This command will clone minimal configuration files from repository-url with valid .ml-git/config.yaml,
     then initialize the metadata according to configurations.
 
@@ -104,18 +105,17 @@ def clone(repository_url, folder=None, track=False):
     Args:
         repository_url (str): The git repository that will be cloned.
         folder (str, optional): Directory that can be created to execute the clone command [default: current path].
-        track (bool, optional): Set if the tracking of the cloned repository should be kept [default: False].
-
+        untracked (bool, optional): Set whether cloned repository trace should not be kept [default: False].
     """
 
     repo = get_repository_instance('project')
     if folder is not None:
-        repo.clone_config(repository_url, folder, track)
+        repo.clone_config(repository_url, folder, untracked)
     else:
         current_directory = os.getcwd()
         with tempfile.TemporaryDirectory(dir=current_directory) as tempdir:
             mlgit_path = os.path.join(tempdir, 'mlgit')
-            repo.clone_config(repository_url, mlgit_path, track)
+            repo.clone_config(repository_url, mlgit_path, untracked)
             if not os.path.exists(os.path.join(current_directory, '.ml-git')):
                 shutil.move(os.path.join(mlgit_path, '.ml-git'), current_directory)
             os.chdir(current_directory)
@@ -309,3 +309,20 @@ def get_models_metrics(entity_name, export_path=None, export_type=FileType.JSON.
         with tempfile.TemporaryDirectory(dir=current_directory) as tempdir:
             metrics_data = repo.get_models_metrics(entity_name, tempdir, export_type, log_export_info=False)
     return metrics_data
+
+
+def init_entity_manager(github_token, url):
+    """Initialize an entity manager to operate over github API.
+
+        Examples:
+            init_entity_manager('github_token', 'https://api.github.com')
+
+        Args:
+            github_token (str): The personal access github token.
+            url (str): The github api url.
+
+        Returns:
+            object of class EntityManager.
+
+    """
+    return EntityManager(github_token, url)

@@ -67,8 +67,8 @@ def checkout(entity, tag, sampling=None, retries=2, force=False, dataset=False, 
 <br>
 
 ```python
-def clone(repository_url, folder=None, track=False):
- """This command will clone minimal configuration files from repository-url with valid .ml-git/config.yaml,
+def clone(repository_url, folder=None, untracked=False):
+    """This command will clone minimal configuration files from repository-url with valid .ml-git/config.yaml,
     then initialize the metadata according to configurations.
 
     Example:
@@ -76,9 +76,8 @@ def clone(repository_url, folder=None, track=False):
 
     Args:
         repository_url (str): The git repository that will be cloned.
-        folder (str, optional): Directory that can be created to execute the clone command. [Default: current path]
-        track (bool, optional): Set if the tracking of the cloned repository should be kept. [Default: False]
-
+        folder (str, optional): Directory that can be created to execute the clone command [default: current path].
+        untracked (bool, optional): Set whether cloned repository trace should not be kept [default: False].
     """
 ```
 </details>
@@ -233,6 +232,78 @@ def storage_add(bucket_name, bucket_type=StorageType.S3H.value, credentials=None
 ```
 </details>
 
+
+<details markdown="1">
+<summary><code> init entity manager </code></summary>
+<br>
+
+```python
+def init_entity_manager(github_token, url):
+    """Initialize an entity manager to operate over github API.
+
+        Examples:
+            init_entity_manager('github_token', 'https://api.github.com')
+
+        Args:
+            github_token (str): The personal access github token.
+            url (str): The github api url.
+
+        Returns:
+            object of class EntityManager.
+
+    """
+```
+</details>
+
+## Classes used in the API.
+
+Some methods uses the classes described below:
+<details markdown="1">
+<summary><code> EntityManager </code></summary>
+<br>
+
+```python
+class EntityManager:
+    """Class that operate over github api to manage entity's operations"""
+    def get_entities(self, config_path=None, repo_name=None):
+        """Get a list of entities found in config.yaml.
+
+        Args:
+            config_path (str): The absolute path of the config.yaml file.
+            repo_name (str): The repository name where is the config.yaml is located in github.
+
+        Returns:
+            list of class Entity.
+        """
+```
+</details>
+
+<details markdown="1">
+<summary><code> Entity </code></summary>
+<br>
+
+```python
+class Entity:
+    """Class that's represents a ml-entity.
+
+    Attributes:
+        entity_type (str): The type of the ml-entity (datasets, models, labels).
+        name (str): The name of the entity.
+        private (str): The access of entity metadata.
+        metadata_full_name (str): The name of the repository metadata.
+        metadata_git_url (str): The git url of the repository metadata.
+        metadata_html_url (str): The html url of the repository metadata.
+        metadata_owner_name (str): The name of the repository owner.
+        metadata_owner_email (str): The email of the repository owner.
+        mutability (str): The mutability of the ml-entity (strict|mutable|flexible).
+        categories (list): Labels to categorize the entity.
+        storage_type (str): The storage type (s3h|azureblobh|gdriveh|sftph).
+        storage (dict): The storage configuration.
+        version (str): The version of the ml-entity.
+        versions (list): List of the entities for each tag found in the repository.
+    """
+```
+</details>
 
 # <a name="methods"> API notebooks </a> #
 
