@@ -19,10 +19,33 @@ INFO - Metadata Manager: Pull [/home/Documents/my-mlgit-project-config/.ml-git/l
 Then, you can checkout the new available data.
 
 
-## Scenario 2 
+## Adding special credentials AWS
 
-TODO
+Depending the project you are working on, you might need to use special credentials to restrict access to your entities (e.g., datases) stored inside a S3/MinIO bucket. The easiest way to configure and use a different credentials for the AWS storage is installing the AWS command-line interface (awscli). First, install the awscli. Then, run the following command:
 
-## Scenario 3 
+```
+aws configure --profile=mlgit
+```
 
-TODO
+You will need to inform the fields listed below.
+
+```
+AWS Access Key ID [None]: your-access-key
+AWS Secret Access Key [None]: your-secret-access-key
+Default region name [None]: bucket-region
+Default output format [None]: json
+```
+
+These commands will create the files ~/.aws/credentials and ~/.aws/config.
+
+- Demonstrating AWS Configure
+  
+[![asciicast](https://asciinema.org/a/371052.svg)](https://asciinema.org/a/371052)
+
+After you have created your special credentions (e.g., mlgit profile)
+
+You can use this profile as parameter to access your storages. Following, you will find an exaple where we attached the profile to the storage mlgit-datasets.
+
+```
+ml-git repository storage add mlgit-datasets --credentials=mlgit
+```
