@@ -297,6 +297,7 @@ output_messages = {
     'ERROR_FIND_FILE_PATH_LOCATION': 'A complete log of this run can be found in: %s',
     'ERROR_TWICE_THE_SAME_ENTITIE': 'You cannot refer to the same entity twice',
     'ERROR_WITHOUT_TAG_FOR_THIS_RELATED_ENTITY': 'No entity with that name (%s) was found to establish relationship.',
+    'ERROR_RELATIONSHIP_WITH_ITSELF': 'It is not allowed to make a relationship of an entity with itself',
 
     'WARN_CORRUPTED_CANNOT_BE_ADD': 'The following files cannot be added because they are corrupted:',
     'WARN_HAS_CONFIGURED_REMOTE': 'YOU ALREADY HAS A CONFIGURED REMOTE. All data stored in this repository will be sent to the new one on the first push.',

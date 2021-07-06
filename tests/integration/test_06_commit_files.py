@@ -180,3 +180,16 @@ class CommitFilesAcceptanceTests(unittest.TestCase):
         self.assertTrue(os.path.exists(HEAD))
 
         self.assertIn('computer-vision__images__datasets-ex__1', spec[LABELS][DATASETS])
+
+    @pytest.mark.usefixtures('start_local_git_server', 'switch_to_tmp_dir')
+    def test_13_commit_related_dataset_with_itself(self):
+        entity_type = DATASETS
+        self._commit_entity(entity_type)
+
+        dataset_name = '{}-ex2'.format(entity_type)
+        os.mkdir(os.path.join(self.tmp_dir, entity_type, dataset_name))
+        create_spec(self, entity_type, self.tmp_dir, artifact_name=dataset_name)
+        self.assertIn(output_messages['INFO_ADDING_PATH'] % entity_type, check_output(MLGIT_ADD % (entity_type, dataset_name, '')))
+
+        self.assertIn(output_messages['ERROR_RELATIONSHIP_WITH_ITSELF'],
+                      check_output(MLGIT_COMMIT % (entity_type, dataset_name, ' --dataset={}'.format(dataset_name))))

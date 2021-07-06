@@ -170,6 +170,8 @@ class Metadata(MetadataManager):
             version = -1
             if ':' in value:
                 entity_name, version = value.split(':')
+            if entity_name == metadata[entity_spec_key]['name']:
+                raise RuntimeError(output_messages['ERROR_RELATIONSHIP_WITH_ITSELF'])
             if entity_name in entities_names:
                 raise RuntimeError(output_messages['ERROR_TWICE_THE_SAME_ENTITIE'])
             entities_names.append(entity_name)
