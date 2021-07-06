@@ -7,8 +7,17 @@ As you get familiar with ML-Git, you might feel the necessity of use advanced ML
 Often, users can share the same dataset. As the dataset improve, you will need to keep track of the changes. It is very simple to keep check what is new in a shared repository. You just need to navigate to the root of your project. Then, you can execute the command `update`, it will update the metadata repository, allowing visibility of what has been changed since the last update. For example, new ML entity and/or new versions.
 
 ```
-$ ml-git repository update
+ml-git repository update
 ```
+
+In case something new exists in this repository, you will see a output like:
+```
+INFO - Metadata Manager: Pull [/home/Documents/my-mlgit-project-config/.ml-git/datasets/metadata]
+INFO - Metadata Manager: Pull [/home/Documents/my-mlgit-project-config/.ml-git/labels/metadata]
+```
+
+Then, you can checkout the new available data.
+
 
 ## Scenario 2 
 
