@@ -80,7 +80,7 @@ ml-git datasets init
 
 Then, you can run the below command to create your dataset
 ```
-ml-git datasets create imagenet8 --category=computer-vision --mutability=strict --storage-type=s3h --bucket-name=pretto-mlgit-dataset
+ml-git datasets create imagenet8 --category=computer-vision --bucket-name=mlgit-datasets
 ```
 It will generate an output saying that the project was created. Also, it will create a series of folders and files with the specifications of the dataset. You can see the generated files looking into the root folder.
 
