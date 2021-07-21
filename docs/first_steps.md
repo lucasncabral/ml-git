@@ -22,23 +22,8 @@ git config --global user.email "your_email@example.com"
 ```
 
 To fully configure and use ML-Git, you will also need to create a git repository and the storage type you want to use.
-You can create manually, the git repository and storage, or use a script provided inside the ML-Git folder.
+You can create manually, the git repository and storage, or use a script provided in our [advanded scenarios](advanced_scenarios.md#using-script). We recommend that for your first project you stick with this tutorial, so you can exercise many ML-Git commands.
 
-You can find the script following the step below:
-
-If you are using **Linux**, execute on the terminal:
-
-```
-cd ml-git
-./scripts/resources_initialization/resources_initialization.sh
-```
-
-If you are using **Windows**, execute on the CMD or Powershell:
-
-```
-cd ml-git
-.\scripts\resources_initialization\resources_initialization.bat
-```
 
 ## ML-Git First Project
 
