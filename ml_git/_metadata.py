@@ -527,9 +527,7 @@ class MetadataRepo(object):
         repo = Repo(self.__path)
         for url in repo.remote().urls:
             if url == blank_url:
-                git_error = GitError()
-                git_error.stderr = output_messages['ERROR_REMOTE_NOT_FOUND']
-                raise git_error
+                raise Exception(output_messages['ERROR_REMOTE_NOT_FOUND'])
 
     def delete_git_reference(self):
         try:
