@@ -76,6 +76,7 @@ output_messages = {
     'DEBUG_BUCKET_REGION_NOT_FIND': 'Could not find bucket region entered',
     'DEBUG_RATE_LIMIT': 'Remaining {} rate limit: [{}]. It will reset after [{}s]',
     'DEBUG_EXECUTING_COMMAND': 'Executing git command: %s',
+    'DEBUG_GIT_COMMAND_EXECUTION': 'Git command output: %s',
 
     'INFO_INITIALIZED_PROJECT_IN': 'Initialized empty ml-git repository in %s',
     'INFO_ADD_REMOTE': 'Add remote repository [%s] for [%s]',

@@ -2,7 +2,7 @@
 © Copyright 2021 HP Development Company, L.P.
 SPDX-License-Identifier: GPL-2.0-only
 """
-
+import os
 import subprocess
 
 from git import GitError, Repo
@@ -23,6 +23,7 @@ class GitClient(object):
             return
 
         output = proc.stdout
+        log.debug(output_messages['DEBUG_GIT_COMMAND_EXECUTION'] % output, class_name=GIT_CLIENT_CLASS_NAME)
         if 'fatal: repository \'{}\' does not exist'.format(self._git) in output:
             raise GitError(output_messages['INFO_NOT_READY_REMOTE_REPOSITORY'])
         elif 'Repository not found' in output:
@@ -36,12 +37,18 @@ class GitClient(object):
         else:
             raise GitError(output)
 
-    def _execute(self, command):
+    def _execute(self, command, change_dir=True):
         if 'clone' not in command:
             log.debug(output_messages['DEBUG_EXECUTING_COMMAND'] % command, class_name=GIT_CLIENT_CLASS_NAME)
+        if change_dir:
+            current_dir = os.getcwd()
+            os.chdir(self._path)
         proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                              universal_newlines=True, shell=True, cwd=self._path)
+                              universal_newlines=True, shell=True)
+        if change_dir:
+            os.chdir(current_dir)
         self._check_output(proc)
+
         return proc
 
     def _get_origin(self):
@@ -68,4 +75,4 @@ class GitClient(object):
         if self._git == '':
             raise GitError(output_messages['ERROR_UNABLE_TO_FIND_REMOTE_REPOSITORY'])
         clone_command = 'git clone {} {}'.format(self._git, self._path)
-        self._execute(clone_command)
+        self._execute(clone_command, change_dir=False)
