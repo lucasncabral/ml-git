@@ -2,7 +2,6 @@
 © Copyright 2021 HP Development Company, L.P.
 SPDX-License-Identifier: GPL-2.0-only
 """
-import os
 import subprocess
 
 from git import GitError, Repo
@@ -38,15 +37,13 @@ class GitClient(object):
             raise GitError(output)
 
     def _execute(self, command, change_dir=True):
-        if 'clone' not in command:
-            log.debug(output_messages['DEBUG_EXECUTING_COMMAND'] % command, class_name=GIT_CLIENT_CLASS_NAME)
-
         cwd = None
         if change_dir:
             cwd = self._path
         proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                               universal_newlines=True, shell=True, cwd=cwd)
 
+        log.debug(output_messages['DEBUG_EXECUTING_COMMAND'] % command, class_name=GIT_CLIENT_CLASS_NAME)
         self._check_output(proc)
         return proc
 
