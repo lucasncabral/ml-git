@@ -40,15 +40,14 @@ class GitClient(object):
     def _execute(self, command, change_dir=True):
         if 'clone' not in command:
             log.debug(output_messages['DEBUG_EXECUTING_COMMAND'] % command, class_name=GIT_CLIENT_CLASS_NAME)
-        if change_dir:
-            current_dir = os.getcwd()
-            os.chdir(self._path)
-        proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                              universal_newlines=True, shell=True)
-        if change_dir:
-            os.chdir(current_dir)
-        self._check_output(proc)
 
+        cwd = None
+        if change_dir:
+            cwd = self._path
+        proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                              universal_newlines=True, shell=True, cwd=cwd)
+
+        self._check_output(proc)
         return proc
 
     def _get_origin(self):
