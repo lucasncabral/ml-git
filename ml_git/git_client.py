@@ -41,21 +41,23 @@ class GitClient(object):
         self._check_output(proc)
         return proc
 
-    def push(self, porcelain=True, tags=True):
+    def _get_origin(self):
         repo = Repo(self._path)
         origin = repo.remotes.origin
+        return origin
+
+    def push(self, porcelain=True, tags=True):
+        origin = self._get_origin()
         push_command = 'git push {} {} {}'.format(origin, '--porcelain' if porcelain else '', '--tags' if tags else '')
         self._execute(push_command)
 
     def pull(self, tags=True):
-        repo = Repo(self._path)
-        origin = repo.remotes.origin
+        origin = self._get_origin()
         pull_command = 'git pull {} {}'.format(origin, '--tags' if tags else '')
         self._execute(pull_command)
 
     def fetch(self):
-        repo = Repo(self._path)
-        origin = repo.remotes.origin
+        origin = self._get_origin()
         fetch_command = 'git fetch {}'.format(origin)
         self._execute(fetch_command)
 
