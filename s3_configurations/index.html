@@ -9,19 +9,21 @@
       
       
       
-      <link rel="icon" href="/ml-git/assets/images/favicon.png">
+        <link rel="canonical" href="https://hpinc.github.io/ml-git/s3_configurations/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
     
     
       
-        <title>ML-Git</title>
+        <title>S3 and MinIO - ML-Git</title>
       
     
     
-      <link rel="stylesheet" href="/ml-git/assets/stylesheets/main.be71726b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.be71726b.min.css">
       
         
-        <link rel="stylesheet" href="/ml-git/assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -57,12 +59,17 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="light-blue" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL("/ml-git/",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#s3-bucket-configuration" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -71,7 +78,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/ml-git/." title="ML-Git" class="md-header__button md-logo" aria-label="ML-Git" data-md-component="logo">
+    <a href=".." title="ML-Git" class="md-header__button md-logo" aria-label="ML-Git" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -90,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              S3 and MinIO
             
           </span>
         </div>
@@ -149,13 +156,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="/ml-git/." class="md-tabs__link">
+      <a href=".." class="md-tabs__link md-tabs__link--active">
         Home
       </a>
     </li>
@@ -168,7 +177,7 @@
 
 
   <li class="md-tabs__item">
-    <a href="/ml-git/developer_info/" class="md-tabs__link">
+    <a href="../developer_info/" class="md-tabs__link">
       Contributing to ML-Git
     </a>
   </li>
@@ -196,7 +205,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/ml-git/." title="ML-Git" class="md-nav__button md-logo" aria-label="ML-Git" data-md-component="logo">
+    <a href=".." title="ML-Git" class="md-nav__button md-logo" aria-label="ML-Git" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -213,12 +222,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
       
       <label class="md-nav__link" for="__nav_1">
         Home
@@ -236,7 +247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -248,7 +259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/first_steps/" class="md-nav__link">
+      <a href="../first_steps/" class="md-nav__link">
         Getting Started
       </a>
     </li>
@@ -260,7 +271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/advanced_scenarios/" class="md-nav__link">
+      <a href="../advanced_scenarios/" class="md-nav__link">
         Additional Use Cases
       </a>
     </li>
@@ -293,7 +304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/mlgit_internals/" class="md-nav__link">
+      <a href="../mlgit_internals/" class="md-nav__link">
         Design
       </a>
     </li>
@@ -305,7 +316,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/centralized_cache_and_objects/" class="md-nav__link">
+      <a href="../centralized_cache_and_objects/" class="md-nav__link">
         Cache and Objects
       </a>
     </li>
@@ -317,7 +328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/mutability_helper/" class="md-nav__link">
+      <a href="../mutability_helper/" class="md-nav__link">
         Mutability Helper
       </a>
     </li>
@@ -329,7 +340,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/plugins/" class="md-nav__link">
+      <a href="../plugins/" class="md-nav__link">
         Plugins
       </a>
     </li>
@@ -341,7 +352,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/resources_initialization/" class="md-nav__link">
+      <a href="../resources_initialization/" class="md-nav__link">
         Resources Initialization
       </a>
     </li>
@@ -353,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/tabular_data/tabular_data/" class="md-nav__link">
+      <a href="../tabular_data/tabular_data/" class="md-nav__link">
         Working With Tabular Data
       </a>
     </li>
@@ -369,12 +380,14 @@
             
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_5" type="checkbox" id="__nav_1_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_5" type="checkbox" id="__nav_1_5" checked>
       
       <label class="md-nav__link" for="__nav_1_5">
         Supported Storages
@@ -392,7 +405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/storage_configurations/" class="md-nav__link">
+      <a href="../storage_configurations/" class="md-nav__link">
         Configurations
       </a>
     </li>
@@ -402,11 +415,58 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="/ml-git/s3_configurations/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          S3 and MinIO
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         S3 and MinIO
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#aws" class="md-nav__link">
+    AWS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minio" class="md-nav__link">
+    MinIO
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -416,7 +476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/azure_configurations/" class="md-nav__link">
+      <a href="../azure_configurations/" class="md-nav__link">
         Azure
       </a>
     </li>
@@ -428,7 +488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/gdrive_configurations/" class="md-nav__link">
+      <a href="../gdrive_configurations/" class="md-nav__link">
         Google Drive
       </a>
     </li>
@@ -467,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/mlgit_commands/" class="md-nav__link">
+      <a href="../mlgit_commands/" class="md-nav__link">
         Using ML-Git CLI
       </a>
     </li>
@@ -500,7 +560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/api/quick_start/" class="md-nav__link">
+      <a href="../api/quick_start/" class="md-nav__link">
         Quick Start
       </a>
     </li>
@@ -512,7 +572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/api/" class="md-nav__link">
+      <a href="../api/" class="md-nav__link">
         Methods
       </a>
     </li>
@@ -536,7 +596,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/downloadable_environment/" class="md-nav__link">
+      <a href="../downloadable_environment/" class="md-nav__link">
         Docker Environment
       </a>
     </li>
@@ -557,7 +617,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/ml-git/developer_info/" class="md-nav__link">
+      <a href="../developer_info/" class="md-nav__link">
         Contributing to ML-Git
       </a>
     </li>
@@ -575,7 +635,99 @@
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
-  <h1>404 - Not found</h1>
+                
+                
+                <h1 id="s3-bucket-configuration">S3 bucket configuration<a class="headerlink" href="#s3-bucket-configuration" title="Permanent link">&para;</a></h1>
+<p>This section explains how to configure the settings that the ML-Git uses to interact with your bucket. This requires that you have the following data:</p>
+<ol>
+<li>Profile Name</li>
+<li>Access Key ID</li>
+<li>Secret Access Key</li>
+<li>Region Name</li>
+<li>Output Format</li>
+</ol>
+<p>The <em>Access Key ID</em> and <em>Secret Access Key</em> are your credentials. The <em>Region Name</em> identifies the AWS Region whose servers you want to send your requests. The <em>Output Format</em> specifies how the results are formatted.</p>
+<p>ML-Git allows you to have your bucket directly on AWS infrastructure or through MinIO. This document is divided into two sections wich describe how configure each one of these.</p>
+<h2 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link">&para;</a></h2>
+<p>Internally ML-Git uses <a href="https://github.com/boto/boto3">Boto3</a> to communicate with AWS services. Boto3 is the Amazon Web Services (AWS) SDK for Python. 
+It enables Python developers to create, configure, and manage AWS services.</p>
+<p>Boto3 looks at various configuration locations until it finds configuration values. The following lookup order is used searching through sources for configuration values:</p>
+<ul>
+<li>Environment variables</li>
+<li>The ~/.aws/config file</li>
+</ul>
+<p><code>Note:</code> 
+If, when creating a storage, you define a specific profile to be used, Boto3 will only search for that profile in the ~/.aws/config file.</p>
+<p>You can configure the AWS in three ways (environment variables, through the console or with the <a href="https://aws.amazon.com/cli/?nc1=h_ls">AWS Command Line Interface</a>). These are described in the following sections.</p>
+<p>1 - Environment Variables</p>
+<p><strong>Linux or macOS</strong>:</p>
+<pre><code>```
+$ export AWS_ACCESS_KEY_ID=your-access-key
+$ export AWS_SECRET_ACCESS_KEY=your-secret-access-key
+$ export AWS_DEFAULT_REGION=us-west-2
+```
+</code></pre>
+<p><strong>Windows</strong>:</p>
+<pre><code>```
+C:\&gt; setx AWS_ACCESS_KEY_ID your-access-key
+C:\&gt; setx AWS_SECRET_ACCESS_KEY your-secret-access-key
+C:\&gt; setx AWS_DEFAULT_REGION us-west-2
+```
+</code></pre>
+<p>2 -  Console </p>
+<p>From the home directory (UserProfile) execute:   </p>
+<div class="highlight"><pre><span></span><code>$ mkdir .aws
+</code></pre></div>
+<p>You need to create two files to store the sensitive credential information (~/.aws/credentials) separated from the less sensitive configuration options (~/.aws/config). To create these two files type the following commands:</p>
+<p>For config file:</p>
+<div class="highlight"><pre><span></span><code>$ echo &quot;
+[your-profile-name]
+region=bucket-region
+output=json 
+&quot; &gt; .aws/config
+</code></pre></div>
+<p>For credentials file:
+   <div class="highlight"><pre><span></span><code>$ echo &quot;
+[your-profile-name]
+aws_access_key_id = your-access-key
+aws_secret_access_key = your-secret-access-key     
+&quot; &gt; .aws/credentials
+</code></pre></div></p>
+<p>3 - AWS CLI</p>
+<p>For general use, the <em>aws configure</em> command is the fastest way to set up, but requires the AWS CLI installed. For install and configure type the following commands:</p>
+<div class="highlight"><pre><span></span><code>$ pip install awscli
+$ aws configure
+AWS Access Key ID [None]: your-access-key
+AWS Secret Access Key [None]: your-secret-access-key
+Default region name [None]: bucket-region
+Default output format [None]: json
+</code></pre></div>
+<p>These commands will create the files ~/.aws/credentials and ~/.aws/config.</p>
+<ul>
+<li>Demonstrating AWS Configure</li>
+</ul>
+<p><a href="https://asciinema.org/a/371052"><img alt="asciicast" src="https://asciinema.org/a/371052.svg" /></a></p>
+<h2 id="minio">MinIO<a class="headerlink" href="#minio" title="Permanent link">&para;</a></h2>
+<p><a href="https://min.io/">MinIO</a> is a cloud storage server compatible with Amazon S3. That said, you can configure it in the same way as described above by placing Access Key and Secret Access Key of your MinIO bucket.</p>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 7, 2021</span>
+      
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
 
               
             </article>
@@ -586,6 +738,41 @@
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../storage_configurations/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configurations" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Configurations
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../azure_configurations/" class="md-footer__link md-footer__link--next" aria-label="Next: Azure" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Azure
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -606,10 +793,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "/ml-git/", "features": ["navigation.tabs", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "/ml-git/assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
-      <script src="/ml-git/assets/javascripts/bundle.56a63758.min.js"></script>
+      <script src="../assets/javascripts/bundle.56a63758.min.js"></script>
       
     
   </body>

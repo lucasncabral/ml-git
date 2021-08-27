@@ -1,0 +1,951 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="https://hpinc.github.io/ml-git/developer_info/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
+    
+    
+      
+        <title>Contributing to ML-Git - ML-Git</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.be71726b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#02a6f2">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="light-blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#contributing-to-ml-git" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ML-Git" class="md-header__button md-logo" aria-label="ML-Git" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ML-Git
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Contributing to ML-Git
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
+      Contributing to ML-Git
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ML-Git" class="md-nav__button md-logo" aria-label="ML-Git" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ML-Git
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        Home
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first_steps/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced_scenarios/" class="md-nav__link">
+        Additional Use Cases
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" >
+      
+      <label class="md-nav__link" for="__nav_1_4">
+        Architecture
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Architecture" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          Architecture
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mlgit_internals/" class="md-nav__link">
+        Design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../centralized_cache_and_objects/" class="md-nav__link">
+        Cache and Objects
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mutability_helper/" class="md-nav__link">
+        Mutability Helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        Plugins
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources_initialization/" class="md-nav__link">
+        Resources Initialization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tabular_data/tabular_data/" class="md-nav__link">
+        Working With Tabular Data
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_5" type="checkbox" id="__nav_1_5" >
+      
+      <label class="md-nav__link" for="__nav_1_5">
+        Supported Storages
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Supported Storages" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_5">
+          <span class="md-nav__icon md-icon"></span>
+          Supported Storages
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage_configurations/" class="md-nav__link">
+        Configurations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3_configurations/" class="md-nav__link">
+        S3 and MinIO
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../azure_configurations/" class="md-nav__link">
+        Azure
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gdrive_configurations/" class="md-nav__link">
+        Google Drive
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_6" type="checkbox" id="__nav_1_6" >
+      
+      <label class="md-nav__link" for="__nav_1_6">
+        Commands
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Commands" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_6">
+          <span class="md-nav__icon md-icon"></span>
+          Commands
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mlgit_commands/" class="md-nav__link">
+        Using ML-Git CLI
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_6_2" type="checkbox" id="__nav_1_6_2" >
+      
+      <label class="md-nav__link" for="__nav_1_6_2">
+        Using ML-Git API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Using ML-Git API" data-md-level="3">
+        <label class="md-nav__title" for="__nav_1_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Using ML-Git API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/quick_start/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloadable_environment/" class="md-nav__link">
+        Docker Environment
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Contributing to ML-Git
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Contributing to ML-Git
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-for-development" class="md-nav__link">
+    Installing for Development
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-tests" class="md-nav__link">
+    Running the Tests
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-unit-tests" class="md-nav__link">
+    Running Unit Tests
+  </a>
+  
+    <nav class="md-nav" aria-label="Running Unit Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-make" class="md-nav__link">
+    Using Make
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#without-make" class="md-nav__link">
+    Without Make
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-integration-tests" class="md-nav__link">
+    Running Integration Tests
+  </a>
+  
+    <nav class="md-nav" aria-label="Running Integration Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-make_1" class="md-nav__link">
+    Using Make
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#without-make_1" class="md-nav__link">
+    Without Make
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-drive-integration-test" class="md-nav__link">
+    Google Drive Integration Test
+  </a>
+  
+    <nav class="md-nav" aria-label="Google Drive Integration Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-make_2" class="md-nav__link">
+    Using Make
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#without-make_2" class="md-nav__link">
+    Without Make
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#executing-a-single-test-file" class="md-nav__link">
+    Executing a Single Test File
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="contributing-to-ml-git">Contributing to ML-Git<a class="headerlink" href="#contributing-to-ml-git" title="Permanent link">&para;</a></h1>
+<p>The ML-Git project welcomes, and depends, on contributions from developers and users in the open source community. Contributions can be made in a number of ways. The main way to contribute is following the next steps:</p>
+<ol>
+<li>Fork the repository into your own GitHub</li>
+<li>Clone the repository to your local machine</li>
+<li>Create a new branch for your changes using the following pattern (feature | bugfix | hotfix)/branch_name. Example: feature/sftp_storage_implementation</li>
+<li>Make changes and test</li>
+<li>Push the changes to your repository</li>
+<li>Create a Pull Request from your forked repository to the ML-Git repository with comprehensive description of changes</li>
+</ol>
+<p>Another way to contribute with the community is creating an issue to track your ideas, doubts, enhancements, tasks, or bugs found. If an issue with the same topic already exists, discuss on the issue.</p>
+<h2 id="installing-for-development">Installing for Development<a class="headerlink" href="#installing-for-development" title="Permanent link">&para;</a></h2>
+<p>To be able to contribute with our project, you will need to have the following <strong>requirements</strong> in your machine: </p>
+<ul>
+<li>Python 3.7</li>
+<li><a href="https://github.com/pypa/pipenv">Pipenv</a></li>
+<li><a href="https://git-scm.com/">Git</a></li>
+<li><a href="https://www.docker.com/">Docker</a> (required only for Integration Tests execution)</li>
+</ul>
+<h2 id="running-the-tests">Running the Tests<a class="headerlink" href="#running-the-tests" title="Permanent link">&para;</a></h2>
+<p>After developing, you must run the unit and integration tests. To be able to do that:</p>
+<ol>
+<li>
+<p>Install Docker:</p>
+</li>
+<li>
+<p><a href="https://docs.docker.com/docker-for-windows/install/">Windows</a></p>
+</li>
+<li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-engine---community-1">Linux</a></li>
+</ol>
+<p>The <strong>Integration Tests</strong> script starts a <a href="https://hub.docker.com/r/minio/minio">MinIO</a> container on your local machine (port 9000) to be used as storage during tests execution.</p>
+<ol>
+<li>
+<p>[Optional] Install and configure Make to run tests easily:</p>
+</li>
+<li>
+<p><a href="http://gnuwin32.sourceforge.net/packages/make.htm">Windows</a></p>
+</li>
+<li>
+<p><a href="https://www.gnu.org/software/make/">Linux</a></p>
+</li>
+<li>
+<p>Configure git:</p>
+</li>
+</ol>
+<p><code>git config --global user.name "First Name and Last Name"</code>
+   <code>git config --global user.email "your_name@example.com"</code>  </p>
+<h3 id="running-unit-tests">Running Unit Tests<a class="headerlink" href="#running-unit-tests" title="Permanent link">&para;</a></h3>
+<p>You can run unit tests through: </p>
+<h4 id="using-make">Using <strong>Make</strong><a class="headerlink" href="#using-make" title="Permanent link">&para;</a></h4>
+<p>Execute on terminal:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ml-git
+make test.unit
+</code></pre></div>
+<h4 id="without-make">Without <strong>Make</strong><a class="headerlink" href="#without-make" title="Permanent link">&para;</a></h4>
+<p><strong>Linux</strong></p>
+<p>Execute on terminal:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ml-git
+sh ./scripts/run_unit_tests.sh
+</code></pre></div>
+<p><strong>Windows</strong></p>
+<p>Execute on Powershell or CMD:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd </span><span class="n">ml-git</span>
+<span class="p">.\</span><span class="n">scripts</span><span class="p">\</span><span class="n">run_unit_tests</span><span class="p">.</span><span class="n">bat</span>
+</code></pre></div>
+<h3 id="running-integration-tests">Running Integration Tests<a class="headerlink" href="#running-integration-tests" title="Permanent link">&para;</a></h3>
+<p>You can run integration tests through:</p>
+<h4 id="using-make_1">Using <strong>Make</strong><a class="headerlink" href="#using-make_1" title="Permanent link">&para;</a></h4>
+<p>Execute on terminal:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ml-git
+make test.integration 
+</code></pre></div>
+<h4 id="without-make_1">Without <strong>Make</strong><a class="headerlink" href="#without-make_1" title="Permanent link">&para;</a></h4>
+<p><strong>Linux</strong></p>
+<p>Execute on terminal:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ml-git
+sh ./scripts/run_integration_tests.sh
+</code></pre></div>
+<p><strong>Windows</strong></p>
+<p>Execute on Powershell or CMD:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd </span><span class="n">ml-git</span>
+<span class="p">.\</span><span class="n">scripts</span><span class="p">\</span><span class="n">run_integration_tests</span><span class="p">.</span><span class="n">bat</span>
+</code></pre></div>
+<h4 id="google-drive-integration-test">Google Drive Integration Test<a class="headerlink" href="#google-drive-integration-test" title="Permanent link">&para;</a></h4>
+<p>To run google drive integration test you need to:
+1. Create directory <strong>tests/integration/credentials-json</strong></p>
+<ol>
+<li>
+<p>Put your credentials file with name <strong>credentials.json</strong> in the folder you created in step 1</p>
+<p>Example of credentials.json:
+<div class="highlight"><pre><span></span><code>{&quot;installed&quot;:{&quot;client_id&quot;:&quot;fake_client_id     &quot;,&quot;project_id&quot;:&quot;project&quot;,&quot;auth_uri&quot;:&quot;https://accounts.google.com/o/oauth2/auth&quot;,&quot;token_uri&quot;:&quot;https://oauth2.googleapis.com/token&quot;,&quot;auth_provider_x509_cert_url&quot;:&quot;https://www.googleapis.com/oauth2/v1/certs&quot;,&quot;client_secret&quot;:&quot;fake_client_secret                                       &quot;,&quot;redirect_uris&quot;:[&quot;urn:ietf:wg:oauth:2.0:oob&quot;,&quot;http://localhost&quot;]}}
+</code></pre></div></p>
+</li>
+<li>
+<p>Create a folder with name <strong>mlgit/test-folder</strong> in your GDrive</p>
+</li>
+<li>
+<p>Create files <strong>mlgit/B</strong> and <strong>mlgit/test-folder/A</strong> with any content, make sure that files aren't Google Files.</p>
+<p>You should have the following structure in your drive:
+<div class="highlight"><pre><span></span><code>YourDrive
+<span class="p">|</span>
+├── mlgit
+│   ├── B
+│   └── test-folder
+│       └── A
+</code></pre></div></p>
+</li>
+<li>
+<p>Create <strong>tests/integration/gdrive-files-links.json</strong> with shared links of <strong>mlgit/B</strong> and <strong>mlgit/test-folder</strong>.</p>
+<p>Example of gdrive-files-links.json:
+<div class="highlight"><pre><span></span><code>{
+  &quot;test-folder&quot;: &quot;https://drive.google.com/drive/folders/1MvWrQtPVDuJ5-XB82dMwRI8XflBZ?usp=sharing&quot;,
+  &quot;B&quot;: &quot;https://drive.google.com/file/d/1uy6Kao8byRqTPv-Plw8tuhITyh5N1Uua/view?usp=sharing&quot;
+}
+</code></pre></div></p>
+</li>
+</ol>
+<p>The Google Drive Integration Tests are set to <strong>not</strong> run by default (as they require extra setup, as mentioned earlier).  To include the integration tests for Google Drive storage during an integration tests run, you should execute:</p>
+<h5 id="using-make_2">Using <strong>Make</strong><a class="headerlink" href="#using-make_2" title="Permanent link">&para;</a></h5>
+<p>Execute on terminal:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ml-git
+make test.integration.gdrive
+</code></pre></div>
+<h5 id="without-make_2">Without <strong>Make</strong><a class="headerlink" href="#without-make_2" title="Permanent link">&para;</a></h5>
+<p><strong>Linux</strong></p>
+<p>Execute on terminal:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ml-git
+sh ./scripts/run_integration_tests.sh --gdrive
+</code></pre></div>
+<p><strong>Windows</strong></p>
+<p>Execute on Powershell or CMD:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd </span><span class="n">ml-git</span>
+<span class="p">.\</span><span class="n">scripts</span><span class="p">\</span><span class="n">run_integration_tests</span><span class="p">.</span><span class="n">bat</span> <span class="p">-</span><span class="n">-gdrive</span>
+</code></pre></div>
+<h3 id="executing-a-single-test-file">Executing a Single Test File<a class="headerlink" href="#executing-a-single-test-file" title="Permanent link">&para;</a></h3>
+<p>To execute a specific integration tests file, execute the <code>run_integration_tests</code> script accordingly with your operating system and pass the test file path relative to integration tests folder (tests/integration/).</p>
+<p>See the below examples running test_01_init.py located at <code>ml-git/tests/integration/test_01_init.py</code>:</p>
+<p><strong>Linux:</strong>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ml-git
+sh ./scripts/run_integration_tests.sh test_01_init.py
+</code></pre></div></p>
+<p><strong>Windows:</strong>
+<div class="highlight"><pre><span></span><code><span class="nb">cd </span><span class="n">ml-git</span>
+<span class="p">.\</span><span class="n">scripts</span><span class="p">\</span><span class="n">run_integration_tests</span><span class="p">.</span><span class="n">bat</span> <span class="n">test_01_init</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div></p>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 27, 2021</span>
+      
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../downloadable_environment/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Docker Environment" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Docker Environment
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.56a63758.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -9,21 +9,21 @@
       
       
       
-        <link rel="canonical" href="https://hpinc.github.io/ml-git/">
+        <link rel="canonical" href="https://hpinc.github.io/ml-git/centralized_cache_and_objects/">
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
     
     
       
-        <title>Introduction - ML-Git</title>
+        <title>Cache and Objects - ML-Git</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.be71726b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.be71726b.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -59,7 +59,7 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="light-blue" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ml-git" class="md-skip">
+        <a href="#centralized-cache" class="md-skip">
           Skip to content
         </a>
       
@@ -78,7 +78,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="ML-Git" class="md-header__button md-logo" aria-label="ML-Git" data-md-component="logo">
+    <a href=".." title="ML-Git" class="md-header__button md-logo" aria-label="ML-Git" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Introduction
+              Cache and Objects
             
           </span>
         </div>
@@ -164,7 +164,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="." class="md-tabs__link md-tabs__link--active">
+      <a href=".." class="md-tabs__link md-tabs__link--active">
         Home
       </a>
     </li>
@@ -177,7 +177,7 @@
 
 
   <li class="md-tabs__item">
-    <a href="developer_info/" class="md-tabs__link">
+    <a href="../developer_info/" class="md-tabs__link">
       Contributing to ML-Git
     </a>
   </li>
@@ -205,7 +205,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="ML-Git" class="md-nav__button md-logo" aria-label="ML-Git" data-md-component="logo">
+    <a href=".." title="ML-Git" class="md-nav__button md-logo" aria-label="ML-Git" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -245,86 +245,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Introduction
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         Introduction
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-install" class="md-nav__link">
-    How to install
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-configure" class="md-nav__link">
-    How to configure
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    Usage
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#basic-commands" class="md-nav__link">
-    Basic commands
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-contribute" class="md-nav__link">
-    How to contribute
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#links" class="md-nav__link">
-    Links
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -334,7 +259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="first_steps/" class="md-nav__link">
+      <a href="../first_steps/" class="md-nav__link">
         Getting Started
       </a>
     </li>
@@ -346,7 +271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="advanced_scenarios/" class="md-nav__link">
+      <a href="../advanced_scenarios/" class="md-nav__link">
         Additional Use Cases
       </a>
     </li>
@@ -356,12 +281,14 @@
             
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" checked>
       
       <label class="md-nav__link" for="__nav_1_4">
         Architecture
@@ -379,7 +306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mlgit_internals/" class="md-nav__link">
+      <a href="../mlgit_internals/" class="md-nav__link">
         Design
       </a>
     </li>
@@ -389,11 +316,94 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="centralized_cache_and_objects/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Cache and Objects
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Cache and Objects
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#centralized-cache" class="md-nav__link">
+    Centralized cache
+  </a>
+  
+    <nav class="md-nav" aria-label="Centralized cache">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-steps" class="md-nav__link">
+    Configuration steps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#centralized-objects" class="md-nav__link">
+    Centralized objects
+  </a>
+  
+    <nav class="md-nav" aria-label="Centralized objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements_1" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-steps_1" class="md-nav__link">
+    Configuration steps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -403,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mutability_helper/" class="md-nav__link">
+      <a href="../mutability_helper/" class="md-nav__link">
         Mutability Helper
       </a>
     </li>
@@ -415,7 +425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="plugins/" class="md-nav__link">
+      <a href="../plugins/" class="md-nav__link">
         Plugins
       </a>
     </li>
@@ -427,7 +437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="resources_initialization/" class="md-nav__link">
+      <a href="../resources_initialization/" class="md-nav__link">
         Resources Initialization
       </a>
     </li>
@@ -439,7 +449,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tabular_data/tabular_data/" class="md-nav__link">
+      <a href="../tabular_data/tabular_data/" class="md-nav__link">
         Working With Tabular Data
       </a>
     </li>
@@ -478,7 +488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="storage_configurations/" class="md-nav__link">
+      <a href="../storage_configurations/" class="md-nav__link">
         Configurations
       </a>
     </li>
@@ -490,7 +500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="s3_configurations/" class="md-nav__link">
+      <a href="../s3_configurations/" class="md-nav__link">
         S3 and MinIO
       </a>
     </li>
@@ -502,7 +512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="azure_configurations/" class="md-nav__link">
+      <a href="../azure_configurations/" class="md-nav__link">
         Azure
       </a>
     </li>
@@ -514,7 +524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gdrive_configurations/" class="md-nav__link">
+      <a href="../gdrive_configurations/" class="md-nav__link">
         Google Drive
       </a>
     </li>
@@ -553,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mlgit_commands/" class="md-nav__link">
+      <a href="../mlgit_commands/" class="md-nav__link">
         Using ML-Git CLI
       </a>
     </li>
@@ -586,7 +596,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/quick_start/" class="md-nav__link">
+      <a href="../api/quick_start/" class="md-nav__link">
         Quick Start
       </a>
     </li>
@@ -598,7 +608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/" class="md-nav__link">
+      <a href="../api/" class="md-nav__link">
         Methods
       </a>
     </li>
@@ -622,7 +632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="downloadable_environment/" class="md-nav__link">
+      <a href="../downloadable_environment/" class="md-nav__link">
         Docker Environment
       </a>
     </li>
@@ -643,7 +653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="developer_info/" class="md-nav__link">
+      <a href="../developer_info/" class="md-nav__link">
         Contributing to ML-Git
       </a>
     </li>
@@ -663,158 +673,112 @@
               
                 
                 
-                <h1 id="ml-git">ML-Git<a class="headerlink" href="#ml-git" title="Permanent link">&para;</a></h1>
-<p>ML-Git is a tool which provides a Distributed Version Control system to enable efficient dataset management. Like its name emphasizes, it is inspired in git concepts and workflows, ML-Git enables the following operations:</p>
+                  <h1>Cache and Objects</h1>
+                
+                <h2 id="centralized-cache"><a name="centralized-cache">Centralized cache</a><a class="headerlink" href="#centralized-cache" title="Permanent link">&para;</a></h2>
+<p>Centralized cache is a configuration mode that allows cached files to be shared between multiple users on the same machine, reducing the total cost of disk space. <strong>Currently, this feature works only in Linux and derivative machines.</strong></p>
+<blockquote>
+<p>:warning:<strong>Caution:</strong></p>
+</blockquote>
 <ul>
-<li>Manage a repository of different datasets, labels and models.</li>
-<li>Distribute these ML artifacts between members of a team or across organizations.</li>
-<li>Apply the right data governance and security models to their artifacts.</li>
+<li>We encourage the use of centralized cache just with mutability set as <strong>strict</strong>.</li>
+<li>It is necessary to deactivate the feature <code>fs.protected_hardlinks</code>, because ML-Git uses hardlink to share cache files. Be aware that changing this setting is a risky operation, as malicious people can exploit this (see the extract below). Do this only if you really need to use the Centralized Cache feature. <strong>Remember to revert this change if you will stop to use Centralized Cache.</strong></li>
 </ul>
-<p>If you are seeking to learn more about ML-Git, access <a href="https://hpinc.github.io/ml-git/">ML-Git Page</a>.</p>
-<h3 id="how-to-install">How to install<a class="headerlink" href="#how-to-install" title="Permanent link">&para;</a></h3>
-<p><strong>Prerequisites:</strong></p>
-<ul>
-<li><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git</a></li>
-<li><a href="https://www.python.org/downloads/release/python-370/">Python 3.7+</a></li>
-</ul>
-<p><strong>With pip:</strong>
-<div class="highlight"><pre><span></span><code>pip install git+git://github.com/HPInc/ml-git.git
-</code></pre></div></p>
-<p><strong>Source code:</strong></p>
-<p>Download ML-Git from repository and execute commands below:</p>
-<ul>
-<li>
-<p>Windows:</p>
-<div class="highlight"><pre><span></span><code>cd ml-git/
-python3.7 setup.py install
-</code></pre></div>
-</li>
-<li>
-<p>Linux:</p>
-<div class="highlight"><pre><span></span><code>cd ml-git/
-sudo python3.7 setup.py install
-</code></pre></div>
-</li>
-</ul>
-<h3 id="how-to-configure">How to configure<a class="headerlink" href="#how-to-configure" title="Permanent link">&para;</a></h3>
-<p>1 - As ML-Git leverages git to manage ML entities metadata, it is necessary to configure user name and email address:</p>
-<div class="highlight"><pre><span></span><code>$ git config --global user.name &quot;Your User&quot;
-$ git config --global user.email &quot;your_email@example.com&quot;
-</code></pre></div>
-<p>2 - Storage:</p>
-<p>ML-Git needs a configured storage to store data from managed artifacts. Please take a look at the <a href="mlgit_internals">ML-Git architecture and internals documentation</a> to better understand how ML-Git works internally with data.</p>
-<ul>
-<li>To configure the storage <a href="storage_configurations">see documentation about supported storages and how to configure each one.</a></li>
-</ul>
-<p>3 - ML-Git project:</p>
-<ul>
-<li>An ML-Git project is an initialized directory that will contain a configuration file to be used by ML-Git in managing entities. 
-To configure it you can use the basic steps to configure the project described in <em><a href="first_project">first project documentation.</a></em></li>
-</ul>
-<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>$ ml-git --help
-Usage: ml-git [OPTIONS] COMMAND [ARGS]...
-
-Options:
-  --version  Show the version and exit.
-
-Commands:
-  clone       Clone a ml-git repository ML_GIT_REPOSITORY_URL
-  datasets    Management of datasets within this ml-git repository.
-  labels      Management of labels sets within this ml-git repository.
-  models      Management of models within this ml-git repository.
-  repository  Management of this ml-git repository.
-</code></pre></div>
-<h3 id="basic-commands">Basic commands<a class="headerlink" href="#basic-commands" title="Permanent link">&para;</a></h3>
-<details>
-<p><summary><code>ml-git clone &lt;repository-url&gt;</code></summary>
-<br></p>
-<div class="highlight"><pre><span></span><code>$ mkdir my-project
-$ cd my-project
-$ ml-git clone https://github.com/user/ml_git_configuration_file_example.git
-</code></pre></div>
-<p>If you prefer not to create the directory:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git clone https://github.com/user/ml_git_configuration_file_example.git --folder=my-project
-</code></pre></div>
-<p>If you prefer keep git tracking files in the project:</p>
-<div class="highlight"><pre><span></span><code>$ mkdir my-project
-$ cd my-project
-$ ml-git clone https://github.com/user/ml_git_configuration_file_example.git --track
-</code></pre></div>
-</details>
-<details>
-<p><summary><code>ml-git &lt;ml-entity&gt; create</code></summary>
-This command will help you to start a new project, it creates your project artifact metadata:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git datasets create --category=computer-vision --category=images --bucket-name=your_bucket --import=../import-path --mutability=strict dataset-ex 
-</code></pre></div>
-<p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/385779"><img alt="asciicast" src="https://asciinema.org/a/385779.svg" /></a></p>
-</details>
-<details>
-<p><summary><code>ml-git &lt;ml-entity&gt; status</code></summary>
-Show changes in project workspace:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git datasets status dataset-ex
-</code></pre></div>
-<p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/385780"><img alt="asciicast" src="https://asciinema.org/a/385780.svg" /></a></p>
-</details>
-<details>
-<p><summary><code>ml-git &lt;ml-entity&gt; add</code></summary>
-Add new files to index:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git datasets add dataset-ex
-</code></pre></div>
-<p>To increment version:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git datasets add dataset-ex --bumpversion
-</code></pre></div>
-<p>Add an specific file:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git datasets add dataset-ex data/file_name.ex
-</code></pre></div>
-<p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/385781"><img alt="asciicast" src="https://asciinema.org/a/385781.svg" /></a></p>
-</details>
-<details>
-<p><summary><code>ml-git &lt;ml-entity&gt; commit</code></summary>
-Consolidate added files in the index to repository:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git datasets commit dataset-ex
-</code></pre></div>
-<p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/385782"><img alt="asciicast" src="https://asciinema.org/a/385782.svg" /></a></p>
-</details>
-<details>
-<p><summary><code>ml-git &lt;ml-entity&gt; push</code></summary>
-Upload metadata to remote repository and send <a href="mlgit_internals">chunks</a> to storage:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git datasets push dataset-ex
-</code></pre></div>
-<p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/385783"><img alt="asciicast" src="https://asciinema.org/a/385783.svg" /></a></p>
-</details>
-<details>
-<p><summary><code>ml-git &lt;ml-entity&gt; checkout</code></summary>
-Change workspace and metadata to versioned ml-entity tag:</p>
-<div class="highlight"><pre><span></span><code>$ ml-git datasets checkout computer-vision__images__dataset-ex__1
-</code></pre></div>
-<p>Demonstration video:</p>
-<p><a href="https://asciinema.org/a/385784"><img alt="asciicast" src="https://asciinema.org/a/385784.svg" /></a></p>
-</details>
-<p><a href="mlgit_commands">More about commands in documentation</a></p>
-<h3 id="how-to-contribute">How to contribute<a class="headerlink" href="#how-to-contribute" title="Permanent link">&para;</a></h3>
-<p>Your contributions are always welcome!</p>
+<p>Please read this extract from <a href="https://www.kernel.org/doc/Documentation/sysctl/fs.txt">kernel.org</a> about protected_hardlinks setting:</p>
+<blockquote>
+<p>protected_hardlinks:</p>
+<p>A long-standing class of security issues is the hardlink-based
+time-of-check-time-of-use race, most commonly seen in world-writable
+directories like /tmp. The common method of exploitation of this flaw
+is to cross privilege boundaries when following a given hardlink (i.e. a
+root process follows a hardlink created by another user). Additionally,
+on systems without separated partitions, this stops unauthorized users
+from "pinning" vulnerable setuid/setgid files against being upgraded by
+the administrator, or linking to special files.</p>
+<p>When set to "0", hardlink creation behavior is unrestricted.</p>
+<p>When set to "1" hardlinks cannot be created by users if they do not
+already own the source file, or do not have read/write access to it.</p>
+<p>This protection is based on the restrictions in Openwall and grsecurity.</p>
+</blockquote>
+<p><strong>Changing fs.protected_hardlinks:</strong></p>
 <ol>
-<li>Fork the repository into your own GitHub</li>
-<li>Clone the repository to your local machine</li>
-<li>Create a new branch for your changes using the following pattern <code>(feature | bugfix | hotfix)/branch_name</code>. Example: <code>feature/sftp_storage_implementation</code></li>
-<li>Make changes and <a href="developer_info">test</a></li>
-<li>Push the changes to your repository</li>
-<li>Create a Pull Request from your forked repository to the ML-Git repository with comprehensive description of changes</li>
+<li>Execute in terminal: <code>sudo gedit /etc/sysctl.conf</code></li>
+<li>Search for: <code>#fs.protected_hardlinks = 0</code> and uncomment (remove ‘#’). If you didn't find it, add a line with <code>#fs.protected_hardlinks = 0</code> to this file</li>
+<li>Then execute: <code>sudo sysctl -p</code></li>
 </ol>
-<p>Another way to contribute with the community is creating an issue to track your ideas, doubts, enhancements, tasks, or bugs found. 
-If an issue with the same topic already exists, discuss on the issue.</p>
-<h3 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="api/">ML-Git API documentation</a> - Find the commands that are available in our api, usage examples and more.</li>
-<li><a href="tabular_data/tabular_data">Working with tabular data</a> - Find suggestions on how to use ml-git with tabular data.</li>
-<li><a href="plugins">ml-git data specialization plugins</a> - Dynamically link third-party packages to add specialized behaviors for the data type.</li>
-</ul>
+<h5 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h5>
+<p>Machine's root user (administrator).</p>
+<h5 id="configuration-steps">Configuration steps<a class="headerlink" href="#configuration-steps" title="Permanent link">&para;</a></h5>
+<p>1 - Create a common directory for each entity with read and write permission for all users:</p>
+<div class="highlight"><pre><span></span><code>sudo mkdir -p /srv/mlgit/cache/dataset
+sudo mkdir -p /srv/mlgit/cache/labels
+sudo mkdir -p /srv/mlgit/cache/model
+</code></pre></div>
+<p><strong>Change permissions:</strong></p>
+<div class="highlight"><pre><span></span><code>sudo chmod -R a+rwX /srv/mlgit/cache/dataset
+sudo chmod -R a+rwX /srv/mlgit/cache/labels
+sudo chmod -R a+rwX /srv/mlgit/cache/model
+</code></pre></div>
+<p>2 - With the project ml-git initialized change .ml-git/config.yaml :</p>
+<div class="highlight"><pre><span></span><code>datasets:
+  git: &#39;&#39;
+  cache_path: &#39;Cache path directory created on step 1 for dataset entity&#39;
+labels:
+  git: &#39;&#39;
+  cache_path: &#39;Path directory created on step 1 for labels entity&#39;
+models:
+  git: &#39;&#39;
+  cache_path: &#39;Path directory created on step 1 for model entity&#39;
+storages:
+  s3:
+    mlgit-datasets:
+      aws-credentials:
+        profile: default
+      region: us-east-1
+</code></pre></div>
+<h2 id="centralized-objects"><a name="centralized-objects">Centralized objects</a><a class="headerlink" href="#centralized-objects" title="Permanent link">&para;</a></h2>
+<p>Centralized objects is a configuration that allow to user share ml-git’s data between machine’s users, avoiding downloading times.</p>
+<h5 id="requirements_1">Requirements<a class="headerlink" href="#requirements_1" title="Permanent link">&para;</a></h5>
+<p>Machine's root user (administrator).</p>
+<h5 id="configuration-steps_1">Configuration steps<a class="headerlink" href="#configuration-steps_1" title="Permanent link">&para;</a></h5>
+<p>1 - Create a common directory for each entity with read and write permission for all users:</p>
+<p><strong>For Windows users</strong></p>
+<div class="highlight"><pre><span></span><code>mkdir \a %ALLUSERSPROFILE%\mlgit\objects\dataset
+mkdir \a %ALLUSERSPROFILE%\mlgit\objects\labels
+mkdir \a %ALLUSERSPROFILE%\mlgit\objects\model
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><code>mkgit \a C:\ProgramData\mlgit\objects\dataset
+mkgit \a C:\ProgramData\mlgit\objects\labels
+mkgit \a C:\ProgramData\mlgit\objects\model
+</code></pre></div>
+<p><strong>For Linux and derivatives users</strong></p>
+<div class="highlight"><pre><span></span><code>sudo mkdir -p /srv/mlgit/objects/dataset
+sudo mkdir -p /srv/mlgit/objects/labels
+sudo mkdir -p /srv/mlgit/objects/model
+</code></pre></div>
+<p><strong>Change permissions</strong></p>
+<div class="highlight"><pre><span></span><code>sudo chmod -R a+rwX /srv/mlgit/objects/dataset
+sudo chmod -R a+rwX /srv/mlgit/objects/labels
+sudo chmod -R a+rwX /srv/mlgit/objects/model
+</code></pre></div>
+<p>2 - With the project ml-git initialized change .ml-git/config.yaml :</p>
+<div class="highlight"><pre><span></span><code>datasets:
+  git: &#39;&#39;
+  objects_path: &#39;Path directory created on step 1 for dataset entity&#39;
+labels:
+  git: &#39;&#39;
+  objects_path: &#39;Path directory created on step 1 for labels entity&#39;
+models:
+  git: &#39;&#39;
+  objects_path: &#39;Path directory created on step 1 for model entity&#39;
+storages:
+  s3:
+    mlgit-datasets:
+      aws-credentials:
+        profile: default
+      region: us-east-1
+</code></pre></div>
                 
                   
                     
@@ -847,15 +811,30 @@ If an issue with the same topic already exists, discuss on the issue.</p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
+        
+        <a href="../mlgit_internals/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Design" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Design
+            </div>
+          </div>
+        </a>
+      
       
         
-        <a href="first_steps/" class="md-footer__link md-footer__link--next" aria-label="Next: Getting Started" rel="next">
+        <a href="../mutability_helper/" class="md-footer__link md-footer__link--next" aria-label="Next: Mutability Helper" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Getting Started
+              Mutability Helper
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -884,10 +863,10 @@ If an issue with the same topic already exists, discuss on the issue.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.56a63758.min.js"></script>
+      <script src="../assets/javascripts/bundle.56a63758.min.js"></script>
       
     
   </body>

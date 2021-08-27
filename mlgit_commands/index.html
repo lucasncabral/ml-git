@@ -1,0 +1,1404 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="https://hpinc.github.io/ml-git/mlgit_commands/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
+    
+    
+      
+        <title>Using ML-Git CLI - ML-Git</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.be71726b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#02a6f2">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="light-blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ml-git-commands" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ML-Git" class="md-header__button md-logo" aria-label="ML-Git" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ML-Git
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Using ML-Git CLI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link md-tabs__link--active">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../developer_info/" class="md-tabs__link">
+      Contributing to ML-Git
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ML-Git" class="md-nav__button md-logo" aria-label="ML-Git" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ML-Git
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      <label class="md-nav__link" for="__nav_1">
+        Home
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first_steps/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced_scenarios/" class="md-nav__link">
+        Additional Use Cases
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_4" type="checkbox" id="__nav_1_4" >
+      
+      <label class="md-nav__link" for="__nav_1_4">
+        Architecture
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Architecture" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          Architecture
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mlgit_internals/" class="md-nav__link">
+        Design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../centralized_cache_and_objects/" class="md-nav__link">
+        Cache and Objects
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mutability_helper/" class="md-nav__link">
+        Mutability Helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        Plugins
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources_initialization/" class="md-nav__link">
+        Resources Initialization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tabular_data/tabular_data/" class="md-nav__link">
+        Working With Tabular Data
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_5" type="checkbox" id="__nav_1_5" >
+      
+      <label class="md-nav__link" for="__nav_1_5">
+        Supported Storages
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Supported Storages" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_5">
+          <span class="md-nav__icon md-icon"></span>
+          Supported Storages
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage_configurations/" class="md-nav__link">
+        Configurations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3_configurations/" class="md-nav__link">
+        S3 and MinIO
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../azure_configurations/" class="md-nav__link">
+        Azure
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gdrive_configurations/" class="md-nav__link">
+        Google Drive
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_6" type="checkbox" id="__nav_1_6" checked>
+      
+      <label class="md-nav__link" for="__nav_1_6">
+        Commands
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Commands" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_6">
+          <span class="md-nav__icon md-icon"></span>
+          Commands
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Using ML-Git CLI
+      </a>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_6_2" type="checkbox" id="__nav_1_6_2" >
+      
+      <label class="md-nav__link" for="__nav_1_6_2">
+        Using ML-Git API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Using ML-Git API" data-md-level="3">
+        <label class="md-nav__title" for="__nav_1_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Using ML-Git API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/quick_start/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloadable_environment/" class="md-nav__link">
+        Docker Environment
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer_info/" class="md-nav__link">
+        Contributing to ML-Git
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="ml-git-commands">ML-Git commands<a class="headerlink" href="#ml-git-commands" title="Permanent link">&para;</a></h1>
+<details>
+<p><summary><code> ml-git --help </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --version  Show the version and exit.
+
+Commands:
+  clone       Clone a ml-git repository ML_GIT_REPOSITORY_URL
+  datasets    Management of datasets within this ml-git repository.
+  labels      Management of labels sets within this ml-git repository.
+  models      Management of models within this ml-git repository.
+  repository  Management of this ml-git repository.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git --help
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git --version </code></summary></p>
+<p>Displays the installed version of ML-Git.</p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; add </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets add [OPTIONS] ML_ENTITY_NAME [FILE_PATH]...
+
+  Add datasets change set ML_ENTITY_NAME to the local ml-git staging area.
+
+Options:
+  --bumpversion  Increment the version number when adding more files.
+  --fsck         Run fsck after command execution.
+  --metric       Insert the metric key and value.
+  --metrics-file Insert the methic file path. It is expected a CSV file containing the metric names in the header and the values in the next line.
+  --help         Show this message and exit.
+</code></pre></div>
+<p>Dataset example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets add dataset-ex --bumpversion
+</code></pre></div></p>
+<p>ml-git expects datasets to be managed under <em>dataset</em> directory.
+\&lt;ml-entity-name> is also expected to be a repository under the tree structure and ml-git will search for it in the tree.
+Under that repository, it is also expected to have a \&lt;ml-entity-name>.spec file, defining the ML entity to be added.
+Optionally, one can add a README.md which will describe the dataset and be what will be shown in the github repository for that specific dataset.</p>
+<p>Internally, the <em>ml-git add</em> will add all the files under the \&lt;ml-entity> directory into the ml-git index / staging area.</p>
+<p>Model example:
+<div class="highlight"><pre><span></span><code>$ ml-git models add model-ex --metrics-file=&#39;/path/to/your/file.csv&#39;
+</code></pre></div></p>
+<p>ml-git allows you to enter a metrics file or the metrics themselves on the command line when adding a model.</p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; branch </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets branch [OPTIONS] ML_ENTITY_NAME
+
+  This command allows to check which tag is checked out in the ml-git
+  workspace.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets branch imagenet8
+(&#39;vision-computing__images__imagenet8__1&#39;, &#39;48ba1e994a1e39e1b508bff4a3302a5c1bb9063e&#39;)
+</code></pre></div></p>
+<p>That information is equal to the HEAD reference from a git concept. ml-git keeps that information on a per \&lt;ml-entity-name> basis. which enables independent checkout of each of these \&lt;ml-entity-name>.</p>
+<p>The output is a tuple:
+1) the tag auto-generated by ml-git based on the \&lt;ml-entity-name>.spec (composite with categories, \&lt;ml-entity-name>, version)
+2) the sha of the git commit of that \&lt;ml-entity> version
+Both are the same representation. One is human-readable and is also used internally by ml-git to find out the path to the referenced \&lt;ml-entity-name>.</p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; checkout </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git models checkout [OPTIONS] ML_ENTITY_TAG|ML_ENTITY
+
+  Checkout the ML_ENTITY_TAG|ML_ENTITY of a model set into user workspace.
+
+Options:
+  -l, --with-labels         The checkout associated labels  in user workspace
+                            as well.
+  -d, --with-dataset        The checkout associated dataset in user workspace
+                            as well.
+  --retry INTEGER           Number of retries to download the files from the
+                            storage [default: 2].
+  --force                   Force checkout command to delete
+                            untracked/uncommitted files from local repository.
+  --bare                    Ability to add/commit/push without having the ml-
+                            entity checked out.
+  --version INTEGER         Number of artifact version to be downloaded
+                            [default: latest].
+  --verbose                 Debug mode
+</code></pre></div>
+<p>Examples:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets checkout computer-vision__images__faces__fddb__1
+</code></pre></div>
+or you can use the name of the entity directly and download the latest available tag
+<div class="highlight"><pre><span></span><code>$ ml-git datasets checkout fddb
+</code></pre></div></p>
+<p>Note:</p>
+<p><code>--d:</code> It can only be used in checkout of labels and models to get the entities that are associated with the entity.</p>
+<p><code>--l:</code> It can only be used in checkout of models to get the label entity that are associated with the entity.</p>
+<p><code>--sample-type, --sampling, --seed:</code> These options are available only for dataset. If you use this option ml-git will not allow you to make changes to the entity and create a new tag.</p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; commit </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git models commit [OPTIONS] ML_ENTITY_NAME
+
+  Commit model change set of ML_ENTITY_NAME locally to this ml-git
+  repository.
+
+Options:
+  --dataset TEXT                  Link dataset entity name to this model set
+                                  version.
+  --labels TEXT                   Link labels entity name to this model set
+                                  version.
+  --tag TEXT                      Ml-git tag to identify a specific version of
+                                  a ML entity.
+  --version INTEGER RANGE         Set the version number of the artifact. This 
+                                  number must be in the range 0 to 999999999.
+  -m, --message TEXT              Use the provided &lt;msg&gt; as the commit
+                                  message.
+  --fsck TEXT                     Run fsck after command execution.
+  --verbose                       Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git models commit model-ex --dataset=dataset-ex
+</code></pre></div></p>
+<p>This command commits the index / staging area to the local repository. It is a 2-step operation in which 1) the actual data (blobs) is copied to the local repository, 2) committing the metadata to the git repository managing the metadata.
+Internally, ml-git keeps track of files that have been added to the data storage and is storing that information to the metadata management layer to be able to restore any version of each \&lt;ml-entity-name>.</p>
+<p>Another important feature of ml-git is the ability to keep track of the relationship between the ML entities. So when committing a label set, one can (should) provide the option <code>--dataset=&lt;dataset-name&gt;</code>.
+Internally, ml-git will inspect the HEAD / ref of the specified \&lt;dataset-name> checked out in the ml-git repository and will add that information to the specificatino file that is committed to the metadata repository.
+With that relationship kept into the metadata repository, it is now possible for anyone to checkout exactly the same versions of labels and dataset.</p>
+<p>Same for ML model, one can specify which dataset and label set that have been used to generate that model through <code>--dataset=&lt;dataset-name&gt;</code> and <code>--labels=&lt;labels-name&gt;</code></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; create </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets create [OPTIONS] ARTIFACT_NAME
+
+  This command will create the workspace structure with data and spec file
+  for an entity and set the git and storage configurations.
+
+Options:
+  --category TEXT                 Artifact&#39;s category name.  [required]
+  --mutability [strict|flexible|mutable]
+                                  Mutability type.  [required]
+  --storage-type [s3h|azureblobh|gdriveh|sftph]
+                                  Data storage type [default: s3h].
+  --version INTEGER RANGE         Set the version number of the artifact. This 
+                                  number must be in the range 0 to 999999999.
+  --import TEXT                   Path to be imported to the project. NOTE:
+                                  Mutually exclusive with argument:
+                                  import_url, credentials_path.
+  --wizard-config                 If specified, ask interactive questions at
+                                  console for git &amp; storage configurations.
+  --bucket-name TEXT              Bucket name
+  --import-url TEXT               Import data from a google drive url. NOTE:
+                                  Mutually exclusive with argument: import.
+  --credentials-path TEXT         Directory of credentials.json. NOTE: This
+                                  option is required if --import-url is used.
+  --unzip                         Unzip imported zipped files. Only available
+                                  if --import-url is used.
+  --entity-dir TEXT               The relative path where the entity will be
+                                  created inside the ml entity directory.
+  --verbose                       Debug mode
+</code></pre></div>
+<p>Examples:
+ - To create an entity with s3 as storage and importing files from a path of your computer:
+<div class="highlight"><pre><span></span><code>ml-git datasets create imagenet8 --storage-type=s3h --category=computer-vision --category=images --version=0 --import=&#39;/path/to/dataset&#39; --mutability=strict
+</code></pre></div></p>
+<ul>
+<li>To create an entity with s3 as storage and importing files from a google drive URL:
+<div class="highlight"><pre><span></span><code>ml-git datasets create imagenet8 --storage-type=s3h --category=computer-vision --category=images --import-url=&#39;gdrive.url&#39; --credentials-path=&#39;/path/to/gdrive/credentials&#39; --mutability=strict --unzip
+</code></pre></div></li>
+</ul>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; export </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets export [OPTIONS] ML_ENTITY_TAG BUCKET_NAME
+
+  This command allows you to export files from one storage (S3|MinIO) to
+  another (S3|MinIO).
+
+Options:
+  --credentials TEXT  Profile of AWS credentials [default: default].
+  --endpoint TEXT     Endpoint where you want to export
+  --region TEXT       AWS region name [default: us-east-1].
+  --retry INTEGER     Number of retries to upload or download the files from
+                      the storage [default: 2].
+  --verbose           Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets export computer-vision__images__faces__fddb__1 minio
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; fetch </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets fetch [OPTIONS] ML_ENTITY_TAG
+
+  Allows you to download just the metadata files of an entity.
+
+Options:
+  --sample-type [group|range|random]
+  --sampling TEXT                 The group: &lt;amount&gt;:&lt;group&gt; The group sample
+                                  option consists of amount and group used to
+                                  download a sample.
+                                  range: &lt;start:stop:step&gt;
+                                  The range sample option consists of start,
+                                  stop and step used to download a sample. The
+                                  start parameter can be equal or greater than
+                                  zero.The stop parameter can be &#39;all&#39;, -1 or
+                                  any integer above zero.
+                                  random:
+                                  &lt;amount:frequency&gt; The random sample option
+                                  consists of amount and frequency used to
+                                  download a sample.
+  --seed TEXT                     Seed to be used in random-based samplers.
+  --retry INTEGER                 Number of retries to download the files from
+                                  the storage [default: 2].
+  --verbose                       Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>ml-git datasets fetch computer-vision__images__faces__fddb__1
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; fsck </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets fsck [OPTIONS]
+
+  Perform fsck on datasets in this ml-git repository.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets fsck
+</code></pre></div></p>
+<p>This command will walk through the internal ml-git directories (index &amp; local repository) and will check the integrity of all blobs under its management.
+It will return the list of blobs that are corrupted.</p>
+<p>Note: </p>
+<div class="highlight"><pre><span></span><code>in the future, fsck should be able to fix some errors of detected corruption.
+</code></pre></div>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; import </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets import [OPTIONS] BUCKET_NAME ENTITY_DIR
+
+  This command allows you to download a file or directory from the S3 or
+  Gdrive to ENTITY_DIR.
+
+Options:
+  --credentials TEXT  Profile of AWS credentials [default: default].
+  --region TEXT       AWS region name [default: us-east-1].
+  --retry INTEGER     Number of retries to download the files from the storage
+                      [default: 2].
+  --path TEXT         Bucket folder path.
+  --object TEXT       Filename in bucket.
+  --storage-type [s3|gdrive]
+                      Data storage type [default: s3h].
+  --endpoint-url      Storage endpoint url.
+  --help              Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets import bucket-name dataset/computer-vision/imagenet8/data
+</code></pre></div>
+For google drive storage:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets import gdrive-folder --storage-type=gdrive --object=file_to_download --credentials=credentials-path dataset/
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; init </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets init [OPTIONS]
+
+  Init a ml-git datasets repository.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets init
+</code></pre></div></p>
+<p>This command is mandatory to be executed just after the addition of a remote metadata repository (<em>ml-git \&lt;ml-entity> remote add</em>).
+It initializes the metadata by pulling all metadata to the local repository.</p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; metrics </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git models metrics [OPTIONS] ML_ENTITY_NAME
+
+  Shows metrics information for each tag of the entity.
+
+Options:
+  --export-path TEXT        Set the path to export metrics to a file. NOTE:
+                            This option is required if --export-type is used.
+  --export-type [csv|json]  Choose the format of the file that will be
+                            generated with the metrics [default: json].
+  --verbose                 Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git models metrics model-ex
+</code></pre></div></p>
+<p>Note:
+<div class="highlight"><pre><span></span><code>This command is only available for model entities.
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; list </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets list [OPTIONS]
+
+  List datasets managed under this ml-git repository.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets list
+ML dataset
+|-- computer-vision
+|   |-- images
+|   |   |-- dataset-ex-minio
+|   |   |-- imagenet8
+|   |   |-- dataset-ex
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code>ml-git &lt;ml-entity&gt; log </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets log [OPTIONS] ML_ENTITY_NAME
+
+  This command shows ml-entity-name&#39;s commit information like author, date,
+  commit message.
+
+Options:
+  --stat      Show amount of files and size of an ml-entity.
+  --fullstat  Show added and deleted files.
+  --verbose   Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>ml-git datasets log dataset-ex
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; push </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets push [OPTIONS] ML_ENTITY_NAME
+
+  Push local commits from ML_ENTITY_NAME to remote ml-git repository &amp;
+  storage.
+
+Options:
+  --retry INTEGER  Number of retries to upload or download the files from the
+                   storage [default: 2].
+  --clearonfail    Remove the files from the storage in case of failure during
+                   the push operation.
+  --verbose        Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>ml-git datasets push dataset-ex
+</code></pre></div></p>
+<p>This command will perform a 2-step operations:
+1. push all blobs to the configured data storage.
+2. push all metadata related to the commits to the remote metadata repository.</p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; remote-fsck </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets remote-fsck [OPTIONS] ML_ENTITY_NAME
+
+  This command will check and repair the remote by uploading lacking
+  chunks/blobs.
+
+Options:
+  --thorough       Try to download the IPLD if it is not present in the local
+                   repository to verify the existence of all contained IPLD
+                   links associated.
+  --paranoid       Adds an additional step that will download all IPLD and its
+                   associated IPLD links to verify the content by computing
+                   the multihash of all these.
+  --retry INTEGER  Number of retries to download the files from the storage
+                   [default: 2].
+  --verbose        Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>ml-git datasets remote-fsck dataset-ex
+</code></pre></div></p>
+<p>This ml-git command will basically try to:</p>
+<ul>
+<li>Detects any chunk/blob lacking in a remote storage for a specific ML artefact version</li>
+<li>Repair - if possible - by uploading lacking chunks/blobs</li>
+<li>In paranoid mode, verifies the content of all the blobs</li>
+</ul>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; reset </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets reset [OPTIONS] ML_ENTITY_NAME
+
+  Reset ml-git state(s) of an ML_ENTITY_NAME
+
+Options:
+  --hard                     Remove untracked files from workspace, files to
+                             be committed from staging area as well as
+                             committed files upto &lt;reference&gt;.
+  --mixed                    Revert the committed files and the staged files
+                             to &#39;Untracked Files&#39;. This is the default action.
+  --soft                     Revert the committed files to &#39;Changes to be
+                             committed&#39;.
+  --reference [head|head~1]  head:Will keep the metadata in the current
+                             commit.
+                             head~1:Will move the metadata to the last
+                             commit.
+  --verbose                  Debug mode
+</code></pre></div>
+<p>Examples:</p>
+<div class="highlight"><pre><span></span><code>ml-git datasets reset dataset-ex --hard
+</code></pre></div>
+<ul>
+<li>Undo the committed changes.</li>
+<li>Undo the added/tracked files.</li>
+<li>Reset the workspace to fit with the current HEAD state.</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>ml-git datasets reset dataset-ex --mixed
+</code></pre></div>
+if HEAD:
+* nothing happens.
+else:
+* Undo the committed changes.
+* Undo the added/tracked files.</p>
+<p><div class="highlight"><pre><span></span><code>ml-git datasets reset dataset-ex --soft
+</code></pre></div>
+if HEAD:
+* nothing happens.
+else:
+* Undo the committed changes.</p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; show </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets show [OPTIONS] ML_ENTITY_NAME
+
+  Print the specification file of the entity.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets show dataset-ex
+-- dataset : imagenet8 --
+categories:
+- vision-computing
+- images
+manifest:
+  files: MANIFEST.yaml
+  storage: s3h://mlgit-datasets
+name: imagenet8
+version: 1
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; status </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets status [OPTIONS] ML_ENTITY_NAME [STATUS_DIRECTORY]
+
+  Print the files that are tracked or not and the ones that are in the
+  index/staging area.
+
+Options:
+  --full     Show all contents for each directory.
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets status dataset-ex
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; tag add</code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets tag add [OPTIONS] ML_ENTITY_NAME TAG
+
+  Use this command to associate a tag to a commit.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets tag add dataset-ex my_tag
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; tag list </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets tag list [OPTIONS] ML_ENTITY_NAME
+
+  List tags of ML_ENTITY_NAME from this ml-git repository.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets tag list dataset-ex
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; update </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets update [OPTIONS]
+
+  This command will update the metadata repository.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets update
+</code></pre></div></p>
+<p>This command enables one to have the visibility of what has been shared since the last update (new ML entity, new versions).</p>
+</details>
+<details>
+<p><summary><code> ml-git &lt;ml-entity&gt; unlock </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git datasets unlock [OPTIONS] ML_ENTITY_NAME FILE
+
+  This command add read and write permissions to file or directory. Note:
+  You should only use this command for the flexible mutability option.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git datasets unlock dataset-ex data/file1.txt
+</code></pre></div></p>
+<p>Note:</p>
+<div class="highlight"><pre><span></span><code>You should only use this command for the flexible mutability option.
+</code></pre></div>
+</details>
+<details>
+<p><summary><code> ml-git clone &lt;repository-url&gt; </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git clone [OPTIONS] REPOSITORY_URL
+
+  Clone a ml-git repository ML_GIT_REPOSITORY_URL
+
+Options:
+  --folder TEXT
+  --track
+  --help         Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git clone https://git@github.com/mlgit-repository
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git login </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git login [OPTIONS]
+
+  login command generates new Aws credential.
+
+Options:
+  --credentials TEXT  profile name for store credentials [default: default].
+  --insecure          use this option when operating in a insecure location.
+                      This option prevents storage of a cookie in the folder.
+                      Never execute this program without --insecure option in
+                      a compute device you do not trust.
+  --rolearn TEXT      directly STS to this AWS Role ARN instead of the
+                      selecting the option during runtime.
+  --help              Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>ml-git login
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git repository config </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository config [OPTIONS]
+
+  Configuration of this ml-git repository
+
+Options:
+  --help  Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository config
+config:
+{&#39;datasets&#39;: {&#39;git&#39;: &#39;git@github.com:example/your-mlgit-datasets&#39;},
+ &#39;storages&#39;: {&#39;s3&#39;: {&#39;mlgit-datasets&#39;: {&#39;aws-credentials&#39;: {&#39;profile&#39;: &#39;mlgit&#39;},
+                                     &#39;region&#39;: &#39;us-east-1&#39;}}},
+ &#39;verbose&#39;: &#39;info&#39;}
+</code></pre></div></p>
+<p>Use this command if you want to check what configuration ml-git is running with. It is highly likely one will need to 
+change the default configuration to adapt for her needs.</p>
+</details>
+<details>
+<p><summary><code> ml-git repository gc </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository gc [OPTIONS]
+
+  Cleanup unnecessary files and optimize the use of the disk space.
+
+Options:
+  --verbose  Debug mode
+</code></pre></div>
+<p>This command will remove unnecessary files contained in the cache and objects directories of the ml-git metadata (.ml-git).</p>
+</details>
+<details>
+<p><summary><code> ml-git repository init </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository init [OPTIONS]
+
+  Initialiation of this ml-git repository
+
+Options:
+  --help  Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository init
+</code></pre></div></p>
+<p>This is the first command you need to run to initialize a ml-git project. It will bascially create a default .ml-git/config.yaml</p>
+</details>
+<details>
+<p><summary><code> ml-git repository remote &lt;ml-entity&gt; add </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository remote dataset add [OPTIONS] REMOTE_URL
+
+  Add remote dataset metadata REMOTE_URL to this ml-git repository
+
+Options:
+  --help  Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository remote dataset add https://git@github.com/mlgit-datasets
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git repository remote &lt;ml-entity&gt; del </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository remote dataset del
+
+  Remove remote dataset metadata REMOTE_URL from this ml-git repository
+
+Options:
+  --help  Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository remote dataset del
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git repository storage add </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository storage add [OPTIONS] BUCKET_NAME
+
+  Add a storage BUCKET_NAME to ml-git
+
+Options:
+  --credentials TEXT              Profile name for storage credentials
+  --region TEXT                   Aws region name for S3 bucket
+  --type [s3h|s3|azureblobh|gdriveh|sftph]
+                                  Storage type (s3h, s3, azureblobh, gdriveh
+                                  ...) [default: s3h]
+  --endpoint-url TEXT             Storage endpoint url.
+  --username TEXT                 The username for the sftp login.
+  --private-key TEXT              Full path for the private key file.
+  --port INTEGER                  SFTP port [default: 22].
+  -g, --global                    Use this option to set configuration at
+                                  global level
+  --verbose                       Debug mode
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository storage add minio --endpoint-url=&lt;minio-endpoint-url&gt;
+</code></pre></div></p>
+<p>Use this command to add a data storage to a ml-git project.</p>
+</details>
+<details>
+<p><summary><code> ml-git repository storage del </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository storage del [OPTIONS] BUCKET_NAME
+
+  Delete a storage BUCKET_NAME from ml-git
+
+Options:
+  --type [s3h|s3|azureblobh|gdriveh]  Storage type (s3h, s3, azureblobh, gdriveh ...) [default:
+                              s3h]
+  --help                      Show this message and exit.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository storage del minio
+</code></pre></div></p>
+</details>
+<details>
+<p><summary><code> ml-git repository update </code></summary>
+<br></p>
+<div class="highlight"><pre><span></span><code>Usage: ml-git repository update
+
+  This command updates the metadata for all entities.
+</code></pre></div>
+<p>Example:
+<div class="highlight"><pre><span></span><code>$ ml-git repository update
+</code></pre></div></p>
+</details>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2021</span>
+      
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../gdrive_configurations/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Google Drive" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Google Drive
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../api/quick_start/" class="md-footer__link md-footer__link--next" aria-label="Next: Quick Start" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Quick Start
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.56a63758.min.js"></script>
+      
+    
+  </body>
+</html>
