@@ -1,5 +1,5 @@
 """
-© Copyright 2020 HP Development Company, L.P.
+© Copyright 2020-2021 HP Development Company, L.P.
 SPDX-License-Identifier: GPL-2.0-only
 """
 
@@ -77,6 +77,7 @@ output_messages = {
     'DEBUG_RATE_LIMIT': 'Remaining {} rate limit: [{}]. It will reset after [{}s]',
     'DEBUG_EXECUTING_COMMAND': 'Executing git command: %s',
     'DEBUG_GIT_COMMAND_EXECUTION': 'Git command output: %s',
+    'DEBUG_UNPUBLISHED_COMMITS': 'Could not get unpublished commits quantity. Returning default value (0) for %s. %s',
 
     'INFO_INITIALIZED_PROJECT_IN': 'Initialized empty ml-git repository in %s',
     'INFO_ADD_REMOTE': 'Add remote repository [%s] for [%s]',
