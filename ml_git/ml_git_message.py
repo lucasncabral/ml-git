@@ -263,6 +263,8 @@ output_messages = {
     'ERROR_PATH_ALREAD_EXISTS': 'The path [%s] already exists and is not an empty directory.',
     'ERROR_UNABLE_TO_FIND': 'Unable to find %s. Check the remote repository used.',
     'ERROR_UNABLE_TO_FIND_REMOTE_REPOSITORY': 'Unable to find remote repository. Add the remote first.',
+    'ERROR_KEY_PERMISSION_DENIED': 'Permission denied (publickey). Please make sure you have '
+                                   'the correct access rights and the repository exists.',
     'ERROR_FOLDER_PERMISSION_DENIED': 'Permission denied in folder',
     'ERROR_AMOUNT_PARAMETER_SHOULD_BE_SMALLER_GROUP_SIZE': 'The amount parameter should be smaller than the group size.',
     'ERROR_GROUP_SIZE_PARAMETER_SHOULD_BE_SMALLER_LIST_SIZE': 'The group size parameter should be smaller than the file list size.',
