@@ -1,5 +1,9 @@
 # ML-Git
 
+![GitHub](https://img.shields.io/github/license/HPInc/ml-git)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/HPInc/ml-git?include_prereleases)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/HPInc/ml-git/MLGit-Release/main)
+
 ML-Git is a tool which provides a Distributed Version Control system to enable efficient dataset management. Like its name emphasizes, it is inspired in git concepts and workflows, ML-Git enables the following operations:
 
 - Manage a repository of different datasets, labels and models.
