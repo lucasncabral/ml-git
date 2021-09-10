@@ -257,5 +257,5 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: combined-coverage-report
-          path: .coverage
+          path: coverage_html_report
         if: ${{ always() }}
