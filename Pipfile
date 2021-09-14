@@ -41,7 +41,6 @@ funcy = "==1.15"
 PyGithub = "==1.55"
 pydot = "1.4.2"
 pyvis = "0.1.9"
-mkdocs-git-revision-date-localized-plugin = "*"
 
 [requires]
 python_version = "3.6.1"
