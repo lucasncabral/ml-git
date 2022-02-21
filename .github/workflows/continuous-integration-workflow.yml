@@ -2,7 +2,7 @@ name: MLGit-CI
 
 on:
   push:
-    branches: [ development ]
+    branches: [ development, feature/update_commands_output ]
   pull_request:
     branches: 
       - development

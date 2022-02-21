@@ -623,8 +623,8 @@ class LocalRepository(MultihashFS):
                 log.error(e, class_name=LOCAL_REPOSITORY_CLASS_NAME)
                 return
             self._remote_fsck_paranoid(manifest, retries, lkeys, batch_size)
-        wp_ipld = self._create_pool(self.__config, manifest[STORAGE_SPEC_KEY], retries, len(obj_files))
 
+        wp_ipld = self._create_pool(self.__config, manifest[STORAGE_SPEC_KEY], retries, len(obj_files))
         submit_iplds_args = {'wp': wp_ipld}
         submit_iplds_args['ipld_unfixed'] = 0
         submit_iplds_args['ipld_fixed'] = 0

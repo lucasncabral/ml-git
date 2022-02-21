@@ -399,8 +399,7 @@ class MultihashFS(HashFS):
         cid = CIDv1('dag-pb', multi_hash)
         ncid = str(cid)
         if ncid != file:
-            log.error(output_messages['ERROR_CORRPUTION_DETECTED'] % (file, ncid),
-                      class_name=HASH_FS_CLASS_NAME)
+            log.debug(output_messages['ERROR_CORRPUTION_DETECTED'] % (file, ncid), class_name=HASH_FS_CLASS_NAME)
             corrupted_files.append(file)
             corrupted_files_fullpaths.append(fullpath)
         else:
