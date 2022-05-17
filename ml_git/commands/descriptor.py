@@ -1,5 +1,5 @@
 """
-© Copyright 2020 HP Development Company, L.P.
+© Copyright 2022 HP Development Company, L.P.
 SPDX-License-Identifier: GPL-2.0-only
 """
 
@@ -220,7 +220,8 @@ commands = [
         'groups': [entity.datasets],
 
         'arguments': {
-            'ml-entity-name': {},
+            # This argument is required, but bellow isn't who will check for his existence is the wizard process.
+            'ml-entity-name': {'required': False},
         },
 
         'options': {
@@ -240,7 +241,8 @@ commands = [
         'groups': [entity.labels],
 
         'arguments': {
-            'ml-entity-name': {},
+            # This argument is required, but bellow isn't who will check for his existence is the wizard process.
+            'ml-entity-name': {'required': False},
         },
 
         'options': {
@@ -261,7 +263,8 @@ commands = [
         'groups': [entity.models],
 
         'arguments': {
-            'ml-entity-name': {},
+            # This argument is required, but bellow isn't who will check for his existence is the wizard process.
+            'ml-entity-name': {'required': False},
         },
 
         'options': {

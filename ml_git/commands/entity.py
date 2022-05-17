@@ -1,5 +1,5 @@
 """
-© Copyright 2020 HP Development Company, L.P.
+© Copyright 2022 HP Development Company, L.P.
 SPDX-License-Identifier: GPL-2.0-only
 """
 
@@ -7,8 +7,10 @@ import click
 from click_didyoumean import DYMGroup
 
 from ml_git.commands.general import mlgit
+from ml_git.commands.wizard import try_wizard_for_field
 from ml_git.commands.utils import repositories, LABELS, DATASETS, MODELS
 from ml_git.constants import EntityType
+from ml_git.ml_git_message import output_messages
 
 
 @mlgit.group(DATASETS, help='Management of datasets within this ml-git repository.', cls=DYMGroup)
@@ -128,7 +130,11 @@ def commit(context, **kwargs):
     msg = kwargs['message']
     version = kwargs['version']
     run_fsck = kwargs['fsck']
-    entity_name = kwargs['ml_entity_name']
+    entity_name = try_wizard_for_field(
+        context, 
+        kwargs['ml_entity_name'], 
+        output_messages['WIZARD_COMMIT_GUIDE_MESSAGE'], 
+        output_messages['WIZARD_COMMIT_INPUT_MESSAGE'])
     dataset_tag = None
     labels_tag = None
 
