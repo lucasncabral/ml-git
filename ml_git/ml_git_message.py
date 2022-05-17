@@ -1,5 +1,5 @@
 """
-© Copyright 2020 HP Development Company, L.P.
+© Copyright 2022 HP Development Company, L.P.
 SPDX-License-Identifier: GPL-2.0-only
 """
 
@@ -299,5 +299,7 @@ output_messages = {
     'WARN_WORKER_EXCEPTION': 'Worker exception - [%s] -- retry [%d]',
     'WARN_NOT_EXIST_FOR_RELATED_DOWNLOAD': 'Repository: the %s does not exist for related download.',
     'WARN_NOT_FOUND': '[%s] Not found!',
-    'WARN_FILE_EXISTS_IN_REPOSITORY': 'The file %s already exists in the repository. If you commit, the file will be overwritten.'
+    'WARN_FILE_EXISTS_IN_REPOSITORY': 'The file %s already exists in the repository. If you commit, the file will be overwritten.',
+    'WIZARD_COMMIT_GUIDE_MESSAGE': 'To commit a model change, a valid local ML_ENTITY_NAME to a ml-git repository is required',
+    'WIZARD_COMMIT_INPUT_MESSAGE': 'Please inform the value for ML_ENTITY_NAME'
 }
