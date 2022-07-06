@@ -135,7 +135,7 @@ def multiple_option_callback(callbacks, ctx, param, value):
     i = 0
     while i != len(callbacks):
         c_value = callbacks[i](ctx, param, new_value)
-        if new_value !=  c_value:
+        if new_value != c_value:
             i = 0
         else:
             i += 1
@@ -145,8 +145,8 @@ def multiple_option_callback(callbacks, ctx, param, value):
 
 def check_empty_values(ctx, param, value):
     try:
-        local_enabled = ctx.params['wizard']    
-    except:
+        local_enabled = ctx.params['wizard']
+    except Exception:
         return value
     value_present = value is not None
     value_empty = str(value).strip() == '' if value_present else False
@@ -160,7 +160,7 @@ def check_empty_values(ctx, param, value):
     return value
 
 
-def check_integer_value(ctx, param, value) :
+def check_integer_value(ctx, param, value):
     local_enabled = ctx.params['wizard']
     value_present = value is not None
     if value_present:
@@ -172,4 +172,4 @@ def check_integer_value(ctx, param, value) :
             print(error_message)
             return wizard_for_field(ctx, None, prompt_msg.NEW_VALUE, wizard_flag=local_enabled, type=int)
         raise click.BadParameter(output_messages['ERROR_NOT_INTEGER_VALUE'])
-    return value        
+    return value
