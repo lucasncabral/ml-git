@@ -132,8 +132,14 @@ def check_valid_storage_choice(ctx, param, value):
 
 def multiple_option_callback(callbacks, ctx, param, value):
     new_value = value
-    for callback in callbacks:
-        new_value = callback(ctx, param, value)
+    i = 0
+    while i != len(callbacks):
+        c_value = callbacks[i](ctx, param, new_value)
+        if new_value !=  c_value:
+            i = 0
+        else:
+            i += 1
+        new_value = c_value
     return new_value
 
 
@@ -143,3 +149,16 @@ def check_empty_values(ctx, param, value):
     if value_present and value_empty:
         raise click.BadParameter(output_messages['ERROR_EMPTY_VALUE'])
     return value
+
+
+def check_integer_value(ctx, param, value) :
+    local_enabled = ctx.params['wizard']
+    value_present = value is not None
+    if value_present:
+        if isinstance(value, int) or value.isdigit():
+            return value
+        if local_enabled or is_wizard_enabled():
+            message = output_messages['ERROR_INVALID_VALUE_FOR'] % ("--" + param.name, value + ' ' + output_messages['ERROR_NOT_INTEGER_VALUE'])
+            return wizard_for_field(ctx, None, message, wizard_flag=local_enabled, type=int)
+        raise click.BadParameter(output_messages['ERROR_NOT_INTEGER_VALUE'])
+    return value        
