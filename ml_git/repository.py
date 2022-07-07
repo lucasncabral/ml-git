@@ -406,7 +406,7 @@ class Repository(object):
             objects_path = get_objects_path(self.__config, repo_type)
             path, file = search_spec_file(self.__repo_type, spec)
             o = Objects(spec, objects_path)
-            changed_files, deleted_files, added_files = o.commit_index(index_path, path, save=False)
+            changed_files, deleted_files, added_files = o.commit_index(index_path, path, persist_data=False)
 
             if (len(changed_files + deleted_files + added_files)) == 0:
                 log.warn(output_messages['ERROR_COMMIT_WITHOUT_ADD'].format(self.__repo_type),
