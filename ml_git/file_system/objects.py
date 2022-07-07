@@ -21,11 +21,11 @@ class Objects(MultihashFS):
         self._objects_path = objects_path
         super(Objects, self).__init__(objects_path, blocksize, levels)
 
-    def commit_index(self, index_path, ws_path=None):
-        return self.commit_objects(index_path, ws_path)
+    def commit_index(self, index_path, ws_path=None, save=True):
+        return self.commit_objects(index_path, ws_path, save)
 
     @Halo(text='Updating index', spinner='dots')
-    def commit_objects(self, index_path, ws_path):
+    def commit_objects(self, index_path, ws_path, save=True):
         added_files = []
         deleted_files = []
         changed_files = []
@@ -44,7 +44,8 @@ class Objects(MultihashFS):
                         changed_files.append((v['previous_hash'], k))
                     else:
                         added_files.append(k)
-        fidx.get_manifest_index().save()
+        if save:
+            fidx.get_manifest_index().save()
         return changed_files, deleted_files, added_files
 
     def _get_used_blobs(self, descriptor_hashes):
