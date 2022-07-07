@@ -165,5 +165,5 @@ def check_integer_value(ctx, param, value):
                                                                           value + ' ' + output_messages['ERROR_NOT_INTEGER_VALUE'])
             print(error_message)
             return wizard_for_field(ctx, None, prompt_msg.NEW_VALUE, wizard_flag=local_enabled, type=int)
-        raise click.BadParameter(output_messages['ERROR_NOT_INTEGER_VALUE'])
+        raise click.BadParameter(output_messages['ERROR_NOT_INTEGER_VALUE'] % value)
     return value
