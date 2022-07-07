@@ -132,14 +132,8 @@ def check_valid_storage_choice(ctx, param, value):
 
 def multiple_option_callback(callbacks, ctx, param, value):
     new_value = value
-    i = 0
-    while i != len(callbacks):
-        c_value = callbacks[i](ctx, param, new_value)
-        if new_value != c_value:
-            i = 0
-        else:
-            i += 1
-        new_value = c_value
+    for callback in callbacks:
+        new_value = callback(ctx, param, value)
     return new_value
 
 
