@@ -138,7 +138,7 @@ class CommitFilesAcceptanceTests(unittest.TestCase):
         entity_init(entity_type, self)
         add_file(self, entity_type, '--bumpversion', 'new')
         runner = CliRunner()
-        result = runner.invoke(entity.labels, ['commit', 'ENTITY-NAME', '--wizard'], input='\n'.join(['', 'message']))
+        result = runner.invoke(entity.labels, ['commit', entity_type + '-ex', '--wizard'], input='\n'.join(['', 'message']))
         self.assertIn(prompt_msg.COMMIT_VERSION.format('labels', '1'), result.output)
         self.assertIn(prompt_msg.COMMIT_MESSAGE, result.output)
 
@@ -148,7 +148,7 @@ class CommitFilesAcceptanceTests(unittest.TestCase):
         entity_init(entity_type, self)
         add_file(self, entity_type, '--bumpversion', 'new')
         runner = CliRunner()
-        result = runner.invoke(entity.models, ['commit', 'ENTITY-NAME', '--wizard'], input='\n'.join(['', 'message']))
+        result = runner.invoke(entity.models, ['commit', entity_type + '-ex', '--wizard'], input='\n'.join(['', 'message']))
         self.assertIn(prompt_msg.COMMIT_VERSION.format('model', '1'), result.output)
         self.assertIn(prompt_msg.COMMIT_MESSAGE, result.output)
 
