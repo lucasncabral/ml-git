@@ -403,16 +403,8 @@ class Repository(object):
         repo_type = self.__repo_type
         try:
             index_path = get_index_path(self.__config, repo_type)
-            metadata_path = get_metadata_path(self.__config, repo_type)
             objects_path = get_objects_path(self.__config, repo_type)
-            m = Metadata(spec, metadata_path, self.__config, repo_type)
-            full_metadata_path, entity_sub_path, metadata = m.tag_exists(index_path)
-            if metadata is None:
-                return False
             path, file = search_spec_file(self.__repo_type, spec)
-            if path is None:
-                return False
-
             o = Objects(spec, objects_path)
             changed_files, deleted_files, added_files = o.commit_index(index_path, path, save=False)
 
