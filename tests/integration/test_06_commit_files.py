@@ -233,5 +233,3 @@ class CommitFilesAcceptanceTests(unittest.TestCase):
         self.assertIn(prompt_msg.COMMIT_MESSAGE, result.output)
         self.assertIn(prompt_msg.WANT_LINK_TO_LABEL_ENTITY.format(parse_entity_type_to_singular(DATASETS)), result.output)
         self.assertIn(prompt_msg.DEFINE_LINKED_DATASET, result.output)
-        self.assertIn(output_messages['ERROR_EMPTY_VALUE'], result.output)
-        self.assertIn(output_messages['ERROR_ENTITY_NOT_FIND'].format('dataset-ex'), result.output)
