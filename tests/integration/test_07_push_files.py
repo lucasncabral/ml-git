@@ -156,7 +156,7 @@ class PushFilesAcceptanceTests(unittest.TestCase):
         self.assertIn(ERROR_MESSAGE, output)
         self.assertIn('There was an error checking if bucket \'{}\' exists.'.format(BUCKET_NAME), output)
 
-    @pytest.mark.usefixtures('switch_to_tmp_dir')
+    @pytest.mark.usefixtures('start_empty_git_server', 'switch_to_tmp_dir')
     def test_12_push_with_invalid_retry_number(self):
         entity_type = DATASETS
         init_repository(entity_type, self)
