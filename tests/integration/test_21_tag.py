@@ -10,7 +10,7 @@ import pytest
 
 from ml_git.ml_git_message import output_messages
 from tests.integration.commands import MLGIT_COMMIT, MLGIT_PUSH, MLGIT_TAG_ADD
-from tests.integration.helper import PATH_TEST, ML_GIT_DIR, create_file, ERROR_MESSAGE, DATASETS, DATASET_NAME
+from tests.integration.helper import ML_GIT_DIR, create_file, ERROR_MESSAGE, DATASETS, DATASET_NAME
 from tests.integration.helper import check_output, init_repository, add_file
 
 
