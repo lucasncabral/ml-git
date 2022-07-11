@@ -159,13 +159,8 @@ class PushFilesAcceptanceTests(unittest.TestCase):
     @pytest.mark.usefixtures('switch_to_tmp_dir')
     def test_12_push_with_invalid_retry_number(self):
         entity_type = DATASETS
-        clear(os.path.join(MINIO_BUCKET_PATH, 'zdj7WWjGAAJ8gdky5FKcVLfd63aiRUGb8fkc8We2bvsp9WW12'))
         init_repository(entity_type, self)
         add_file(self, entity_type, '--bumpversion', 'new', file_content='0')
-        metadata_path = os.path.join(self.tmp_dir, ML_GIT_DIR, entity_type, 'metadata')
-        self.assertIn(output_messages['INFO_COMMIT_REPO'] % (metadata_path, entity_type + '-ex'),
-                      check_output(MLGIT_COMMIT % (entity_type, entity_type + '-ex', '')))
-        HEAD = os.path.join(self.tmp_dir, ML_GIT_DIR, entity_type, 'refs', entity_type+'-ex', 'HEAD')
-        self.assertTrue(os.path.exists(HEAD))
+        self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_COMMIT % (entity_type, DATASET_NAME, '')))
         expected_error_message = '-2 is not in the valid range of 0 to 99999999.'
         self.assertIn(expected_error_message, check_output(MLGIT_PUSH % (entity_type, entity_type+'-ex --retry=-2')))
