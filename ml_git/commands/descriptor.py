@@ -12,7 +12,7 @@ from ml_git.commands import entity, help_msg, storage
 from ml_git.commands.custom_options import MutuallyExclusiveOption, OptionRequiredIf, DeprecatedOptionsCommand, \
     DeprecatedOption, check_multiple, check_valid_storage_choice, check_empty_values, multiple_option_callback
 from ml_git.commands.custom_types import CategoriesType, NotEmptyString
-from ml_git.commands.utils import set_verbose_mode
+from ml_git.commands.utils import set_verbose_mode, MAX_INT_VALUE
 from ml_git.commands.wizard import is_wizard_enabled
 from ml_git.constants import MultihashStorageType, MutabilityType, StorageType, FileType
 
@@ -63,9 +63,9 @@ commands = [
         },
 
         'options': {
-            '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
+            '--retry': {'type': click.IntRange(0, MAX_INT_VALUE), 'default': 2, 'help': help_msg.RETRY_OPTION},
             '--clearonfail': {'is_flag': True, 'help': help_msg.CLEAR_ON_FAIL},
-            '--fail-limit': {'type': int, 'help': help_msg.FAIL_LIMIT}
+            '--fail-limit': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.FAIL_LIMIT}
         },
 
         'help': 'Push local commits from ML_ENTITY_NAME to remote ml-git repository & storage.'
@@ -80,15 +80,12 @@ commands = [
         'options': {
             '--sample-type': {'type': click.Choice(['group', 'range', 'random'])},
             '--sampling': {'default': '1:1000', 'help': help_msg.SAMPLING_OPTION},
-
             '--seed': {'default': '1', 'help': help_msg.SEED_OPTION},
-
-            '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
-
+            '--retry': {'type': click.IntRange(0, MAX_INT_VALUE), 'default': 2, 'help': help_msg.RETRY_OPTION},
             '--force': {'default': False, 'is_flag': True, 'help': help_msg.FORCE_CHECKOUT},
             '--bare': {'default': False, 'is_flag': True, 'help': help_msg.BARE_OPTION},
-            '--version': {'type': int, 'help': help_msg.ARTIFACT_VERSION},
-            '--fail-limit': {'type': int, 'help': help_msg.FAIL_LIMIT},
+            '--version': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.ARTIFACT_VERSION},
+            '--fail-limit': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.FAIL_LIMIT},
             '--full': {'is_flag': True, 'default': False, 'help': help_msg.STATUS_FULL_OPTION},
             '--wizard': {'is_flag': True, 'default': False, 'help': help_msg.WIZARD_OPTION, 'is_eager': True}
         },
@@ -114,12 +111,11 @@ commands = [
 
         'options': {
             ('--with-dataset', '-d'): {'is_flag': True, 'default': False, 'help': help_msg.ASSOCIATED_WITH_DATASET},
-            '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
-
+            '--retry': {'type': click.IntRange(0, MAX_INT_VALUE), 'default': 2, 'help': help_msg.RETRY_OPTION},
             '--force': {'is_flag': True, 'default': False, 'help': help_msg.FORCE_CHECKOUT},
             '--bare': {'default': False, 'is_flag': True, 'help': help_msg.BARE_OPTION},
-            '--version': {'type': int, 'help': help_msg.ARTIFACT_VERSION},
-            '--fail-limit': {'type': int, 'help': help_msg.FAIL_LIMIT},
+            '--version': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.ARTIFACT_VERSION},
+            '--fail-limit': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.FAIL_LIMIT},
             '--full': {'is_flag': True, 'default': False, 'help': help_msg.STATUS_FULL_OPTION},
             '--wizard': {'is_flag': True, 'default': False, 'help': help_msg.WIZARD_OPTION, 'is_eager': True}
         },
@@ -135,11 +131,11 @@ commands = [
         'options': {
             ('--with-labels', '-l'): {'is_flag': True, 'default': False, 'help': help_msg.ASSOCIATED_WITH_LABELS},
             ('--with-dataset', '-d'): {'is_flag': True, 'default': False, 'help': help_msg.ASSOCIATED_WITH_DATASET},
-            '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
+            '--retry': {'type': click.IntRange(0, MAX_INT_VALUE), 'default': 2, 'help': help_msg.RETRY_OPTION},
             '--force': {'default': False, 'is_flag': True, 'help': help_msg.FORCE_CHECKOUT},
             '--bare': {'default': False, 'is_flag': True, 'help': help_msg.BARE_OPTION},
-            '--version': {'type': int, 'help': help_msg.ARTIFACT_VERSION},
-            '--fail-limit': {'type': int, 'help': help_msg.FAIL_LIMIT},
+            '--version': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.ARTIFACT_VERSION},
+            '--fail-limit': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.FAIL_LIMIT},
             '--full': {'is_flag': True, 'default': False, 'help': help_msg.STATUS_FULL_OPTION},
             '--wizard': {'is_flag': True, 'default': False, 'help': help_msg.WIZARD_OPTION, 'is_eager': True}
         },
@@ -165,13 +161,9 @@ commands = [
 
         'options': {
             '--sample-type': {'type': click.Choice(['group', 'range', 'random'])},
-            '--sampling': {'default': '1:1000',
-                           'help': help_msg.SAMPLING_OPTION
-                           },
-
+            '--sampling': {'default': '1:1000', 'help': help_msg.SAMPLING_OPTION},
             '--seed': {'default': '1', 'help': help_msg.SEED_OPTION},
-
-            '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
+            '--retry': {'type': click.IntRange(0, MAX_INT_VALUE), 'default': 2, 'help': help_msg.RETRY_OPTION},
         },
 
         'help': 'Allows you to download just the metadata files of an entity.'
@@ -282,7 +274,7 @@ commands = [
         },
 
         'options': {
-            '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
+            '--version': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},
             '--fsck': {'is_flag': True, 'help': help_msg.FSCK_OPTION},
             '--wizard': {'is_flag': True, 'default': False, 'help': help_msg.WIZARD_OPTION}
@@ -303,7 +295,7 @@ commands = [
 
         'options': {
             '--dataset': {'help': help_msg.LINK_DATASET_TO_LABEL, 'multiple': True, 'type': NotEmptyString(), 'callback': check_multiple},
-            '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
+            '--version': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},
             '--fsck': {'is_flag': True, 'help': help_msg.FSCK_OPTION},
             '--wizard': {'is_flag': True, 'default': False, 'help': help_msg.WIZARD_OPTION}
@@ -325,7 +317,7 @@ commands = [
         'options': {
             '--dataset': {'help': help_msg.LINK_DATASET, 'multiple': True, 'type': NotEmptyString(), 'callback': check_multiple},
             '--labels': {'help': help_msg.LINK_LABELS, 'multiple': True, 'type': NotEmptyString(), 'callback': check_multiple},
-            '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER},
+            '--version': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.SET_VERSION_NUMBER},
             ('--message', '-m'): {'help': help_msg.COMMIT_MSG},
             '--fsck': {'is_flag': True, 'help': help_msg.FSCK_OPTION},
             '--wizard': {'is_flag': True, 'default': False, 'help': help_msg.WIZARD_OPTION}
@@ -405,7 +397,7 @@ commands = [
             '--credentials': {'default': 'default',
                               'help': help_msg.CREDENTIALS_OPTION},
             '--region': {'default': 'us-east-1', 'help': help_msg.REGION_OPTION},
-            '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
+            '--retry': {'type': click.IntRange(0, MAX_INT_VALUE), 'default': 2, 'help': help_msg.RETRY_OPTION},
             '--path': {'default': None, 'help': help_msg.PATH_OPTION},
             '--object': {'default': None, 'help': help_msg.OBJECT_OPTION},
             '--storage-type': {
@@ -436,7 +428,7 @@ commands = [
             '--credentials': {'default': 'default', 'help': help_msg.AWS_CREDENTIALS},
             '--endpoint': {'default': None, 'help': help_msg.ENDPOINT_URL},
             '--region': {'default': 'us-east-1', 'help': help_msg.REGION_OPTION},
-            '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
+            '--retry': {'type': click.IntRange(0, MAX_INT_VALUE), 'default': 2, 'help': help_msg.RETRY_OPTION},
 
         },
 
@@ -480,7 +472,7 @@ commands = [
         'options': {
             '--thorough': {'is_flag': True, 'help': help_msg.THOROUGH_OPTION},
             '--paranoid': {'is_flag': True, 'help': help_msg.PARANOID_OPTION},
-            '--retry': {'default': 2, 'help': help_msg.RETRY_OPTION},
+            '--retry': {'type': click.IntRange(0, MAX_INT_VALUE), 'default': 2, 'help': help_msg.RETRY_OPTION},
             '--full': {'is_flag': True, 'default': False, 'help': help_msg.REMOTE_FSCK_FULL_OPTION},
             '--wizard': {'is_flag': True, 'default': False, 'help': help_msg.WIZARD_OPTION, 'is_eager': True}
         },
@@ -509,7 +501,7 @@ commands = [
                                      case_sensitive=True),
                 'help': help_msg.STORAGE_TYPE_MULTIHASH, 'default': StorageType.S3H.value
             },
-            '--version': {'type': click.IntRange(0, int(8 * '9')), 'help': help_msg.SET_VERSION_NUMBER, 'default': 1},
+            '--version': {'type': click.IntRange(0, MAX_INT_VALUE), 'help': help_msg.SET_VERSION_NUMBER, 'default': 1},
             '--import': {'help': help_msg.IMPORT_OPTION, 'type': NotEmptyString(),
                          'cls': MutuallyExclusiveOption, 'mutually_exclusive': ['import_url', 'credentials_path']},
             '--wizard-config': {'is_flag': True, 'help': help_msg.WIZARD_CONFIG, 'cls': DeprecatedOption,

@@ -1,5 +1,5 @@
 """
-© Copyright 2020-2021 HP Development Company, L.P.
+© Copyright 2020-2022 HP Development Company, L.P.
 SPDX-License-Identifier: GPL-2.0-only
 """
 
@@ -155,3 +155,17 @@ class PushFilesAcceptanceTests(unittest.TestCase):
         output = check_output(MLGIT_PUSH % (entity_type, artifact_name))
         self.assertIn(ERROR_MESSAGE, output)
         self.assertIn('There was an error checking if bucket \'{}\' exists.'.format(BUCKET_NAME), output)
+
+    @pytest.mark.usefixtures('switch_to_tmp_dir')
+    def test_12_push_with_invalid_retry_number(self):
+        entity_type = DATASETS
+        clear(os.path.join(MINIO_BUCKET_PATH, 'zdj7WWjGAAJ8gdky5FKcVLfd63aiRUGb8fkc8We2bvsp9WW12'))
+        init_repository(entity_type, self)
+        add_file(self, entity_type, '--bumpversion', 'new', file_content='0')
+        metadata_path = os.path.join(self.tmp_dir, ML_GIT_DIR, entity_type, 'metadata')
+        self.assertIn(output_messages['INFO_COMMIT_REPO'] % (metadata_path, entity_type + '-ex'),
+                      check_output(MLGIT_COMMIT % (entity_type, entity_type + '-ex', '')))
+        HEAD = os.path.join(self.tmp_dir, ML_GIT_DIR, entity_type, 'refs', entity_type+'-ex', 'HEAD')
+        self.assertTrue(os.path.exists(HEAD))
+        expected_error_message = '-2 is not in the valid range of 0 to 99999999.'
+        self.assertIn(expected_error_message, check_output(MLGIT_PUSH % (entity_type, entity_type+'-ex --retry=-2')))
