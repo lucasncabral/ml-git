@@ -14,8 +14,6 @@ from halo import Halo
 from ml_git import log
 from ml_git._metadata import MetadataRepo
 from ml_git.admin import remote_add, clone_config_repository, init_mlgit, remote_del
-from ml_git.commands import prompt_msg
-from ml_git.commands.wizard import request_user_confirmation
 from ml_git.config import get_index_path, get_objects_path, get_cache_path, get_metadata_path, get_refs_path, \
     validate_config_spec_hash, validate_spec_hash, get_sample_config_spec, get_sample_spec_doc, \
     get_index_metadata_path, create_workspace_tree_structure, start_wizard_questions, config_load, \
@@ -825,7 +823,8 @@ class Repository(object):
 
     '''Performs a fsck on remote storage w.r.t. some specific ML artefact version'''
 
-    def remote_fsck(self, spec, retries=2, thorough=False, paranoid=False, full_log=False, wizard_flag=False):
+    def remote_fsck(self, spec, retries=2, thorough=False, paranoid=False, full_log=False, wizard_flag=False, prompt=''):
+        from ml_git.commands.wizard import request_user_confirmation
         repo_type = self.__repo_type
         try:
             metadata_path = get_metadata_path(self.__config, repo_type)
@@ -844,7 +843,7 @@ class Repository(object):
         full_spec_path = os.path.join(spec_path, spec_file)
 
         r = LocalRepository(self.__config, objects_path, repo_type)
-        thorough = thorough or request_user_confirmation(prompt_msg.THOROUGH_MESSAGE, wizard_flag=wizard_flag)
+        thorough = thorough or request_user_confirmation(prompt, wizard_flag=wizard_flag)
         r.remote_fsck(metadata_path, spec, full_spec_path, retries, thorough, paranoid, full_log)
 
         # ensure first we're on master !
