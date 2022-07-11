@@ -17,6 +17,7 @@ from ml_git.commands.utils import repositories, LABELS, DATASETS, MODELS, check_
 from ml_git.commands.wizard import wizard_for_field, choice_wizard_for_field, request_user_confirmation
 from ml_git.constants import EntityType, MutabilityType, RGX_TAG_FORMAT
 from ml_git.ml_git_message import output_messages
+from ml_git.utils import check_project_exists
 
 
 @mlgit.group(DATASETS, help='Management of datasets within this ml-git repository.', cls=DYMGroup)
@@ -25,7 +26,7 @@ def datasets(ctx):
     """
     Management of datasets within this ml-git repository.
     """
-    pass
+    check_project_exists(ctx)
 
 
 @datasets.group('tag', help='Management of tags for this entity.', cls=DYMGroup)
@@ -42,7 +43,7 @@ def models(ctx):
     """
     Management of models within this ml-git repository.
     """
-    pass
+    check_project_exists(ctx)
 
 
 @models.group('tag', help='Management of tags for this entity.', cls=DYMGroup)
@@ -272,11 +273,11 @@ def remote_fsck(context, **kwargs):
     repo_type = context.parent.command.name
     wizard_flag = kwargs['wizard']
     entity_name = kwargs['ml_entity_name']
-    thorough = kwargs['thorough'] if kwargs['thorough'] else request_user_confirmation(prompt_msg.THOROUGH_MESSAGE, wizard_flag=wizard_flag)
+    thorough = kwargs['thorough']
     paranoid = kwargs['paranoid']
     retry = kwargs['retry']
     full_log = kwargs['full']
-    repositories[repo_type].remote_fsck(entity_name, retry, thorough, paranoid, full_log)
+    repositories[repo_type].remote_fsck(entity_name, retry, thorough, paranoid, full_log, wizard_flag)
 
 
 def create(context, **kwargs):
