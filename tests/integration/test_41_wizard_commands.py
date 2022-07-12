@@ -81,9 +81,6 @@ class WizardCommandsAcceptanceTests(unittest.TestCase):
         self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_ENTITY_INIT % MODELS))
 
         self.assertIn(output_messages['ERROR_WRONG_NAME'],
-                      check_output(MLGIT_CREATE % ('datasets', 'ENTITY-NAME') + ' --wizard'))
-
-        self.assertIn(output_messages['ERROR_WRONG_NAME'],
                       check_output(MLGIT_ADD % ('datasets', 'ENTITY-NAME', '--wizard')))
 
         self.assertIn(output_messages['ERROR_WRONG_NAME'],
