@@ -705,8 +705,10 @@ class Repository(object):
         repo_type = self.__repo_type
         metadata_path = get_metadata_path(self.__config, repo_type)
         m = Metadata('', metadata_path, self.__config, repo_type)
+
         if ref is None:
             ref = m.get_default_branch()
+
         m.checkout(ref, force=True)
 
     '''Performs fsck on several aspects of ml-git filesystem.
@@ -833,6 +835,7 @@ class Repository(object):
             tag, sha = ref.branch()
             self._checkout_ref(tag)
             spec_path, spec_file = search_spec_file(self.__repo_type, spec)
+
         except Exception as e:
             log.error(e, class_name=REPOSITORY_CLASS_NAME)
             return
@@ -842,6 +845,7 @@ class Repository(object):
         full_spec_path = os.path.join(spec_path, spec_file)
 
         r = LocalRepository(self.__config, objects_path, repo_type)
+
         r.remote_fsck(metadata_path, spec, full_spec_path, retries, thorough, paranoid, full_log)
 
         # ensure first we're on master !

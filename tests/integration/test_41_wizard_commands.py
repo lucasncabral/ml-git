@@ -5,16 +5,15 @@ SPDX-License-Identifier: GPL-2.0-only
 
 import os
 import unittest
-import pytest
-
 from unittest import mock
+
+import pytest
 
 from ml_git.commands.wizard import WizardMode
 from ml_git.ml_git_message import output_messages
 from tests.integration.commands import MLGIT_REMOTE_FSCK, MLGIT_CHECKOUT, MLGIT_COMMIT, MLGIT_CONFIG_WIZARD, \
     MLGIT_CREATE, MLGIT_INIT, MLGIT_ENTITY_INIT, MLGIT_REMOTE_ADD
-from tests.integration.helper import MLGIT_ADD, GLOBAL_CONFIG_PATH, DATASETS, MODELS, GIT_PATH, ML_GIT_DIR, \
-    ERROR_MESSAGE
+from tests.integration.helper import MLGIT_ADD, GLOBAL_CONFIG_PATH, DATASETS, MODELS, GIT_PATH, ERROR_MESSAGE
 from tests.integration.helper import check_output
 
 
@@ -31,10 +30,10 @@ class WizardCommandsAcceptanceTests(unittest.TestCase):
         self.setup_wizard()
 
         self.assertIn(output_messages['ERROR_NOT_IN_RESPOSITORY'],
-                      check_output(MLGIT_CREATE % ('datasets', 'ENTITY-NAME') + ' --wizard'))
+                      check_output(MLGIT_CREATE % ('datasets', 'ENTITY-NAME')))
 
         self.assertIn(output_messages['ERROR_NOT_IN_RESPOSITORY'],
-                      check_output(MLGIT_REMOTE_FSCK % ('datasets', 'ENTITY-NAME') + ' --wizard'))
+                      check_output(MLGIT_REMOTE_FSCK % ('datasets', 'ENTITY-NAME')))
 
     @pytest.mark.usefixtures('start_local_git_server', 'switch_to_tmp_dir')
     @mock.patch.dict(os.environ, {'HOME': GLOBAL_CONFIG_PATH})

@@ -15,8 +15,7 @@ from ml_git.commands.prompt_msg import VERSION_TO_BE_DOWNLOADED
 from ml_git.commands.utils import repositories, LABELS, DATASETS, MODELS, check_entity_name, \
     parse_entity_type_to_singular, get_last_entity_version, check_project_exists, check_initialized_entity, \
     check_entity_exists
-from ml_git.commands.wizard import wizard_for_field, choice_wizard_for_field, request_user_confirmation, \
-    is_wizard_enabled
+from ml_git.commands.wizard import wizard_for_field, choice_wizard_for_field, request_user_confirmation, is_wizard_enabled
 from ml_git.constants import EntityType, MutabilityType, RGX_TAG_FORMAT
 from ml_git.ml_git_message import output_messages
 
