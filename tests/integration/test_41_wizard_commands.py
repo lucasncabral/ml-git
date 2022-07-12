@@ -29,13 +29,13 @@ class WizardCommandsAcceptanceTests(unittest.TestCase):
         self.setup_wizard()
 
         self.assertIn(output_messages['ERROR_NOT_IN_RESPOSITORY'],
-                      check_output(MLGIT_CREATE % ('datasets', 'ENTITY-NAME') + ' --wizard'))
+                      check_output(MLGIT_CREATE % ('datasets', 'ENTITY-NAME')))
 
         self.assertIn(output_messages['ERROR_NOT_IN_RESPOSITORY'],
-                      check_output(MLGIT_ADD % ('datasets', 'ENTITY-NAME', '--wizard')))
+                      check_output(MLGIT_ADD % ('datasets', 'ENTITY-NAME', 'value')))
 
         self.assertIn(output_messages['ERROR_NOT_IN_RESPOSITORY'],
-                      check_output(MLGIT_REMOTE_FSCK % ('datasets', 'ENTITY-NAME') + ' --wizard'))
+                      check_output(MLGIT_REMOTE_FSCK % ('datasets', 'ENTITY-NAME')))
 
     @pytest.mark.usefixtures('start_local_git_server', 'switch_to_tmp_dir')
     @mock.patch.dict(os.environ, {'HOME': GLOBAL_CONFIG_PATH})

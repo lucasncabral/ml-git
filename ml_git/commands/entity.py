@@ -13,8 +13,8 @@ from ml_git.commands.custom_types import CategoriesType
 from ml_git.commands.general import mlgit
 from ml_git.commands.prompt_msg import VERSION_TO_BE_DOWNLOADED
 from ml_git.commands.utils import repositories, LABELS, DATASETS, MODELS, check_entity_name, \
-    parse_entity_type_to_singular, get_last_entity_version
-from ml_git.commands.wizard import wizard_for_field, choice_wizard_for_field, request_user_confirmation
+    parse_entity_type_to_singular, get_last_entity_version, check_initialized_entity
+from ml_git.commands.wizard import wizard_for_field, choice_wizard_for_field, request_user_confirmation, is_wizard_enabled
 from ml_git.constants import EntityType, MutabilityType, RGX_TAG_FORMAT
 from ml_git.ml_git_message import output_messages
 from ml_git.utils import check_project_exists
@@ -26,7 +26,7 @@ def datasets(ctx):
     """
     Management of datasets within this ml-git repository.
     """
-    check_project_exists(ctx)
+    pass
 
 
 @datasets.group('tag', help='Management of tags for this entity.', cls=DYMGroup)
@@ -43,7 +43,7 @@ def models(ctx):
     """
     Management of models within this ml-git repository.
     """
-    check_project_exists(ctx)
+    pass
 
 
 @models.group('tag', help='Management of tags for this entity.', cls=DYMGroup)
@@ -70,6 +70,11 @@ def lb_tag_group():
     pass
 
 
+def _verify_project_init(wizard_flag, context):
+    if wizard_flag or is_wizard_enabled():
+        check_project_exists(context)
+
+
 def init(context):
     repo_type = context.parent.command.name
     repositories[repo_type].init()
@@ -90,10 +95,12 @@ def push(context, **kwargs):
 
 
 def checkout(context, **kwargs):
+    wizard_flag = kwargs['wizard']
+    _verify_project_init(wizard_flag, context)
+
     repo_type = context.parent.command.name
     repo = repositories[repo_type]
     entity = kwargs['ml_entity_tag']
-    wizard_flag = kwargs['wizard']
     sample = None
 
     if 'sample_type' in kwargs and kwargs['sample_type'] is not None:
@@ -139,6 +146,9 @@ def fetch(context, **kwargs):
 
 
 def add(context, **kwargs):
+    wizard_flag = kwargs['wizard'] if 'wizard' in kwargs else False
+    _verify_project_init(wizard_flag, context)
+
     repo_type = context.parent.command.name
     bump_version = kwargs['bumpversion']
     run_fsck = kwargs['fsck']
@@ -148,14 +158,14 @@ def add(context, **kwargs):
     metrics_file_path = kwargs.get('metrics_file')
     if not metric and repo_type == MODELS:
         metrics_file_path = wizard_for_field(context, kwargs.get('metrics_file'),
-                                             prompt_msg.METRIC_FILE, wizard_flag=kwargs['wizard'])
+                                             prompt_msg.METRIC_FILE, wizard_flag=wizard_flag)
     repositories[repo_type].add(entity_name, file_path, bump_version, run_fsck, metric, metrics_file_path)
 
 
 def commit(context, **kwargs):
-    wizard_flag = False
-    if 'wizard' in kwargs:
-        wizard_flag = kwargs['wizard']
+    wizard_flag = kwargs['wizard']
+    _verify_project_init(wizard_flag, context)
+
     repo_type = context.parent.command.name
     entity_name = kwargs['ml_entity_name']
     run_fsck = kwargs['fsck']
@@ -273,16 +283,22 @@ def remote_fsck(context, **kwargs):
     repo_type = context.parent.command.name
     wizard_flag = kwargs['wizard']
     entity_name = kwargs['ml_entity_name']
-    thorough = kwargs['thorough']
+
+    _verify_project_init(wizard_flag, context)
+    check_initialized_entity(context, repo_type, entity_name)
+
+    thorough = kwargs['thorough'] or request_user_confirmation(prompt_msg.THOROUGH_MESSAGE, wizard_flag=wizard_flag)
     paranoid = kwargs['paranoid']
     retry = kwargs['retry']
     full_log = kwargs['full']
-    repositories[repo_type].remote_fsck(entity_name, retry, thorough, paranoid, full_log, wizard_flag, prompt_msg.THOROUGH_MESSAGE)
+    repositories[repo_type].remote_fsck(entity_name, retry, thorough, paranoid, full_log)
 
 
 def create(context, **kwargs):
     check_entity_name(kwargs['artifact_name'])
     wizard_flag = kwargs['wizard']
+    _verify_project_init(wizard_flag, context)
+
     kwargs['categories'] = wizard_for_field(context, kwargs['categories'], prompt_msg.CATEGORIES_MESSAGE,
                                             wizard_flag=wizard_flag, required=True, type=CategoriesType())
     if not kwargs['categories']:

@@ -59,3 +59,12 @@ def get_last_entity_version(entity_type, entity_name):
         return
     last_version = metadata.get_last_tag_version(entity_name)
     return last_version + 1
+
+
+def check_initialized_entity(context, entity_type, entity_name):
+    config = merged_config_load()
+    metadata_path = get_metadata_path(config, entity_type)
+    metadata = Metadata(entity_name, metadata_path, config, entity_type)
+    if not metadata.check_exists():
+        log.error(output_messages['ERROR_NOT_INITIALIZED'] % entity_type)
+        context.exit()
