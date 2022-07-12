@@ -423,11 +423,3 @@ def path_is_parent(parent_path, child_path):
     parent_path = os.path.abspath(parent_path)
     child_path = os.path.abspath(child_path)
     return os.path.commonpath([parent_path]) == os.path.commonpath([parent_path, child_path])
-
-
-def check_project_exists(context):
-    try:
-        get_root_path()
-    except RootPathException as e:
-        log.error(e)
-        context.exit()

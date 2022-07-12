@@ -151,7 +151,9 @@ def fetch(context, **kwargs):
 def add(context, **kwargs):
     repo_type = context.parent.command.name
     entity_name = kwargs['ml_entity_name']
-    wizard_flag = kwargs['wizard']
+    wizard_flag = False
+    if 'wizard' in kwargs:
+        wizard_flag = kwargs['wizard']
     _verify_project_settings(wizard_flag, context, repo_type, entity_name)
     bump_version = kwargs['bumpversion']
     run_fsck = kwargs['fsck']

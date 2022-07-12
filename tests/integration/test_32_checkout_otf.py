@@ -84,7 +84,7 @@ class APIAcceptanceTests(unittest.TestCase):
     def test_04_checkout_with_otf_without_global(self):
         self.set_up_checkout(DATASETS)
         delete_global_config()
-        self.assertIn(output_messages['ERROR_NOT_IN_RESPOSITORY'],
+        self.assertIn(output_messages['INFO_ARE_NOT_IN_INITIALIZED_PROJECT'],
                       check_output(MLGIT_CHECKOUT % (DATASETS, 'computer-vision__images__datasets-ex__2')))
         entity_dir = os.path.join(self.tmp_dir, DATASETS, DATASET_NAME)
         self.assertFalse(os.path.exists(entity_dir))
