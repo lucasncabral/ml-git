@@ -13,11 +13,12 @@ from ml_git.commands.custom_types import CategoriesType
 from ml_git.commands.general import mlgit
 from ml_git.commands.prompt_msg import VERSION_TO_BE_DOWNLOADED
 from ml_git.commands.utils import repositories, LABELS, DATASETS, MODELS, check_entity_name, \
-    parse_entity_type_to_singular, get_last_entity_version
-from ml_git.commands.wizard import wizard_for_field, choice_wizard_for_field, request_user_confirmation
+    parse_entity_type_to_singular, get_last_entity_version, check_project_exists, check_initialized_entity, \
+    check_entity_exists
+from ml_git.commands.wizard import wizard_for_field, choice_wizard_for_field, request_user_confirmation, \
+    is_wizard_enabled
 from ml_git.constants import EntityType, MutabilityType, RGX_TAG_FORMAT
 from ml_git.ml_git_message import output_messages
-from ml_git.utils import check_project_exists
 
 
 @mlgit.group(DATASETS, help='Management of datasets within this ml-git repository.', cls=DYMGroup)
@@ -26,7 +27,7 @@ def datasets(ctx):
     """
     Management of datasets within this ml-git repository.
     """
-    check_project_exists(ctx)
+    pass
 
 
 @datasets.group('tag', help='Management of tags for this entity.', cls=DYMGroup)
@@ -43,7 +44,7 @@ def models(ctx):
     """
     Management of models within this ml-git repository.
     """
-    check_project_exists(ctx)
+    pass
 
 
 @models.group('tag', help='Management of tags for this entity.', cls=DYMGroup)
@@ -55,7 +56,8 @@ def md_tag_group():
 
 
 @mlgit.group(LABELS, help='Management of labels sets within this ml-git repository.', cls=DYMGroup)
-def labels():
+@click.pass_context
+def labels(ctx):
     """
     Management of labels sets within this ml-git repository.
     """
@@ -68,6 +70,14 @@ def lb_tag_group():
     Management of tags for this entity.
     """
     pass
+
+
+def _verify_project_settings(wizard_flag, context, entity_type, entity_name, check_entity=True):
+    if wizard_flag or is_wizard_enabled():
+        check_project_exists(context)
+        check_initialized_entity(context, entity_type, entity_name)
+        if check_entity:
+            check_entity_exists(context, entity_type, entity_name)
 
 
 def init(context):
@@ -94,6 +104,7 @@ def checkout(context, **kwargs):
     repo = repositories[repo_type]
     entity = kwargs['ml_entity_tag']
     wizard_flag = kwargs['wizard']
+    _verify_project_settings(wizard_flag, context, repo_type, entity, check_entity=False)
     sample = None
 
     if 'sample_type' in kwargs and kwargs['sample_type'] is not None:
@@ -140,15 +151,17 @@ def fetch(context, **kwargs):
 
 def add(context, **kwargs):
     repo_type = context.parent.command.name
+    entity_name = kwargs['ml_entity_name']
+    wizard_flag = kwargs['wizard']
+    _verify_project_settings(wizard_flag, context, repo_type, entity_name)
     bump_version = kwargs['bumpversion']
     run_fsck = kwargs['fsck']
     file_path = kwargs['file_path']
-    entity_name = kwargs['ml_entity_name']
     metric = kwargs.get('metric')
     metrics_file_path = kwargs.get('metrics_file')
     if not metric and repo_type == MODELS:
         metrics_file_path = wizard_for_field(context, kwargs.get('metrics_file'),
-                                             prompt_msg.METRIC_FILE, wizard_flag=kwargs['wizard'])
+                                             prompt_msg.METRIC_FILE, wizard_flag=wizard_flag)
     repositories[repo_type].add(entity_name, file_path, bump_version, run_fsck, metric, metrics_file_path)
 
 
@@ -158,6 +171,7 @@ def commit(context, **kwargs):
         wizard_flag = kwargs['wizard']
     repo_type = context.parent.command.name
     entity_name = kwargs['ml_entity_name']
+    _verify_project_settings(wizard_flag, context, repo_type, entity_name)
     run_fsck = kwargs['fsck']
 
     if not repositories[repo_type].has_data_to_commit(entity_name):
@@ -271,18 +285,22 @@ def diff(context, **kwargs):
 
 def remote_fsck(context, **kwargs):
     repo_type = context.parent.command.name
-    wizard_flag = kwargs['wizard']
     entity_name = kwargs['ml_entity_name']
-    thorough = kwargs['thorough']
+    wizard_flag = kwargs['wizard']
+    _verify_project_settings(wizard_flag, context, repo_type, entity_name)
+    thorough = kwargs['thorough'] if kwargs['thorough'] else request_user_confirmation(prompt_msg.THOROUGH_MESSAGE, wizard_flag=wizard_flag)
     paranoid = kwargs['paranoid']
     retry = kwargs['retry']
     full_log = kwargs['full']
-    repositories[repo_type].remote_fsck(entity_name, retry, thorough, paranoid, full_log, wizard_flag, prompt_msg.THOROUGH_MESSAGE)
+    repositories[repo_type].remote_fsck(entity_name, retry, thorough, paranoid, full_log)
 
 
 def create(context, **kwargs):
-    check_entity_name(kwargs['artifact_name'])
+    repo_type = context.parent.command.name
+    entity_name = kwargs['artifact_name']
     wizard_flag = kwargs['wizard']
+    check_entity_name(entity_name)
+    _verify_project_settings(wizard_flag, context, repo_type, entity_name, check_entity=False)
     kwargs['categories'] = wizard_for_field(context, kwargs['categories'], prompt_msg.CATEGORIES_MESSAGE,
                                             wizard_flag=wizard_flag, required=True, type=CategoriesType())
     if not kwargs['categories']:
@@ -291,7 +309,6 @@ def create(context, **kwargs):
                                                    click.Choice(MutabilityType.to_list()), default=None, wizard_flag=wizard_flag)
     if not kwargs['mutability']:
         raise UsageError(output_messages['ERROR_MISSING_OPTION'].format('mutability'))
-    repo_type = context.parent.command.name
     repositories[repo_type].create(kwargs)
 
 
