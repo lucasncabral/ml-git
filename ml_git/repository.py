@@ -720,11 +720,12 @@ class Repository(object):
             ** download again corrupted blob
             ** rebuild cache'''
 
-    def fsck(self, full_log=False):
+    def fsck(self, full_log=False, fix_workspace=False):
         repo_type = self.__repo_type
         try:
             objects_path = get_objects_path(self.__config, repo_type)
             index_path = get_index_path(self.__config, repo_type)
+            cache_path = get_cache_path(self.__config, repo_type)
             metadata_path = get_metadata_path(self.__config, repo_type)
             m = Metadata('', metadata_path, self.__config, repo_type)
             if not m.check_exists():
@@ -737,8 +738,13 @@ class Repository(object):
         corrupted_files_obj = o.fsck()
         corrupted_files_obj_len = len(corrupted_files_obj)
 
-        idx = MultihashIndex('', index_path, objects_path)
-        corrupted_files_idx = idx.fsck()
+        corrupted_files_idx = []
+        dirs = os.listdir(os.path.join(index_path, 'metadata'))
+        for entity in dirs:
+            spec_path, _ = search_spec_file(self.__repo_type, entity)
+            idx = MultihashIndex(entity, index_path, objects_path, cache_path=cache_path)
+            corrupted_files_idx.extend(idx.fsck(spec_path))
+
         corrupted_files_idx_len = len(corrupted_files_idx)
         total_corrupted_files = corrupted_files_idx_len + corrupted_files_obj_len
 
