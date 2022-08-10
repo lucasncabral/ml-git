@@ -744,7 +744,7 @@ class Repository(object):
         missing_files = []
         for entity in dirs:
             try:
-                spec_dir, spec_file = search_spec_file(self.__repo_type, entity)
+                spec_dir, spec_file = search_spec_file(self.__repo_type, entity, root_path=metadata_path)
                 local_repository = LocalRepository(self.__config, objects_path, repo_type)
                 files = local_repository.check_and_fetch_missing_files(entity, os.path.join(spec_dir, spec_file), metadata_path)
                 missing_files.extend(files)
