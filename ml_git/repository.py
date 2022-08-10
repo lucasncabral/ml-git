@@ -733,8 +733,6 @@ class Repository(object):
                         total_fixed += 1
                     else:
                         total_unfixed += 1
-                else:
-                    total_unfixed += 1
             except Exception as e:
                 log.debug(output_messages['ERROR_WHILE_CHECKING_WORKSPACE'].format(entity, e))
         return total_fixed, total_unfixed
@@ -773,6 +771,7 @@ class Repository(object):
         print('')
         log.info(output_messages['INFO_STARTING_INTEGRITY_CHECK'] % index_path)
         missing_files = self._fetch_missing_blobs_and_ilpds(index_path, objects_path, repo_type, metadata_path)
+        missing_files_len = len(missing_files) - corrupted_files_obj_len if len(missing_files) > 0 else 0
         corrupted_files_idx = []
         fixed_in_workspace, unfixed_in_workspace = self._check_index_and_fix_workspace(index_path, cache_path, corrupted_files_idx, fix_workspace, objects_path, repo_type)
         total_fixed = len(missing_files) + fixed_in_workspace
@@ -792,7 +791,7 @@ class Repository(object):
                                                                   total_corrupted_files))
 
         print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', total_corrupted_files))
-        print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', (len(missing_files) - corrupted_files_obj_len)))
+        print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', missing_files_len))
         print(output_messages['INFO_FSCK_FIXED_FILES'].format(total_fixed))
         if unfixed_in_workspace > 0 and not fix_workspace:
             log.info(output_messages['INFO_USE_FIX_WORKSPACE'])

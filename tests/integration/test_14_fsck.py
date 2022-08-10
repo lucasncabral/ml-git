@@ -21,7 +21,7 @@ class FsckAcceptanceTests(unittest.TestCase):
     def _fsck_corrupted(self, entity):
         init_repository(entity, self)
         add_file(self, entity, '', 'new', file_content='2')
-        self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_COMMIT % (entity, entity + '-ex')))
+        self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_COMMIT % (entity, entity + '-ex', '')))
         self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_PUSH % (entity, entity + '-ex')))
         fsck_output = check_output(MLGIT_FSCK % entity)
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 0), fsck_output)
@@ -48,7 +48,7 @@ class FsckAcceptanceTests(unittest.TestCase):
         self.assertIn(output_messages['INFO_FSCK_FIXED_FILES'].format(0), fsck_output)
 
     @pytest.mark.usefixtures('start_local_git_server', 'switch_to_tmp_dir')
-    def test_01_fsck__corrupted_blob(self):
+    def test_01_fsck_corrupted_blob(self):
         self._fsck_corrupted(DATASETS)
         self._fsck_corrupted(LABELS)
         self._fsck_corrupted(MODELS)
@@ -68,11 +68,11 @@ class FsckAcceptanceTests(unittest.TestCase):
         with open(corrupted_file) as f:
             original_content = f.read()
 
-        self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_COMMIT % (entity, entity + '-ex')))
+        self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_COMMIT % (entity, entity + '-ex', '')))
         self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_PUSH % (entity, entity + '-ex')))
         fsck_output = check_output(MLGIT_FSCK % entity)
 
-        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 1), fsck_output)
+        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 0), fsck_output)
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', 0), fsck_output)
         self.assertIn(output_messages['INFO_FSCK_FIXED_FILES'].format(0), fsck_output)
 
@@ -109,7 +109,7 @@ class FsckAcceptanceTests(unittest.TestCase):
                                'zdj7WdrvGPx9s8wmSB6KJGCmfCRNDQX6i8kVfFenQbWDQ1pmd'), 'wt') as file:
             file.write('corrupting file')
         output = check_output((MLGIT_FSCK % entity) + ' --full')
-        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 2), output)
+        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 1), output)
         self.assertIn('zdj7WdrvGPx9s8wmSB6KJGCmfCRNDQX6i8kVfFenQbWDQ1pmd', output)
 
     @pytest.mark.usefixtures('start_local_git_server', 'switch_to_tmp_dir')
