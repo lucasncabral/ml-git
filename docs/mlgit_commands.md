@@ -382,7 +382,7 @@ Usage: ml-git datasets fsck [OPTIONS]
 
 Options:
   --fix-workspace  Use this option to repair files identified as corrupt in
-                   the workspace.
+                   the entity workspace.
   --full           Show the list of corrupted files.
   --verbose        Debug mode
 ```
