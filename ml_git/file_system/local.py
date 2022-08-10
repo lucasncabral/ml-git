@@ -430,6 +430,7 @@ class LocalRepository(MultihashFS):
             return
 
         wps.progress_bar_close()
+        return True
 
     def check_and_fetch_missing_files(self, entity, spec_path, metadata_path):
         log.debug("Stating fsck for {} entity".format(entity))
@@ -446,20 +447,23 @@ class LocalRepository(MultihashFS):
             log.error(output_messages['ERROR_WITHOUT_STORAGE'] % (manifest[STORAGE_SPEC_KEY]), class_name=LOCAL_REPOSITORY_CLASS_NAME)
             return
 
+        missing_files = []
         lkeys = list(obj_files.keys())
         log.debug(output_messages['INFO_STARTING_IPLDS_CHECK'], class_name=LOCAL_REPOSITORY_CLASS_NAME)
         missing_iplds = self._fsck_check_iplds_is_present(lkeys)
         if len(missing_iplds) > 0:
+            missing_files.extend(missing_iplds)
             log.info('{} - {}'.format(entity, output_messages['INFO_MISSING_DESCRIPTOR_FILES_DOWNLOAD'] % len(missing_iplds)), class_name=LOCAL_REPOSITORY_CLASS_NAME)
             self._work_pool_to_submit_file(manifest, 2, missing_iplds, self._fetch_ipld)
 
         log.debug(output_messages['INFO_STARTING_BLOBS_CHECK'], class_name=LOCAL_REPOSITORY_CLASS_NAME)
         missing_blobs = self._fsck_check_blobs_is_present(lkeys)
         if len(missing_blobs) > 0:
+            missing_files.extend(missing_blobs)
             log.info('{} - {}'.format(entity, output_messages['INFO_MISSING_BLOB_FILES_DOWNLOAD'] % len(missing_blobs)), class_name=LOCAL_REPOSITORY_CLASS_NAME)
             self._work_pool_to_submit_file(manifest, 2, missing_blobs, self._fetch_ipld)
         log.debug("End fsck for {} entity".format(entity))
-        return True
+        return missing_files
 
     def checkout(self, cache_path, metadata_path, ws_path, tag, samples, bare=False, entity_dir=None, fail_limit=None):
         _, spec_name, version = spec_parse(tag)

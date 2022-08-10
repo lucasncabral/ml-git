@@ -714,6 +714,8 @@ class Repository(object):
     def _check_index_and_fix_workspace(self, index_path, cache_path, corrupted_files_idx, fix_workspace, objects_path,
                                        repo_type):
         dirs = os.listdir(os.path.join(index_path, 'metadata'))
+        total_fixed = 0
+        total_unfixed = 0
         for entity in dirs:
             spec_path, _ = search_spec_file(self.__repo_type, entity)
             idx = MultihashIndex(entity, index_path, objects_path, cache_path=cache_path)
@@ -725,14 +727,24 @@ class Repository(object):
                 obj_files = {}
                 for value in files:
                     obj_files[files[value]['hash']] = {files[value]['key']}
-                local_repository.mount_files(obj_files, entity, cache_path, spec_path)
+                result = local_repository.mount_files(obj_files, entity, cache_path, spec_path)
+                if result:
+                    total_fixed += 1
+                else:
+                    total_unfixed += 1
+            else:
+                total_unfixed += 1
+        return total_fixed, total_unfixed
 
     def _fetch_missing_blobs_and_ilpds(self, index_path, objects_path, repo_type, metadata_path):
         dirs = os.listdir(os.path.join(index_path, 'metadata'))
+        missing_files = []
         for entity in dirs:
             spec_dir, spec_file = search_spec_file(self.__repo_type, entity)
             local_repository = LocalRepository(self.__config, objects_path, repo_type)
-            local_repository.check_and_fetch_missing_files(entity, os.path.join(spec_dir, spec_file), metadata_path)
+            files = local_repository.check_and_fetch_missing_files(entity, os.path.join(spec_dir, spec_file), metadata_path)
+            missing_files.extend(files)
+        return missing_files
 
     def fsck(self, full_log=False, fix_workspace=False):
         repo_type = self.__repo_type
@@ -754,9 +766,10 @@ class Repository(object):
 
         print('')
         log.info(output_messages['INFO_STARTING_INTEGRITY_CHECK'] % index_path)
-        self._fetch_missing_blobs_and_ilpds(index_path, objects_path, repo_type, metadata_path)
+        missing_files = self._fetch_missing_blobs_and_ilpds(index_path, objects_path, repo_type, metadata_path)
         corrupted_files_idx = []
-        self._check_index_and_fix_workspace(index_path, cache_path, corrupted_files_idx, fix_workspace, objects_path, repo_type)
+        fixed_in_workspace, unfixed_in_workspace = self._check_index_and_fix_workspace(index_path, cache_path, corrupted_files_idx, fix_workspace, objects_path, repo_type)
+        total_fixed = len(missing_files) + fixed_in_workspace
         log.info(output_messages['INFO_FINISH_INTEGRITY_CHECK'] % index_path)
 
         corrupted_files_idx_len = len(corrupted_files_idx)
@@ -765,9 +778,18 @@ class Repository(object):
         if not full_log:
             corrupted_files_obj = ''
             corrupted_files_idx = ''
-        print(output_messages['INFO_FSCK_CORRUPTED_FILES'] % (corrupted_files_obj_len, corrupted_files_obj,
+
+        print('')
+        log.info(output_messages['INFO_FSCK_SUMMARY'])
+        log.debug(output_messages['INFO_FSCK_CORRUPTED_FILES'] % (corrupted_files_obj_len, corrupted_files_obj,
                                                               corrupted_files_idx_len, corrupted_files_idx,
                                                               total_corrupted_files))
+
+        print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', total_corrupted_files))
+        print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', (len(missing_files) - corrupted_files_obj_len)))
+        print(output_messages['INFO_FSCK_FIXED_FILES'].format(total_fixed))
+        if unfixed_in_workspace > 0 and not fix_workspace:
+            log.info(output_messages['INFO_USE_FIX_WORKSPACE'])
 
     def show(self, spec):
         repo_type = self.__repo_type
