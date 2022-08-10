@@ -195,7 +195,6 @@ class MultihashIndex(object):
         os.mkdir(self._path)
 
     def fsck(self, entity_path):
-        log.info(output_messages['INFO_STARTING_INTEGRITY_CHECK'] % self._path, class_name=MULTI_HASH_CLASS_NAME)
         return self._full_idx.fsck(entity_path, self._hfs, self._cache)
 
     def update_index_manifest(self, hash_files):
@@ -343,20 +342,18 @@ class FullIndex(object):
         return len(self.get_index())
 
     def fsck(self, entity_path, hfs, cache):
-        corrupted_files = []
+        corrupted_files = {}
         f_index = self.get_index()
         for k, v in f_index.items():
             expected_hash = v['hash']
             file_path = os.path.join(entity_path, k)
-            recovered_file = False
-            if v['status'] == Status.c.value and 'previous_hash' in v:
-                expected_hash = v['previous_hash']
-                recovered_file = hfs.get_scid(file_path) != expected_hash
-
-            if (os.path.exists(file_path) and hfs.get_scid(file_path) != expected_hash) or recovered_file:
-                check_file = f_index.get(posix_path(k))
-                self.check_and_update(k, check_file, hfs, posix_path(k), file_path, cache)
-                corrupted_files.append(file_path)
+            if os.path.exists(file_path):
+                if v['status'] == Status.c.name and 'previous_hash' in v:
+                    expected_hash = v['previous_hash']
+                if hfs.get_scid(file_path) != expected_hash:
+                    check_file = f_index.get(posix_path(k))
+                    self.check_and_update(k, check_file, hfs, posix_path(k), file_path, cache)
+                    corrupted_files[file_path] = {'hash': expected_hash, 'key': k}
         self.save_manifest_index()
         return corrupted_files
 

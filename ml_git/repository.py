@@ -711,14 +711,28 @@ class Repository(object):
 
         m.checkout(ref, force=True)
 
-    '''Performs fsck on several aspects of ml-git filesystem.
-        TODO: add options like following:
-        * detect:
-            ** fast: performs checks on all blobs present in index / objects
-            ** thorough: perform check on files within cache
-        * fix:
-            ** download again corrupted blob
-            ** rebuild cache'''
+    def _check_index_and_fix_workspace(self, index_path, cache_path, corrupted_files_idx, fix_workspace, objects_path,
+                                       repo_type):
+        dirs = os.listdir(os.path.join(index_path, 'metadata'))
+        for entity in dirs:
+            spec_path, _ = search_spec_file(self.__repo_type, entity)
+            idx = MultihashIndex(entity, index_path, objects_path, cache_path=cache_path)
+            files = idx.fsck(spec_path)
+            corrupted_files_idx.extend(files.keys())
+            if fix_workspace and len(files.keys()) > 0:
+                log.info(output_messages['INFO_FIXING_CORRUPTED_FILES'].format(len(files.keys()), entity))
+                local_repository = LocalRepository(self.__config, objects_path, repo_type)
+                obj_files = {}
+                for value in files:
+                    obj_files[files[value]['hash']] = {files[value]['key']}
+                local_repository.mount_files(obj_files, entity, cache_path, spec_path)
+
+    def _fetch_missing_blobs_and_ilpds(self, index_path, objects_path, repo_type, metadata_path):
+        dirs = os.listdir(os.path.join(index_path, 'metadata'))
+        for entity in dirs:
+            spec_dir, spec_file = search_spec_file(self.__repo_type, entity)
+            local_repository = LocalRepository(self.__config, objects_path, repo_type)
+            local_repository.check_and_fetch_missing_files(entity, os.path.join(spec_dir, spec_file), metadata_path)
 
     def fsck(self, full_log=False, fix_workspace=False):
         repo_type = self.__repo_type
@@ -735,15 +749,15 @@ class Repository(object):
             return
 
         o = Objects('', objects_path)
-        corrupted_files_obj = o.fsck()
+        corrupted_files_obj = o.fsck(remove_corrupted=True)
         corrupted_files_obj_len = len(corrupted_files_obj)
 
+        print('')
+        log.info(output_messages['INFO_STARTING_INTEGRITY_CHECK'] % index_path)
+        self._fetch_missing_blobs_and_ilpds(index_path, objects_path, repo_type, metadata_path)
         corrupted_files_idx = []
-        dirs = os.listdir(os.path.join(index_path, 'metadata'))
-        for entity in dirs:
-            spec_path, _ = search_spec_file(self.__repo_type, entity)
-            idx = MultihashIndex(entity, index_path, objects_path, cache_path=cache_path)
-            corrupted_files_idx.extend(idx.fsck(spec_path))
+        self._check_index_and_fix_workspace(index_path, cache_path, corrupted_files_idx, fix_workspace, objects_path, repo_type)
+        log.info(output_messages['INFO_FINISH_INTEGRITY_CHECK'] % index_path)
 
         corrupted_files_idx_len = len(corrupted_files_idx)
         total_corrupted_files = corrupted_files_idx_len + corrupted_files_obj_len
@@ -754,8 +768,6 @@ class Repository(object):
         print(output_messages['INFO_FSCK_CORRUPTED_FILES'] % (corrupted_files_obj_len, corrupted_files_obj,
                                                               corrupted_files_idx_len, corrupted_files_idx,
                                                               total_corrupted_files))
-        if total_corrupted_files > 0:
-            log.info(output_messages['INFO_FSCK_VERBOSE_MODE'], class_name=REPOSITORY_CLASS_NAME)
 
     def show(self, spec):
         repo_type = self.__repo_type
