@@ -293,6 +293,8 @@ output_messages = {
                                         'Please check if the storage service is up and running.',
     'ERROR_INVALID_URL': 'Invalid url: [%s]',
     'ERROR_INVALID_IPLD': 'Invalid IPLD [%s]',
+    'ERROR_WHILE_FETCHING_MISSING_FILES': 'Error while fetching missing files for {} entity - ERROR: {}',
+    'ERROR_WHILE_CHECKING_WORKSPACE': 'Error while checking workspace data for {} entity - ERROR: {}',
     'ERROR_FILE_DOWNLOAD_FAILED': 'Failed to download file id: [%s]',
     'ERROR_NOT_IN_RESPOSITORY': 'You are not in an initialized ml-git repository.',
     'ERROR_PATH_ALREAD_EXISTS': 'The path [%s] already exists and is not an empty directory.',

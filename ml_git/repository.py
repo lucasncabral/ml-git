@@ -717,33 +717,39 @@ class Repository(object):
         total_fixed = 0
         total_unfixed = 0
         for entity in dirs:
-            spec_path, _ = search_spec_file(self.__repo_type, entity)
-            idx = MultihashIndex(entity, index_path, objects_path, cache_path=cache_path)
-            files = idx.fsck(spec_path)
-            corrupted_files_idx.extend(files.keys())
-            if fix_workspace and len(files.keys()) > 0:
-                log.info(output_messages['INFO_FIXING_CORRUPTED_FILES'].format(len(files.keys()), entity))
-                local_repository = LocalRepository(self.__config, objects_path, repo_type)
-                obj_files = {}
-                for value in files:
-                    obj_files[files[value]['hash']] = {files[value]['key']}
-                result = local_repository.mount_files(obj_files, entity, cache_path, spec_path)
-                if result:
-                    total_fixed += 1
+            try:
+                spec_path, _ = search_spec_file(self.__repo_type, entity)
+                idx = MultihashIndex(entity, index_path, objects_path, cache_path=cache_path)
+                files = idx.fsck(spec_path)
+                corrupted_files_idx.extend(files.keys())
+                if fix_workspace and len(files.keys()) > 0:
+                    log.info(output_messages['INFO_FIXING_CORRUPTED_FILES'].format(len(files.keys()), entity))
+                    local_repository = LocalRepository(self.__config, objects_path, repo_type)
+                    obj_files = {}
+                    for value in files:
+                        obj_files[files[value]['hash']] = {files[value]['key']}
+                    result = local_repository.mount_files(obj_files, entity, cache_path, spec_path)
+                    if result:
+                        total_fixed += 1
+                    else:
+                        total_unfixed += 1
                 else:
                     total_unfixed += 1
-            else:
-                total_unfixed += 1
+            except Exception as e:
+                log.debug(output_messages['ERROR_WHILE_CHECKING_WORKSPACE'].format(entity, e))
         return total_fixed, total_unfixed
 
     def _fetch_missing_blobs_and_ilpds(self, index_path, objects_path, repo_type, metadata_path):
         dirs = os.listdir(os.path.join(index_path, 'metadata'))
         missing_files = []
         for entity in dirs:
-            spec_dir, spec_file = search_spec_file(self.__repo_type, entity)
-            local_repository = LocalRepository(self.__config, objects_path, repo_type)
-            files = local_repository.check_and_fetch_missing_files(entity, os.path.join(spec_dir, spec_file), metadata_path)
-            missing_files.extend(files)
+            try:
+                spec_dir, spec_file = search_spec_file(self.__repo_type, entity)
+                local_repository = LocalRepository(self.__config, objects_path, repo_type)
+                files = local_repository.check_and_fetch_missing_files(entity, os.path.join(spec_dir, spec_file), metadata_path)
+                missing_files.extend(files)
+            except Exception as e:
+                log.debug(output_messages['ERROR_WHILE_FETCHING_MISSING_FILES'].format(entity, e))
         return missing_files
 
     def fsck(self, full_log=False, fix_workspace=False):
@@ -782,8 +788,8 @@ class Repository(object):
         print('')
         log.info(output_messages['INFO_FSCK_SUMMARY'])
         log.debug(output_messages['INFO_FSCK_CORRUPTED_FILES'] % (corrupted_files_obj_len, corrupted_files_obj,
-                                                              corrupted_files_idx_len, corrupted_files_idx,
-                                                              total_corrupted_files))
+                                                                  corrupted_files_idx_len, corrupted_files_idx,
+                                                                  total_corrupted_files))
 
         print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', total_corrupted_files))
         print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', (len(missing_files) - corrupted_files_obj_len)))
