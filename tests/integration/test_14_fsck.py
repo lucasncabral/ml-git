@@ -37,6 +37,8 @@ class FsckAcceptanceTests(unittest.TestCase):
     def _fsck_missing(self, entity):
         init_repository(entity, self)
         add_file(self, entity, '', 'new', file_content='2')
+        self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_COMMIT % (entity, entity + '-ex', '')))
+        self.assertNotIn(ERROR_MESSAGE, check_output(MLGIT_PUSH % (entity, entity + '-ex')))
         fsck_output = check_output(MLGIT_FSCK % entity)
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 0, ''), fsck_output)
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', 0, ''), fsck_output)
@@ -88,7 +90,7 @@ class FsckAcceptanceTests(unittest.TestCase):
 
         with open(corrupted_file) as f:
             content = f.read()
-        self.assertEquals(content, corrupted_content)
+        self.assertEquals(content, '')
 
         fsck_output = check_output(MLGIT_FSCK % (entity + ' --fix-workspace'))
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 1, ''), fsck_output)
