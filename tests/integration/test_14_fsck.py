@@ -38,13 +38,13 @@ class FsckAcceptanceTests(unittest.TestCase):
         init_repository(entity, self)
         add_file(self, entity, '', 'new', file_content='2')
         fsck_output = check_output(MLGIT_FSCK % entity)
-        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted') % 0, fsck_output)
-        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing') % 0, fsck_output)
+        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 0), fsck_output)
+        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', 0), fsck_output)
         self.assertIn(output_messages['INFO_FSCK_FIXED_FILES'].format(0), fsck_output)
         os.remove(os.path.join(self.tmp_dir, ML_GIT_DIR, entity, 'objects', 'hashfs', 'dr', 'vG', 'zdj7WdrvGPx9s8wmSB6KJGCmfCRNDQX6i8kVfFenQbWDQ1pmd'))
         fsck_output = check_output(MLGIT_FSCK % entity)
-        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted') % 0, fsck_output)
-        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing') % 1, fsck_output)
+        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 0), fsck_output)
+        self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', 1), fsck_output)
         self.assertIn(output_messages['INFO_FSCK_FIXED_FILES'].format(0), fsck_output)
 
     @pytest.mark.usefixtures('start_local_git_server', 'switch_to_tmp_dir')
@@ -88,7 +88,7 @@ class FsckAcceptanceTests(unittest.TestCase):
 
         with open(corrupted_file) as f:
             content = f.read()
-            self.assertEquals(content, corrupted_content)
+        self.assertEquals(content, corrupted_content)
 
         fsck_output = check_output(MLGIT_FSCK % (entity + ' --fix-workspace'))
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 1), fsck_output)
@@ -97,7 +97,7 @@ class FsckAcceptanceTests(unittest.TestCase):
 
         with open(corrupted_file) as f:
             content = f.read()
-            self.assertEquals(content, original_content)
+        self.assertEquals(content, original_content)
 
     @pytest.mark.usefixtures('start_local_git_server', 'switch_to_tmp_dir')
     def test_04_fsck_with_full_option(self):

@@ -790,7 +790,7 @@ class Repository(object):
                                                                   corrupted_files_idx_len, corrupted_files_idx,
                                                                   total_corrupted_files))
 
-        print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', total_corrupted_files))
+        print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', total_corrupted_files, corrupted_files_obj))
         print(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', missing_files_len))
         print(output_messages['INFO_FSCK_FIXED_FILES'].format(total_fixed))
         if unfixed_in_workspace > 0 and not fix_workspace:

@@ -179,7 +179,7 @@ output_messages = {
     'INFO_ENTITIES_RELATIONSHIPS_NOT_FOUND': 'No relationships were found for your project entities.',
     'INFO_TOTAL_UNZIPPED_FILES': 'Total unzipped files: {}',
     'INFO_FILE_AUTOMATICALLY_ADDED': 'File {} has been automatically added to staged files.',
-    'INFO_SUMMARY_FSCK_FILES': 'Total of {} files detected: {}',
+    'INFO_SUMMARY_FSCK_FILES': 'Total of {} files detected: {}. {}',
     'INFO_FSCK_CORRUPTED_FILES': '\n[%d] corrupted file(s) in Local Repository %s\n[%d] corrupted file(s) in Index %s\nTotal of corrupted files detected: %d',
     'INFO_FSCK_FIXED_FILES': 'Total of fixed files (corrupted and missing): {}',
     'INFO_USE_FIX_WORKSPACE': 'It has been detected that you have corrupted files in the workspace, you can use the --fix-worskpace option to fix the identified files.',
