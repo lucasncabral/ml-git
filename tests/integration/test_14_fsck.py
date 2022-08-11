@@ -47,7 +47,7 @@ class FsckAcceptanceTests(unittest.TestCase):
         fsck_output = check_output(MLGIT_FSCK % entity)
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 0, ''), fsck_output)
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', 1, ''), fsck_output)
-        self.assertIn(output_messages['INFO_FSCK_FIXED_FILES'].format(0), fsck_output)
+        self.assertIn(output_messages['INFO_FSCK_FIXED_FILES'].format(1), fsck_output)
 
     @pytest.mark.usefixtures('start_local_git_server', 'switch_to_tmp_dir')
     def test_01_fsck_corrupted_blob(self):
@@ -92,7 +92,7 @@ class FsckAcceptanceTests(unittest.TestCase):
             content = f.read()
         self.assertEquals(content, '')
 
-        fsck_output = check_output(MLGIT_FSCK % (entity + ' --fix-workspace'))
+        fsck_output = check_output(MLGIT_FSCK % (entity) + ' --fix-workspace')
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('corrupted', 1, ''), fsck_output)
         self.assertIn(output_messages['INFO_SUMMARY_FSCK_FILES'].format('missing', 0, ''), fsck_output)
         self.assertIn(output_messages['INFO_FSCK_FIXED_FILES'].format(1), fsck_output)
