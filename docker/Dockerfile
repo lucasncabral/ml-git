@@ -1,4 +1,4 @@
-FROM jupyter/datascience-notebook
+FROM jupyter/datascience-notebook:python-3.8.8
 USER root
 ADD https://dl.min.io/server/minio/release/linux-amd64/minio /
 ADD docker/init.sh /
