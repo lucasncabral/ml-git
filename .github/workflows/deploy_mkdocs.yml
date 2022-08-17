@@ -32,7 +32,7 @@ jobs:
       - name: Commit markdown
         run: |
           git add ./docs/api
-          git commit -m "Generating empty Markdown"
+          git diff-index --quiet HEAD || git commit -m "Generating empty Markdown"
       - uses: runsascoded/nbconvert@v1.2
         with:
           args: -a -f
