@@ -47,4 +47,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           input_type: ipynb
           output_type: markdown
-          output_dir: './docs/api/api_scripts/'
+          split_at_heading: false
+          output_dir: '.'
