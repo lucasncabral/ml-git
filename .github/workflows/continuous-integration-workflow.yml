@@ -45,4 +45,4 @@ jobs:
 
       - uses: runsascoded/nbconvert@v1.2
         with:
-          args: -f
+          args: -a -f
