@@ -10,6 +10,23 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v1
+      - uses: fusion-engineering/setup-git-credentials@v2
+        with:
+          credentials: 'https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/'
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Create empty Markdown
+        run: |
+          for jupyter_file in $(find ./docs/api -name '*.ipynb'); do
+              touch "${jupyter_file%.ipynb}.md";
+          done
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Generating empty Markdown
+      - uses: runsascoded/nbconvert@v1.2
+        with:
+          args: -a -f
       - name: Create index
         uses: canastro/copy-file-action@master
         with:
@@ -20,6 +37,11 @@ jobs:
         with:
           source: "docker/README.md"
           target: "docs/downloadable_environment.md"
+      - name: ML-Git Step-by-Step Guides
+        uses: canastro/copy-file-action@master
+        with:
+          source: docs/api/api_scripts/README.md
+          target: docs/step_by_step_guides.md
       - name: Remove 'docs/' from links - step 1
         uses: jacobtomlinson/gha-find-replace@master
         with:
