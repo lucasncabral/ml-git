@@ -44,10 +44,9 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Create empty Markdowns
-        shell: zsh {0}
         run: |
-          for jupyter_file in ./**/*.ipynb; do
-              touch "${jupyter_file%.ipynb}.md"
+          for jupyter_file in $(find . -name '*.ipynb'); do
+              touch "${jupyter_file%.ipynb}.md";
           done
 
       - uses: runsascoded/nbconvert@v1.2
