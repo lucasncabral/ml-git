@@ -51,5 +51,4 @@ jobs:
 
       - uses: runsascoded/nbconvert@v1.2
         with:
-          args: -f --all
-          a: true
+          args: -a
