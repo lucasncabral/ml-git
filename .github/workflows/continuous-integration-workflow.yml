@@ -92,3 +92,23 @@ jobs:
           pipenv --python ${{ matrix.python-version }}
           chmod +x ./scripts/run_integration_tests.sh
           make test.integration
+
+  convert-notebooks:
+    name: Convert Jupyter Notebooks to Markdown
+#    needs: [build-linux, build-windows]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: fusion-engineering/setup-git-credentials@v2
+        with:
+          credentials: 'https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/'
+
+      - uses: actions/checkout@v1
+      - name: autopy-lot
+        uses: deep5050/autopy-lot@master
+        with:
+          check: all
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          input_type: ipynb
+          output_type: markdown
+          output_dir: './docs/api/api_scripts_docs/'
