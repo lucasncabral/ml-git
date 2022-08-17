@@ -48,4 +48,4 @@ jobs:
           input_type: ipynb
           output_type: markdown
           split_at_heading: false
-          output_dir: '.'
+          output_dir: './'
