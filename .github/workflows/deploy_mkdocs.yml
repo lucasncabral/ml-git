@@ -21,9 +21,14 @@ jobs:
           for jupyter_file in $(find ./docs/api -name '*.ipynb'); do
               touch "${jupyter_file%.ipynb}.md";
           done
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Generating empty Markdown
+      - name: Configure Git Credentials for Tests
+        run: |
+            git config --global user.name $USER_NAME
+            git config --global user.email $USER_EMAIL
+        env:
+          USER_NAME: 'MLGit'
+          USER_EMAIL: 'mlgit@mail.com'
+        shell: bash
       - name: Commit markdown
         run: |
           git add ./docs/api
