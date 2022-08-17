@@ -646,6 +646,165 @@
 
             
           
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_8">
+          ML-Git Step-by-Step Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ML-Git Step-by-Step Guides" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          ML-Git Step-by-Step Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../step_by_step_guides.md" class="md-nav__link">
+        Summary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/api_scripts_docs/basic/basic_flow/" class="md-nav__link">
+        Basic Flow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/api_scripts_docs/basic/clone_repository/" class="md-nav__link">
+        Clone Repository
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/api_scripts_docs/basic/multiple_projects/" class="md-nav__link">
+        Multiple Projects
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/api_scripts_docs/relationship_notebook/relationship_api_commands/" class="md-nav__link">
+        Relationship API Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/api_scripts_docs/mnist_notebook/mnist_random_forest_api/" class="md-nav__link">
+        MNIST Random Forest API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/api_scripts_docs/mnist_notebook/mnist_random_forest_cli/" class="md-nav__link">
+        MNIST Random Forest CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/api_scripts_docs/multiple_datasets_notebook/checkout_with_sample/" class="md-nav__link">
+        Checkout With Sample
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/api_scripts_docs/multiple_datasets_notebook/multiple_datasets/" class="md-nav__link">
+        Multiple Datasets
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -985,17 +1144,24 @@ Options:
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets fsck [OPTIONS]
 
 Options:
-  --full     Show the list of corrupted files.
-  --verbose  Debug mode
+  --fix-workspace  Use this option to repair files identified as corrupted in
+                   the entity workspace.
+  --full           Show the list of corrupted files.
+  --verbose        Debug mode
 </code></pre></div>
 <p>Example:
 <div class="highlight"><pre><span></span><code>ml-git datasets fsck
 </code></pre></div></p>
-<p>This command will walk through the internal ml-git directories (index &amp; local repository) and will check the integrity of all blobs under its management.
-It will return the list of blobs that are corrupted if the user passes the --full option.</p>
-<p>Note: </p>
-<div class="highlight"><pre><span></span><code>in the future, fsck should be able to fix some errors of detected corruption.
-</code></pre></div>
+<p>This command will walk through the internal ml-git directories (index &amp; local repository) and check the presence and integrity of all file blobs under its management.</p>
+<p>This command will basically try to:</p>
+<ul>
+<li>Detect any chunk/blob that is corrupted or missing in the internal ml-git directory (.ml-git/{entity-type}/objects)</li>
+<li>Fetch files detected as corrupted or missing from storage</li>
+<li>Check the integrity of files mounted in the entities workspace</li>
+<li>In fix-workspace mode, repair corrupted files found in the entities workspace. A file in the entities workspace is considered 'corrupted' based on the business rule defined by the mutability of the entity.
+If you want to know more about each type of mutability and how it works, please take a look at <a href="../mutability_helper/">Mutability documentation</a>.</li>
+</ul>
+<p>It will return the list of blobs that are corrupted/missing if the user passes the --full option.</p>
 </details>
 <details>
 <p><summary><code> ml-git &lt;ml-entity&gt; import </code></summary>
@@ -1570,7 +1736,7 @@ Options:
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 12, 2022</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 15, 2022</span>
       
     
   </small>
