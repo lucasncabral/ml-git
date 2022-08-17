@@ -49,6 +49,10 @@ jobs:
               touch "${jupyter_file%.ipynb}.md";
           done
 
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Generating empty Markdowns
+
       - uses: runsascoded/nbconvert@v1.2
         with:
           args: -f -a
