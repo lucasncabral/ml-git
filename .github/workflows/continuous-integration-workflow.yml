@@ -31,7 +31,7 @@ jobs:
 
   convert-notebooks:
     name: Convert Jupyter Notebooks to Markdown
-#    needs: [build-linux, build-windows]
+#    needs: [flake8, build-windows]
     runs-on: ubuntu-latest
 
     steps:
@@ -39,13 +39,10 @@ jobs:
         with:
           credentials: 'https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/'
 
-      - uses: actions/checkout@v1
-      - name: autopy-lot
-        uses: deep5050/autopy-lot@master
+      - uses: actions/checkout@v2
         with:
-          check: all
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          input_type: ipynb
-          output_type: markdown
-          split_at_heading: false
-          output_dir: './'
+          ref: ${{ github.head_ref }}
+
+      - uses: runsascoded/nbconvert@v1.2
+        with:
+          args: -a -f
