@@ -45,10 +45,11 @@ jobs:
 
       - name: Create empty Markdowns
         run: |
-          for jupyter_file in $(find . -name '*.ipynb'); do
+          for jupyter_file in $(find ./docs/api -name '*.ipynb'); do
               touch "${jupyter_file%.ipynb}.md";
           done
 
       - uses: runsascoded/nbconvert@v1.2
         with:
           args: -a -f
+          a: True
