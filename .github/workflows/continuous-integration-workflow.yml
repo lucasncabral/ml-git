@@ -29,66 +29,30 @@ jobs:
         run: |
           flake8 .
 
-  unit-tests:
-    name: Unit Tests
-
+  convert-notebooks:
+    name: Convert Jupyter Notebooks to Markdown
+#    needs: [flake8, build-windows]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.6, 3.7, 3.8]
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        uses: ./.github/actions/install_dependencies
-
       - uses: fusion-engineering/setup-git-credentials@v2
         with:
           credentials: 'https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/'
 
-      - name: Configure Git Credentials for Tests
-        uses: ./.github/actions/configure_git_credentials
-
-      - name: Unit Tests
-        run: |
-          pipenv --python ${{ matrix.python-version }}
-          chmod +x ./scripts/run_unit_tests.sh
-          make test.unit
-
-  integration-tests:
-    name: Integration Tests
-
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.6, 3.7, 3.8]
-
-    steps:
       - uses: actions/checkout@v2
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
         with:
-          python-version: ${{ matrix.python-version }}
+          ref: ${{ github.head_ref }}
 
-      - name: Install dependencies
-        uses: ./.github/actions/install_dependencies
-
-      - uses: fusion-engineering/setup-git-credentials@v2
-        with:
-          credentials: 'https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/'
-
-      - name: Configure Git Credentials for Tests
-        uses: ./.github/actions/configure_git_credentials
-
-      - name: Integration Tests
+      - name: Create empty Markdowns
         run: |
-          pipenv --python ${{ matrix.python-version }}
-          chmod +x ./scripts/run_integration_tests.sh
-          make test.integration
+          for jupyter_file in $(find ./docs/api -name '*.ipynb'); do
+              touch "${jupyter_file%.ipynb}.md";
+          done
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Generating empty Markdowns
+
+      - uses: runsascoded/nbconvert@v1.2
+        with:
+          args: -f -a
