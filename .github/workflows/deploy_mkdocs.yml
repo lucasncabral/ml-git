@@ -16,11 +16,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-      - uses: Convert Notebooks to Markdown
+      - name: Convert Notebooks to Markdown
         run: |
           python3 -m pip install notebook
           for jupyter_file in $(find ./docs/api -name '*.ipynb'); do
               jupyter nbconvert --to markdown jupyter_file;
+          done
       - name: Create index
         uses: canastro/copy-file-action@master
         with:
