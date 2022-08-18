@@ -265,9 +265,82 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         Introduction
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-install" class="md-nav__link">
+    How to install
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-uninstall" class="md-nav__link">
+    How to uninstall
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-configure" class="md-nav__link">
+    How to configure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-commands" class="md-nav__link">
+    Basic commands
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-contribute" class="md-nav__link">
+    How to contribute
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#links" class="md-nav__link">
+    Links
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -636,7 +709,7 @@
   
   
     <li class="md-nav__item">
-      <a href="downloadable_environment.md" class="md-nav__link">
+      <a href="downloadable_environment/" class="md-nav__link">
         Docker Environment
       </a>
     </li>
@@ -649,155 +722,10 @@
   
   
   
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_1_8">
-          ML-Git Step-by-Step Guides
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="ML-Git Step-by-Step Guides" data-md-level="2">
-        <label class="md-nav__title" for="__nav_1_8">
-          <span class="md-nav__icon md-icon"></span>
-          ML-Git Step-by-Step Guides
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
     <li class="md-nav__item">
-      <a href="api/api_scripts/" class="md-nav__link">
-        Summary
+      <a href="step_by_step_guides/" class="md-nav__link">
+        ML-Git Step-by-Step Guides
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/api_scripts_docs/basic/basic_flow/" class="md-nav__link">
-        Basic Flow
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/api_scripts_docs/basic/clone_repository/" class="md-nav__link">
-        Clone Repository
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/api_scripts_docs/basic/multiple_projects/" class="md-nav__link">
-        Multiple Projects
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/api_scripts_docs/relationship_notebook/relationship_api_commands/" class="md-nav__link">
-        Relationship API Commands
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/api_scripts_docs/mnist_notebook/mnist_random_forest_api/" class="md-nav__link">
-        MNIST Random Forest API
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/api_scripts_docs/mnist_notebook/mnist_random_forest_cli/" class="md-nav__link">
-        MNIST Random Forest CLI
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/api_scripts_docs/multiple_datasets_notebook/checkout_with_sample/" class="md-nav__link">
-        Checkout With Sample
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/api_scripts_docs/multiple_datasets_notebook/multiple_datasets/" class="md-nav__link">
-        Multiple Datasets
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -839,11 +767,154 @@
 
 
 <h1 id="ml-git">ML-Git<a class="headerlink" href="#ml-git" title="Permanent link">&para;</a></h1>
-<p>ML-Git is a tool which provides a Distributed Version Control system to enable efficient dataset management. Like its name emphasizes, it is inspired in git concepts and workflows, ML-Git enables the following operations:</p>
+<p>1 ML-Git is a tool which provides a Distributed Version Control system to enable efficient dataset management. Like its name emphasizes, it is inspired in git concepts and workflows, ML-Git enables the following operations:</p>
 <ul>
 <li>Manage a repository of different datasets, labels and models.</li>
 <li>Distribute these ML artifacts between members of a team or across organizations.</li>
 <li>Apply the right data governance and security models to their artifacts.</li>
+</ul>
+<p>If you are seeking to learn more about ML-Git, access <a href="https://hpinc.github.io/ml-git/">ML-Git Page</a>.</p>
+<h3 id="how-to-install">How to install<a class="headerlink" href="#how-to-install" title="Permanent link">&para;</a></h3>
+<p><strong>Prerequisites:</strong></p>
+<ul>
+<li><a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git</a></li>
+<li><a href="https://www.python.org/downloads/release/python-361/">Python 3.6.1+</a></li>
+<li><a href="https://pypi.org/project/pip/">Pip 20.1.1+</a></li>
+</ul>
+<p><strong>From repository:</strong>
+<div class="highlight"><pre><span></span><code>pip install ml-git
+</code></pre></div></p>
+<p><strong>From source code:</strong></p>
+<p>Download ML-Git from repository and execute commands below:</p>
+<div class="highlight"><pre><span></span><code>cd ml-git/
+pip install .
+</code></pre></div>
+<h3 id="how-to-uninstall">How to uninstall<a class="headerlink" href="#how-to-uninstall" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>pip uninstall ml-git
+</code></pre></div>
+<h3 id="how-to-configure">How to configure<a class="headerlink" href="#how-to-configure" title="Permanent link">&para;</a></h3>
+<p>1 - As ML-Git leverages git to manage ML entities metadata, it is necessary to configure user name and email address:</p>
+<div class="highlight"><pre><span></span><code>git config --global user.name &quot;Your User&quot;
+git config --global user.email &quot;your_email@example.com&quot;
+</code></pre></div>
+<p>2 - <strong>OPTIONAL CONFIGURATIONS</strong> 
+- 2.1 - Some ML-Git commands have a wizard to help you during their execution. Those commands have the <code>--wizard</code> option available to enable this wizard. However, you can configure the wizard to be enabled by default on all supported commands by running the following command:</p>
+<pre><code>```
+ml-git repository config --set-wizard=enabled
+```
+</code></pre>
+<ul>
+<li>2.2 - You can also allow commands and options to be autocompleted with a  <code>[Tab]</code> key press. For that, take a look at the following link <a href="shell_completion_guide">ML-Git Shell Completion Support</a>.</li>
+</ul>
+<p>3 - Storage:</p>
+<p>ML-Git needs a configured storage to store data from managed artifacts. Please take a look at the <a href="mlgit_internals">ML-Git architecture and internals documentation</a> to better understand how ML-Git works internally with data.</p>
+<ul>
+<li>To configure the storage <a href="storage_configurations">see documentation about supported storages and how to configure each one.</a></li>
+</ul>
+<p>4 - ML-Git project:</p>
+<ul>
+<li>An ML-Git project is an initialized directory that will contain a configuration file to be used by ML-Git in managing entities. 
+To configure it you can use the basic steps to configure the project described in <em><a href="first_project">first project documentation.</a></em></li>
+</ul>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ml-git --help
+Usage: ml-git [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --version  Show the version and exit.
+
+Commands:
+  clone       Clone an ml-git repository ML_GIT_REPOSITORY_URL
+  datasets    Management of datasets within this ml-git repository.
+  labels      Management of labels sets within this ml-git repository.
+  models      Management of models within this ml-git repository.
+  repository  Management of this ml-git repository.
+</code></pre></div>
+<h3 id="basic-commands">Basic commands<a class="headerlink" href="#basic-commands" title="Permanent link">&para;</a></h3>
+<details>
+<summary><code>ml-git clone &lt;repository-url&gt;</code></summary>
+<p><br></p>
+<div class="highlight"><pre><span></span><code>ml-git clone https://github.com/user/ml_git_configuration_file_example.git
+</code></pre></div>
+<p>If you prefer to create a new directory to clone into:</p>
+<div class="highlight"><pre><span></span><code>ml-git clone https://github.com/user/ml_git_configuration_file_example.git my-project-dir
+</code></pre></div>
+<p>If you prefer keep git tracking files in the project:</p>
+<div class="highlight"><pre><span></span><code>ml-git clone https://github.com/user/ml_git_configuration_file_example.git --track
+</code></pre></div>
+</details>
+<details>
+<summary><code>ml-git &lt;ml-entity&gt; create</code></summary>
+<p>This command will help you to start a new project, it creates your project artifact metadata:</p>
+<div class="highlight"><pre><span></span><code>ml-git datasets create --categories=&quot;computer-vision, images&quot; --bucket-name=your_bucket --import=../import-path --mutability=strict dataset-ex 
+</code></pre></div>
+<p>Demonstration video:</p>
+<p><a href="https://asciinema.org/a/435917"><img alt="asciicast" src="https://asciinema.org/a/435917.svg" /></a></p>
+</details>
+<details>
+<summary><code>ml-git &lt;ml-entity&gt; status</code></summary>
+<p>Show changes in project workspace:</p>
+<div class="highlight"><pre><span></span><code>ml-git datasets status dataset-ex
+</code></pre></div>
+<p>Demonstration video:</p>
+<p><a href="https://asciinema.org/a/385780"><img alt="asciicast" src="https://asciinema.org/a/385780.svg" /></a></p>
+</details>
+<details>
+<summary><code>ml-git &lt;ml-entity&gt; add</code></summary>
+<p>Add new files to index:</p>
+<div class="highlight"><pre><span></span><code>ml-git datasets add dataset-ex
+</code></pre></div>
+<p>To increment version:</p>
+<div class="highlight"><pre><span></span><code>ml-git datasets add dataset-ex --bumpversion
+</code></pre></div>
+<p>Add an specific file:</p>
+<div class="highlight"><pre><span></span><code>ml-git datasets add dataset-ex data/file_name.ex
+</code></pre></div>
+<p>Demonstration video:</p>
+<p><a href="https://asciinema.org/a/385781"><img alt="asciicast" src="https://asciinema.org/a/385781.svg" /></a></p>
+</details>
+<details>
+<summary><code>ml-git &lt;ml-entity&gt; commit</code></summary>
+<p>Consolidate added files in the index to repository:</p>
+<div class="highlight"><pre><span></span><code>ml-git datasets commit dataset-ex
+</code></pre></div>
+<p>Demonstration video:</p>
+<p><a href="https://asciinema.org/a/385782"><img alt="asciicast" src="https://asciinema.org/a/385782.svg" /></a></p>
+</details>
+<details>
+<summary><code>ml-git &lt;ml-entity&gt; push</code></summary>
+<p>Upload metadata to remote repository and send <a href="mlgit_internals">chunks</a> to storage:</p>
+<div class="highlight"><pre><span></span><code>ml-git datasets push dataset-ex
+</code></pre></div>
+<p>Demonstration video:</p>
+<p><a href="https://asciinema.org/a/385783"><img alt="asciicast" src="https://asciinema.org/a/385783.svg" /></a></p>
+</details>
+<details>
+<summary><code>ml-git &lt;ml-entity&gt; checkout</code></summary>
+<p>Change workspace and metadata to versioned ml-entity tag:</p>
+<div class="highlight"><pre><span></span><code>ml-git datasets checkout computer-vision__images__dataset-ex__1
+</code></pre></div>
+<p>Demonstration video:</p>
+<p><a href="https://asciinema.org/a/385784"><img alt="asciicast" src="https://asciinema.org/a/385784.svg" /></a></p>
+</details>
+<p><a href="mlgit_commands">More about commands in documentation</a></p>
+<h3 id="how-to-contribute">How to contribute<a class="headerlink" href="#how-to-contribute" title="Permanent link">&para;</a></h3>
+<p>Your contributions are always welcome!</p>
+<ol>
+<li>Fork the repository into your own GitHub</li>
+<li>Clone the repository to your local machine</li>
+<li>Create a new branch for your changes using the following pattern <code>(feature | bugfix | hotfix)/branch_name</code>. Example: <code>feature/sftp_storage_implementation</code></li>
+<li>Make changes and <a href="developer_info">test</a></li>
+<li>Push the changes to your repository</li>
+<li>Create a Pull Request from your forked repository to the ML-Git repository with comprehensive description of changes</li>
+</ol>
+<p>Another way to contribute with the community is creating an issue to track your ideas, doubts, enhancements, tasks, or bugs found. 
+If an issue with the same topic already exists, discuss on the issue.</p>
+<h3 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="api/">ML-Git API documentation</a> - Find the commands that are available in our api, usage examples and more.</li>
+<li><a href="tabular_data/tabular_data">Working with tabular data</a> - Find suggestions on how to use ml-git with tabular data.</li>
+<li><a href="plugins">ml-git data specialization plugins</a> - Dynamically link third-party packages to add specialized behaviors for the data type.</li>
 </ul>
 
   <hr>
@@ -851,7 +922,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 27, 2021</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 18, 2022</span>
       
     
   </small>

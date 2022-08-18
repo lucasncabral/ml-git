@@ -638,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../downloadable_environment.md" class="md-nav__link">
+      <a href="../downloadable_environment/" class="md-nav__link">
         Docker Environment
       </a>
     </li>
@@ -651,155 +651,10 @@
   
   
   
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_1_8">
-          ML-Git Step-by-Step Guides
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="ML-Git Step-by-Step Guides" data-md-level="2">
-        <label class="md-nav__title" for="__nav_1_8">
-          <span class="md-nav__icon md-icon"></span>
-          ML-Git Step-by-Step Guides
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../api/api_scripts/" class="md-nav__link">
-        Summary
+      <a href="../step_by_step_guides/" class="md-nav__link">
+        ML-Git Step-by-Step Guides
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/basic/basic_flow/" class="md-nav__link">
-        Basic Flow
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/basic/clone_repository/" class="md-nav__link">
-        Clone Repository
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/basic/multiple_projects/" class="md-nav__link">
-        Multiple Projects
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/relationship_notebook/relationship_api_commands/" class="md-nav__link">
-        Relationship API Commands
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/mnist_notebook/mnist_random_forest_api/" class="md-nav__link">
-        MNIST Random Forest API
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/mnist_notebook/mnist_random_forest_cli/" class="md-nav__link">
-        MNIST Random Forest CLI
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/multiple_datasets_notebook/checkout_with_sample/" class="md-nav__link">
-        Checkout With Sample
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/multiple_datasets_notebook/multiple_datasets/" class="md-nav__link">
-        Multiple Datasets
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -842,8 +697,8 @@
 
 <h1 id="ml-git-commands">ML-Git commands<a class="headerlink" href="#ml-git-commands" title="Permanent link">&para;</a></h1>
 <details>
-<p><summary><code> ml-git --help </code></summary>
-<br></p>
+<summary><code> ml-git --help </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git [OPTIONS] COMMAND [ARGS]...
 
 Options:
@@ -861,12 +716,12 @@ Commands:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git --version </code></summary></p>
+<summary><code> ml-git --version </code></summary>
 <p>Displays the installed version of ML-Git.</p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; add </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; add </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets add [OPTIONS] ML_ENTITY_NAME [FILE_PATH]...
 
   Add datasets change set ML_ENTITY_NAME to the local ml-git staging area.
@@ -895,8 +750,8 @@ Optionally, one can add a README.md which will describe the dataset and be what 
 <p>ml-git allows you to enter a metrics file or the metrics themselves on the command line when adding a model.</p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; branch </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; branch </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets branch [OPTIONS] ML_ENTITY_NAME
 
   This command allows to check which tag is checked out in the ml-git
@@ -918,8 +773,8 @@ Output:
 Both are the same representation. One is human-readable and is also used internally by ml-git to find out the path to the referenced \&lt;ml-entity-name>.</p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; checkout </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; checkout </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git models checkout [OPTIONS] ML_ENTITY_TAG|ML_ENTITY
 
   Checkout the ML_ENTITY_TAG|ML_ENTITY of a model set into user workspace.
@@ -960,8 +815,8 @@ or you can use the name of the entity directly and download the latest available
 <p><code>--sample-type, --sampling, --seed:</code> These options are available only for dataset. If you use this option ml-git will not allow you to make changes to the entity and create a new tag.</p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; commit </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; commit </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git models commit [OPTIONS] ML_ENTITY_NAME
 
   Commit model change set of ML_ENTITY_NAME locally to this ml-git
@@ -991,8 +846,8 @@ With that relationship kept into the metadata repository, it is now possible for
 <p>Same for ML model, one can specify which dataset and label set that have been used to generate that model through <code>--dataset=&lt;dataset-name&gt;</code> and <code>--labels=&lt;labels-name&gt;</code></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; create </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; create </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets create [OPTIONS] ARTIFACT_NAME
 
   This command will create the workspace structure with data and spec file
@@ -1043,8 +898,8 @@ Options:
 </ul>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; diff </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; diff </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets diff [OPTIONS] ML_ENTITY_NAME FIRST_TAG SECOND_TAG
 
   Print the difference between two entity tag versions. The command will
@@ -1086,8 +941,8 @@ Deleted files:
 </ul>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; export </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; export </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets export [OPTIONS] ML_ENTITY_TAG BUCKET_NAME
 
   This command allows you to export files from one storage (S3|MinIO) to
@@ -1107,8 +962,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; fetch </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; fetch </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets fetch [OPTIONS] ML_ENTITY_TAG
 
   Allows you to download just the metadata files of an entity.
@@ -1139,8 +994,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; fsck </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; fsck </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets fsck [OPTIONS]
 
 Options:
@@ -1164,8 +1019,8 @@ If you want to know more about each type of mutability and how it works, please 
 <p>It will return the list of blobs that are corrupted/missing if the user passes the --full option.</p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; import </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; import </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets import [OPTIONS] BUCKET_NAME ENTITY_DIR
 
   This command allows you to download a file or directory from the S3 or
@@ -1193,8 +1048,8 @@ For google drive storage:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; init </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; init </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets init [OPTIONS]
 
   Init a ml-git datasets repository.
@@ -1209,8 +1064,8 @@ Options:
 It initializes the metadata by pulling all metadata to the local repository.</p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; metrics </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; metrics </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git models metrics [OPTIONS] ML_ENTITY_NAME
 
   Shows metrics information for each tag of the entity.
@@ -1230,8 +1085,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; list </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; list </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets list [OPTIONS]
 
   List datasets managed under this ml-git repository.
@@ -1252,8 +1107,8 @@ Output:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code>ml-git &lt;ml-entity&gt; log </code></summary>
-<br></p>
+<summary><code>ml-git &lt;ml-entity&gt; log </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets log [OPTIONS] ML_ENTITY_NAME
 
   This command shows ml-entity-name&#39;s commit information like author, date,
@@ -1269,8 +1124,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; push </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; push </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets push [OPTIONS] ML_ENTITY_NAME
 
   Push local commits from ML_ENTITY_NAME to remote ml-git repository &amp;
@@ -1295,8 +1150,8 @@ Options:
 2. push all metadata related to the commits to the remote metadata repository.</p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; remote-fsck </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; remote-fsck </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets remote-fsck [OPTIONS] ML_ENTITY_NAME
   This command will check and repair the remote, by default it will 
   only repair by uploading lacking chunks/blobs. Options bring more 
@@ -1327,8 +1182,8 @@ Options:
 </ul>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; reset </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; reset </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets reset [OPTIONS] ML_ENTITY_NAME
 
   Reset ml-git state(s) of an ML_ENTITY_NAME
@@ -1370,8 +1225,8 @@ else:
 * Undo the committed changes.</p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; show </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; show </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets show [OPTIONS] ML_ENTITY_NAME
 
   Print the specification file of the entity.
@@ -1395,8 +1250,8 @@ version: 1
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; status </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; status </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets status [OPTIONS] ML_ENTITY_NAME [STATUS_DIRECTORY]
 
   Print the files that are tracked or not and the ones that are in the
@@ -1411,8 +1266,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; tag add</code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; tag add</code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets tag add [OPTIONS] ML_ENTITY_NAME TAG
 
   Use this command to associate a tag to a commit.
@@ -1425,8 +1280,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; tag list </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; tag list </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets tag list [OPTIONS] ML_ENTITY_NAME
 
   List tags of ML_ENTITY_NAME from this ml-git repository.
@@ -1439,8 +1294,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; update </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; update </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets update [OPTIONS]
 
   This command will update the metadata repository.
@@ -1454,8 +1309,8 @@ Options:
 <p>This command enables one to have the visibility of what has been shared since the last update (new ML entity, new versions).</p>
 </details>
 <details>
-<p><summary><code> ml-git &lt;ml-entity&gt; unlock </code></summary>
-<br></p>
+<summary><code> ml-git &lt;ml-entity&gt; unlock </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git datasets unlock [OPTIONS] ML_ENTITY_NAME FILE
 
   This command add read and write permissions to file or directory. Note:
@@ -1472,8 +1327,8 @@ Options:
 </code></pre></div>
 </details>
 <details>
-<p><summary><code> ml-git clone &lt;repository-url&gt; </code></summary>
-<br></p>
+<summary><code> ml-git clone &lt;repository-url&gt; </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git clone [OPTIONS] REPOSITORY_URL [DIRECTORY]
 
   Clone an ml-git repository ML_GIT_REPOSITORY_URL
@@ -1487,8 +1342,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git login </code></summary>
-<br></p>
+<summary><code> ml-git login </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git login [OPTIONS]
 
   login command generates new Aws credential.
@@ -1508,8 +1363,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git repository config </code></summary>
-<br></p>
+<summary><code> ml-git repository config </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository config [OPTIONS] COMMAND [ARGS]...
 
   Management of the ML-Git config file.
@@ -1528,8 +1383,8 @@ Commands:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git repository config push</code></summary>
-<br></p>
+<summary><code> ml-git repository config push</code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository config push [OPTIONS]
 
   Create a new version of the ML-Git configuration file. This command
@@ -1544,8 +1399,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git repository config show</code></summary>
-<br></p>
+<summary><code> ml-git repository config show</code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository config show [OPTIONS]
 
   Configuration of this ml-git repository
@@ -1569,8 +1424,8 @@ Output:
 change the default configuration to adapt for her needs.</p>
 </details>
 <details>
-<p><summary><code> ml-git repository gc </code></summary>
-<br></p>
+<summary><code> ml-git repository gc </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository gc [OPTIONS]
 
   Cleanup unnecessary files and optimize the use of the disk space.
@@ -1581,8 +1436,8 @@ Options:
 <p>This command will remove unnecessary files contained in the cache and objects directories of the ml-git metadata (.ml-git).</p>
 </details>
 <details>
-<p><summary><code> ml-git repository graph </code></summary>
-<br></p>
+<summary><code> ml-git repository graph </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository graph [OPTIONS]
 
   Creates a graph of all entity relations as an HTML file and automatically
@@ -1613,8 +1468,8 @@ Output:
 </code></pre></div>
 </details>
 <details>
-<p><summary><code> ml-git repository init </code></summary>
-<br></p>
+<summary><code> ml-git repository init </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository init [OPTIONS]
 
   Initialization of this ML-Git repository
@@ -1628,8 +1483,8 @@ Options:
 <p>This is the first command you need to run to initialize a ml-git project. It will bascially create a default .ml-git/config.yaml</p>
 </details>
 <details>
-<p><summary><code> ml-git repository remote &lt;ml-entity&gt; add </code></summary>
-<br></p>
+<summary><code> ml-git repository remote &lt;ml-entity&gt; add </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository remote datasets add [OPTIONS] REMOTE_URL
 
   Add remote dataset metadata REMOTE_URL to this ml-git repository.
@@ -1642,8 +1497,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git repository remote &lt;ml-entity&gt; del </code></summary>
-<br></p>
+<summary><code> ml-git repository remote &lt;ml-entity&gt; del </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository remote datasets del
 
   Remove remote datasets metadata REMOTE_URL from this ml-git repository
@@ -1656,8 +1511,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git repository remote config add </code></summary>
-<br></p>
+<summary><code> ml-git repository remote config add </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository remote config add [OPTIONS] REMOTE_URL
 
   Starts a git at the root of the project and configure the remote.
@@ -1670,8 +1525,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git repository storage add </code></summary>
-<br></p>
+<summary><code> ml-git repository storage add </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository storage add [OPTIONS] BUCKET_NAME
 
   Add a storage BUCKET_NAME to ml-git [This command has a wizard that 
@@ -1699,8 +1554,8 @@ Options:
 <p>Use this command to add a data storage to a ml-git project.</p>
 </details>
 <details>
-<p><summary><code> ml-git repository storage del </code></summary>
-<br></p>
+<summary><code> ml-git repository storage del </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository storage del [OPTIONS] BUCKET_NAME
 
   Delete a storage BUCKET_NAME from ml-git
@@ -1720,8 +1575,8 @@ Options:
 </code></pre></div></p>
 </details>
 <details>
-<p><summary><code> ml-git repository update </code></summary>
-<br></p>
+<summary><code> ml-git repository update </code></summary>
+<p><br></p>
 <div class="highlight"><pre><span></span><code>Usage: ml-git repository update
 
   This command updates the metadata for all entities.
@@ -1736,7 +1591,7 @@ Options:
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 15, 2022</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 18, 2022</span>
       
     
   </small>

@@ -683,7 +683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../downloadable_environment.md" class="md-nav__link">
+      <a href="../downloadable_environment/" class="md-nav__link">
         Docker Environment
       </a>
     </li>
@@ -696,155 +696,10 @@
   
   
   
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_1_8">
-          ML-Git Step-by-Step Guides
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="ML-Git Step-by-Step Guides" data-md-level="2">
-        <label class="md-nav__title" for="__nav_1_8">
-          <span class="md-nav__icon md-icon"></span>
-          ML-Git Step-by-Step Guides
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../api/api_scripts/" class="md-nav__link">
-        Summary
+      <a href="../step_by_step_guides/" class="md-nav__link">
+        ML-Git Step-by-Step Guides
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/basic/basic_flow/" class="md-nav__link">
-        Basic Flow
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/basic/clone_repository/" class="md-nav__link">
-        Clone Repository
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/basic/multiple_projects/" class="md-nav__link">
-        Multiple Projects
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/relationship_notebook/relationship_api_commands/" class="md-nav__link">
-        Relationship API Commands
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/mnist_notebook/mnist_random_forest_api/" class="md-nav__link">
-        MNIST Random Forest API
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/mnist_notebook/mnist_random_forest_cli/" class="md-nav__link">
-        MNIST Random Forest CLI
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/multiple_datasets_notebook/checkout_with_sample/" class="md-nav__link">
-        Checkout With Sample
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/api_scripts_docs/multiple_datasets_notebook/multiple_datasets/" class="md-nav__link">
-        Multiple Datasets
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -889,8 +744,8 @@
 <p>Data specialization plugins are resources that can be added to ML-Git providing specific processing and metadata collection for specific data formats. This document aims to provide instructions on how data specialization plugins can be developed for ML-Git, defining interface methods that must be implemented to provide the necessary functionalities for processing these data.</p>
 <h2 id="plugin-contracts">Plugin contracts<a class="headerlink" href="#plugin-contracts" title="Permanent link">&para;</a></h2>
 <details>
-<p><summary><code> add_metadata </code></summary>
-</br></p>
+<summary><code> add_metadata </code></summary>
+<p></br></p>
 <p>This method is responsible for processing or gathering information about the versioned data and inserting it into the specification file. If the plugin is installed and properly configured, this signature will be triggered before the metadata is committed. </p>
 <p><em>Definition:</em></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_metadata</span><span class="p">(</span><span class="n">work_space_path</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
@@ -1011,7 +866,7 @@ pip3 install --user .
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2021</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 18, 2022</span>
       
     
   </small>
