@@ -16,26 +16,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-      - name: Create empty Markdown
+      - uses: Convert Notebooks to Markdown
         run: |
+          python3 -m pip install notebook
           for jupyter_file in $(find ./docs/api -name '*.ipynb'); do
-              touch "${jupyter_file%.ipynb}.md";
-          done
-      - name: Configure Git Credentials for Tests
-        run: |
-            git config --global user.name $USER_NAME
-            git config --global user.email $USER_EMAIL
-        env:
-          USER_NAME: 'MLGit'
-          USER_EMAIL: 'mlgit@mail.com'
-        shell: bash
-      - name: Commit markdown
-        run: |
-          git add ./docs/api
-          git diff-index --quiet HEAD || git commit -m "Generating empty Markdown"
-      - uses: runsascoded/nbconvert@v1.2
-        with:
-          args: -a -f
+              jupyter nbconvert --to markdown jupyter_file;
       - name: Create index
         uses: canastro/copy-file-action@master
         with:
