@@ -1,5 +1,5 @@
 """
-© Copyright 2020 HP Development Company, L.P.
+© Copyright 2020-2022 HP Development Company, L.P.
 SPDX-License-Identifier: GPL-2.0-only
 """
 
@@ -226,7 +226,7 @@ class MultihashFS(HashFS):
         if cid == cid0:
             log.debug(output_messages['DEBUG_CHECKSUM_VERIFIED'] % cid, class_name=HASH_FS_CLASS_NAME)
             return True
-        log.error(output_messages['ERROR_CORRPUTION_DETECTED'] % (cid, cid0), class_name=HASH_FS_CLASS_NAME)
+        log.debug(output_messages['DEBUG_CORRUPTION_DETECTED'] % (cid, cid0), class_name=HASH_FS_CLASS_NAME)
         return False
 
     def _digest(self, data):
@@ -353,11 +353,12 @@ class MultihashFS(HashFS):
     '''Checks integrity of all files under .ml-git/.../hashfs/'''
 
     def fsck(self, exclude=['log', 'metadata'], remove_corrupted=False):
-        log.info(output_messages['INFO_STARTING_INTEGRITY_CHECK'] % self._path, class_name=HASH_FS_CLASS_NAME)
+        log.info(output_messages['INFO_STARTING_INTEGRITY_CHECK'].format(self._path), class_name=HASH_FS_CLASS_NAME)
         corrupted_files = []
         corrupted_files_fullpaths = []
         self._check_files_integrity(corrupted_files, corrupted_files_fullpaths)
         self._remove_corrupted_files(corrupted_files_fullpaths, remove_corrupted)
+        log.info(output_messages['INFO_FINISH_INTEGRITY_CHECK'].format(self._path), class_name=HASH_FS_CLASS_NAME)
         return corrupted_files
 
     def _remove_corrupted_files(self, corrupted_files_fullpaths, remove_corrupted):
@@ -372,7 +373,7 @@ class MultihashFS(HashFS):
             self.__progress_bar.close()
 
     def _check_files_integrity(self, corrupted_files, corrupted_files_fullpaths):
-        self.__progress_bar = tqdm(total=len(os.listdir(self._path)), desc='directories', unit='directories',
+        self.__progress_bar = tqdm(total=len(os.listdir(self._path)) - 1, desc='directories', unit='directories',
                                    unit_scale=True, mininterval=1.0)
         last_path = ''
         for root, dirs, files in os.walk(self._path):
@@ -399,7 +400,7 @@ class MultihashFS(HashFS):
         cid = CIDv1('dag-pb', multi_hash)
         ncid = str(cid)
         if ncid != file:
-            log.error(output_messages['ERROR_CORRPUTION_DETECTED'] % (file, ncid),
+            log.debug(output_messages['DEBUG_CORRUPTION_DETECTED'] % (file, ncid),
                       class_name=HASH_FS_CLASS_NAME)
             corrupted_files.append(file)
             corrupted_files_fullpaths.append(fullpath)
