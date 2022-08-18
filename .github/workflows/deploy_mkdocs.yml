@@ -20,7 +20,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install notebook
-          for jupyter_file in $(find ./docs/api -name '*.ipynb'); do
+          for jupyter_file in $(find ./docs -name '*.ipynb'); do
               jupyter nbconvert --to markdown "${jupyter_file}";
           done
       - name: Create index
