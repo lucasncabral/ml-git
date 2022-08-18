@@ -42,19 +42,19 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: docs\/
-          replace: ""
+          replace: " "
           include: "docs/index.md"
       - name: Remove 'docs/' from links - step 2
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: \.md
-          replace: ""
+          replace: " "
           include: "docs/index.md"
       - name: Remove 'docs/' from links - step 3
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: README
-          replace: ""
+          replace: " "
           include: "docs/index.md"
       - name: Setup Python
         uses: actions/setup-python@v1
