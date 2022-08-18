@@ -15,7 +15,7 @@
     
     
       
-        <title>ML-Git - ML-Git</title>
+        <title>MNIST Random Forest API - ML-Git</title>
       
     
     
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ML-Git
+              MNIST Random Forest API
             
           </span>
         </div>
@@ -159,13 +159,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../../.." class="md-tabs__link">
+      <a href="../../../.." class="md-tabs__link md-tabs__link--active">
         Home
       </a>
     </li>
@@ -224,12 +226,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
       
       
       
@@ -634,12 +638,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" checked>
       
       
       
@@ -662,7 +668,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api_scripts_docs/basic/basic_flow.md" class="md-nav__link">
+      <a href="../../basic_flow/" class="md-nav__link">
         Basic Flow
       </a>
     </li>
@@ -676,7 +682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api_scripts_docs/basic/clone_repository.md" class="md-nav__link">
+      <a href="../../clone_repository/" class="md-nav__link">
         Clone Repository
       </a>
     </li>
@@ -690,7 +696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api_scripts_docs/basic/multiple_projects.md" class="md-nav__link">
+      <a href="../../multiple_projects/" class="md-nav__link">
         Multiple Projects
       </a>
     </li>
@@ -704,7 +710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api_scripts_docs/relationship_notebook/relationship_api_commands.md" class="md-nav__link">
+      <a href="../../relationship_notebook/relationship_api_commands/" class="md-nav__link">
         Relationship API Commands
       </a>
     </li>
@@ -716,11 +722,162 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../api_scripts_docs/mnist_notebook/mnist_random_forest_api.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          MNIST Random Forest API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         MNIST Random Forest API
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#notebook-state-management" class="md-nav__link">
+    Notebook state management
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-dataset" class="md-nav__link">
+    1 - The dataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-getting-the-data" class="md-nav__link">
+    2 - Getting the data
+  </a>
+  
+    <nav class="md-nav" aria-label="2 - Getting the data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#training-data" class="md-nav__link">
+    Training data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-data" class="md-nav__link">
+    Test data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-training-and-evaluating" class="md-nav__link">
+    3 - Training and evaluating
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-versioning-our-model" class="md-nav__link">
+    4 - Versioning our model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-adding-new-data" class="md-nav__link">
+    5 - Adding new data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-versioning-the-dataset-and-labels-with-the-new-entries" class="md-nav__link">
+    6 - Versioning the dataset and labels with the new entries
+  </a>
+  
+    <nav class="md-nav" aria-label="6 - Versioning the dataset and labels with the new entries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#versioning-the-dataset" class="md-nav__link">
+    Versioning the dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioning-the-labels" class="md-nav__link">
+    Versioning the labels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-training-and-evaluating" class="md-nav__link">
+    7 - Training and evaluating
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-versioning-our-model" class="md-nav__link">
+    8 - Versioning our model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-reproducing-our-experiment-with-ml-git" class="md-nav__link">
+     9 - Reproducing our experiment with ml-git
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusions" class="md-nav__link">
+    Conclusions
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -732,7 +889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api_scripts_docs/mnist_notebook/mnist_random_forest_cli.md" class="md-nav__link">
+      <a href="../mnist_random_forest_cli/" class="md-nav__link">
         MNIST Random Forest CLI
       </a>
     </li>
@@ -746,7 +903,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api_scripts_docs/multiple_datasets_notebook/checkout_with_sample.md" class="md-nav__link">
+      <a href="../../multiple_datasets_notebook/checkout_with_sample/" class="md-nav__link">
         Checkout With Sample
       </a>
     </li>
@@ -760,7 +917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api_scripts_docs/multiple_datasets_notebook/multiple_datasets.md" class="md-nav__link">
+      <a href="../../multiple_datasets_notebook/multiple_datasets/" class="md-nav__link">
         Multiple Datasets
       </a>
     </li>
@@ -1223,6 +1380,42 @@ Accuracy score for version 2:  0.9746
       </main>
       
         <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../../relationship_notebook/relationship_api_commands/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Relationship API Commands" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Relationship API Commands
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../mnist_random_forest_cli/" class="md-footer__link md-footer__link--next" aria-label="Next: MNIST Random Forest CLI" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              MNIST Random Forest CLI
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
