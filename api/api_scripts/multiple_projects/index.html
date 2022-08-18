@@ -635,10 +635,141 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_8">
+          ML-Git Step-by-Step Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ML-Git Step-by-Step Guides" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          ML-Git Step-by-Step Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../step_by_step_guides/" class="md-nav__link">
-        ML-Git Step-by-Step Guides
+      <a href="../../api_scripts_docs/basic/basic_flow.md" class="md-nav__link">
+        Basic Flow
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/basic/clone_repository.md" class="md-nav__link">
+        Clone Repository
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/basic/multiple_projects.md" class="md-nav__link">
+        Multiple Projects
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/relationship_notebook/relationship_api_commands.md" class="md-nav__link">
+        Relationship API Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/mnist_notebook/mnist_random_forest_api.md" class="md-nav__link">
+        MNIST Random Forest API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/mnist_notebook/mnist_random_forest_cli.md" class="md-nav__link">
+        MNIST Random Forest CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/multiple_datasets_notebook/checkout_with_sample.md" class="md-nav__link">
+        Checkout With Sample
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/multiple_datasets_notebook/multiple_datasets.md" class="md-nav__link">
+        Multiple Datasets
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -683,6 +814,16 @@
 
 <h2 id="multiple-projects">Multiple Projects<a class="headerlink" href="#multiple-projects" title="Permanent link">&para;</a></h2>
 <p>This notebook describes how to work with multiple projects in the ML-Git API.</p>
+<h3 id="notebook-state-management">Notebook state management<a class="headerlink" href="#notebook-state-management" title="Permanent link">&para;</a></h3>
+<p>If you have already run this notebook or another in this same folder, it is recommended that you perform a state restart by executing the cell below, because previously performed state changes may interfere with the execution of the notebook. Be aware, that procedure does not affect any remote repository.</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">cd</span> <span class="o">/</span><span class="n">api_scripts</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">./</span><span class="n">logs</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">.</span><span class="n">ml</span><span class="o">-</span><span class="n">git</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">./</span><span class="n">datasets</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">api_scripts</span><span class="o">/</span><span class="n">project_1</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">api_scripts</span><span class="o">/</span><span class="n">project_2</span>
+</code></pre></div>
+<h3 id="using-multiples-projects">Using multiples projects<a class="headerlink" href="#using-multiples-projects" title="Permanent link">&para;</a></h3>
 <p>Let's start creating, for each project, a folder to work with.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># importing os module</span>
 <span class="kn">import</span> <span class="nn">os</span>

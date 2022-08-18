@@ -635,10 +635,141 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_8">
+          ML-Git Step-by-Step Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ML-Git Step-by-Step Guides" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          ML-Git Step-by-Step Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../step_by_step_guides/" class="md-nav__link">
-        ML-Git Step-by-Step Guides
+      <a href="../../api_scripts_docs/basic/basic_flow.md" class="md-nav__link">
+        Basic Flow
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/basic/clone_repository.md" class="md-nav__link">
+        Clone Repository
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/basic/multiple_projects.md" class="md-nav__link">
+        Multiple Projects
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/relationship_notebook/relationship_api_commands.md" class="md-nav__link">
+        Relationship API Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/mnist_notebook/mnist_random_forest_api.md" class="md-nav__link">
+        MNIST Random Forest API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/mnist_notebook/mnist_random_forest_cli.md" class="md-nav__link">
+        MNIST Random Forest CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/multiple_datasets_notebook/checkout_with_sample.md" class="md-nav__link">
+        Checkout With Sample
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api_scripts_docs/multiple_datasets_notebook/multiple_datasets.md" class="md-nav__link">
+        Multiple Datasets
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -682,7 +813,7 @@
   <h1>Basic flow</h1>
 
 <h2 id="basic-flow">Basic Flow<a class="headerlink" href="#basic-flow" title="Permanent link">&para;</a></h2>
-<p>This notebook describes a basic flow of ml-git with api. There you will learn how to initialize an ml-git project, how to perform all necessary configuration steps and how to version a dataset. We will divide this quick howto into 3 main sections:</p>
+<p>This notebook describes a basic execution flow of ml-git with its API. There, you will learn how to initialize an ML-Git project, how to perform all the necessary configuration steps and how to version a dataset. We will divide this quick howto into 3 main sections:</p>
 <h5 id="ml-git-repository-configuationintialization">ml-git repository configuation/intialization<a class="headerlink" href="#ml-git-repository-configuationintialization" title="Permanent link">&para;</a></h5>
 <pre><code> This section explains how to initialize and configure a repository for ml-git.
 </code></pre>
@@ -692,6 +823,13 @@
 <h5 id="downloading-a-dataset">downloading a dataset<a class="headerlink" href="#downloading-a-dataset" title="Permanent link">&para;</a></h5>
 <pre><code>This section describes how to download a versioned data set using ml-git.
 </code></pre>
+<h3 id="notebook-state-management">Notebook state management<a class="headerlink" href="#notebook-state-management" title="Permanent link">&para;</a></h3>
+<p>If you have already run this notebook or another in this same folder, it is recommended that you perform a state restart by executing the cell below, because previously performed state changes may interfere with the execution of the notebook. Be aware, that procedure does not affect any remote repository.</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">cd</span> <span class="o">/</span><span class="n">api_scripts</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">./</span><span class="n">logs</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">.</span><span class="n">ml</span><span class="o">-</span><span class="n">git</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">./</span><span class="n">datasets</span>
+</code></pre></div>
 <h3 id="1-ml-git-repository-configuationintialization">1 - ml-git repository configuation/intialization<a class="headerlink" href="#1-ml-git-repository-configuationintialization" title="Permanent link">&para;</a></h3>
 <p>To start using the ml-git api we need to import it into our script</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git.api</span> <span class="kn">import</span> <span class="n">MLGitAPI</span>

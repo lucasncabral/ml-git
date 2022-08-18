@@ -635,10 +635,141 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_8">
+          ML-Git Step-by-Step Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ML-Git Step-by-Step Guides" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          ML-Git Step-by-Step Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../../step_by_step_guides/" class="md-nav__link">
-        ML-Git Step-by-Step Guides
+      <a href="../../../api_scripts_docs/basic/basic_flow.md" class="md-nav__link">
+        Basic Flow
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/basic/clone_repository.md" class="md-nav__link">
+        Clone Repository
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/basic/multiple_projects.md" class="md-nav__link">
+        Multiple Projects
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/relationship_notebook/relationship_api_commands.md" class="md-nav__link">
+        Relationship API Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/mnist_notebook/mnist_random_forest_api.md" class="md-nav__link">
+        MNIST Random Forest API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/mnist_notebook/mnist_random_forest_cli.md" class="md-nav__link">
+        MNIST Random Forest CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/multiple_datasets_notebook/checkout_with_sample.md" class="md-nav__link">
+        Checkout With Sample
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/multiple_datasets_notebook/multiple_datasets.md" class="md-nav__link">
+        Multiple Datasets
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -682,6 +813,16 @@
 <h1 id="relationships-api-methods">Relationships API methods<a class="headerlink" href="#relationships-api-methods" title="Permanent link">&para;</a></h1>
 <p>This notebook describes a basic flow in the context of relationships between entities with the API provided by ML-Git.</p>
 <p>In it, we'll show you how to use the set of commands provided. You can check the documentation for more information: <a href="https://github.com/HPInc/ml-git/blob/main/docs/api/README.md">API documentation</a></p>
+<h3 id="notebook-prerequisites">Notebook prerequisites<a class="headerlink" href="#notebook-prerequisites" title="Permanent link">&para;</a></h3>
+<p>This notebook uses the GitHub API to access a reset and does Ml-Git operations on its contents, so before running this notebook, take the following steps:</p>
+<ul>
+<li>
+<p>Have a GitHub <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">SHH access key</a> so that you can use the repository information retrieval API.</p>
+</li>
+<li>
+<p>Have a GitHub repository that the SHH key has access to.</p>
+</li>
+</ul>
 <h3 id="1-context">1 - Context<a class="headerlink" href="#1-context" title="Permanent link">&para;</a></h3>
 <p>In this notebook we consider a scenario of an ML-Git project with the following settings:</p>
 <ul>
@@ -702,8 +843,11 @@
 <p><img width="800" alt="portfolio_view" src="relationship_diagram.png"></p>
 <h3 id="2-configuring">2 - Configuring<a class="headerlink" href="#2-configuring" title="Permanent link">&para;</a></h3>
 <p>To use the methods, you will need to import the API and define some constants related to the user's credential:</p>
+<p>Below are the constants described in the pre-requirements section, where:['removed'] should be replaced by the SHH access key and api_url can be modified if necessary as reported in the GitHub API documentation.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git.api</span> <span class="kn">import</span> <span class="n">MLGitAPI</span>
-<span class="n">github_token</span> <span class="o">=</span> <span class="p">[</span><span class="n">removed</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">ml_git</span> <span class="kn">import</span> <span class="n">api</span>
+
+<span class="n">github_token</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;removed&#39;</span><span class="p">]</span>
 <span class="n">api_url</span> <span class="o">=</span> <span class="s1">&#39;https://api.github.com&#39;</span>
 </code></pre></div>
 <p>After defining the variables to configure, it will be possible to start a manager that will be responsible for operating on the github API.</p>
@@ -713,10 +857,10 @@
 <p>We will use the manager to execute the commands in the next steps.</p>
 <h3 id="3-methods">3 - Methods<a class="headerlink" href="#3-methods" title="Permanent link">&para;</a></h3>
 <h4 id="31-get-entities">3.1 - Get Entities<a class="headerlink" href="#31-get-entities" title="Permanent link">&para;</a></h4>
-<p>The <em>get_entities</em> method allows the user to get a list of entities being versioned in a project. For this, the user must inform the path to the configuration file, whether this path is a local directory, or the name of a git repository.</p>
+<p>The <em>get_entities</em> method allows the user to get a list of entities being versioned in a project. For this, the user must inform the path to the configuration file, whether this path is a local directory or the name of a git repository. The path can be modified using the config_repository_name field, in our example case the configuration file is in 'user/mlgit-config-repository.</p>
 <div class="highlight"><pre><span></span><code><span class="n">config_repository_name</span><span class="o">=</span><span class="s1">&#39;user/mlgit-config-repository&#39;</span>
 
-<span class="n">project_entities</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_entities</span><span class="p">(</span><span class="n">repo_name</span><span class="o">=</span><span class="n">config_repository_name</span><span class="p">)</span>
+<span class="n">project_entities</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_entities</span><span class="p">(</span><span class="n">config_repo_name</span><span class="o">=</span><span class="n">config_repository_name</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entities found: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">project_entities</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Example of output object:</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_entities</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>

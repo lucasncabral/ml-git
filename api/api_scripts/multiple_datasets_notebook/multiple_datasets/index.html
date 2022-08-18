@@ -635,10 +635,141 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_8" type="checkbox" id="__nav_1_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_8">
+          ML-Git Step-by-Step Guides
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ML-Git Step-by-Step Guides" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          ML-Git Step-by-Step Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../../../step_by_step_guides/" class="md-nav__link">
-        ML-Git Step-by-Step Guides
+      <a href="../../../api_scripts_docs/basic/basic_flow.md" class="md-nav__link">
+        Basic Flow
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/basic/clone_repository.md" class="md-nav__link">
+        Clone Repository
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/basic/multiple_projects.md" class="md-nav__link">
+        Multiple Projects
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/relationship_notebook/relationship_api_commands.md" class="md-nav__link">
+        Relationship API Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/mnist_notebook/mnist_random_forest_api.md" class="md-nav__link">
+        MNIST Random Forest API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/mnist_notebook/mnist_random_forest_cli.md" class="md-nav__link">
+        MNIST Random Forest CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/multiple_datasets_notebook/checkout_with_sample.md" class="md-nav__link">
+        Checkout With Sample
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api_scripts_docs/multiple_datasets_notebook/multiple_datasets.md" class="md-nav__link">
+        Multiple Datasets
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -682,9 +813,16 @@
   <h1>Multiple datasets</h1>
 
 <h2 id="storage-reuse-with-multiple-datasets">Storage reuse with multiple datasets<a class="headerlink" href="#storage-reuse-with-multiple-datasets" title="Permanent link">&para;</a></h2>
-<h4 id="this-notebook-describes-a-storage-reuse-scenario-with-multiple-datasets-containing-common-datapoints">This notebook describes a storage reuse scenario with multiple datasets containing common datapoints.<a class="headerlink" href="#this-notebook-describes-a-storage-reuse-scenario-with-multiple-datasets-containing-common-datapoints" title="Permanent link">&para;</a></h4>
+<h4 id="this-notebook-describes-how-to-handle-the-scenario-where-the-same-file-is-present-in-more-than-one-dataset">This notebook describes how to handle the scenario where the same file is present in more than one dataset.<a class="headerlink" href="#this-notebook-describes-how-to-handle-the-scenario-where-the-same-file-is-present-in-more-than-one-dataset" title="Permanent link">&para;</a></h4>
 <p>When the same file is used in multiple datasets, that file will be added to the bucket only once, in order to optimize the space usage in the bucket. To exemplify this use case, two entities will be created: the people entity contains 10 images with faces of people, while famous entity contains 7 images with faces of famous people, being 5 of them also contained in the people entity.</p>
 <p>This way, when sending the files to the repository, the 5 images that are being used in the two entities will not be duplicated in the bucket. The two entities will refer to the same image stored in the bucket.</p>
+<h3 id="notebook-state-management">Notebook state management<a class="headerlink" href="#notebook-state-management" title="Permanent link">&para;</a></h3>
+<p>If you have already run this notebook or another in this same folder, it is recommended that you perform a state restart by executing the cell below, because previously performed state changes may interfere with the execution of the notebook. Be aware, that procedure does not affect any remote repository.</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">cd</span> <span class="o">/</span><span class="n">api_scripts</span><span class="o">/</span><span class="n">multiple_datasets_notebook</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">./</span><span class="n">logs</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">.</span><span class="n">ml</span><span class="o">-</span><span class="n">git</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">./</span><span class="n">datasets</span>
+</code></pre></div>
 <h4 id="to-start-using-the-ml-git-api-we-need-to-import-it-into-our-script">To start using the ml-git api we need to import it into our script<a class="headerlink" href="#to-start-using-the-ml-git-api-we-need-to-import-it-into-our-script" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">ml_git.api</span> <span class="kn">import</span> <span class="n">MLGitAPI</span>
 </code></pre></div>
@@ -693,10 +831,10 @@
 <span class="n">entity</span> <span class="o">=</span> <span class="s1">&#39;datasets&#39;</span>
 
 <span class="c1"># The entity name we are working on</span>
-<span class="n">entity_name_people</span> <span class="o">=</span> <span class="s1">&#39;people_faces&#39;</span>
+<span class="n">entity_name_people</span> <span class="o">=</span> <span class="s1">&#39;peopleFaces&#39;</span>
 
 <span class="c1"># The entity name we are working on</span>
-<span class="n">entity_name_famous</span> <span class="o">=</span> <span class="s1">&#39;famous_faces&#39;</span>
+<span class="n">entity_name_famous</span> <span class="o">=</span> <span class="s1">&#39;famousFaces&#39;</span>
 </code></pre></div>
 <h4 id="to-start-lets-take-into-account-that-you-have-a-repository-with-git-settings-to-make-the-clone-if-this-is-not-your-scenario-you-will-need-to-configure-ml-git-outside-this-notebook-at-the-moment-the-api-does-not-have-the-necessary-methods-to-perform-this-configuration">To start, let's take into account that you have a repository with git settings to make the clone. If this is not your scenario, you will need to configure ml-git outside this notebook (At the moment the api does not have the necessary methods to perform this configuration).<a class="headerlink" href="#to-start-lets-take-into-account-that-you-have-a-repository-with-git-settings-to-make-the-clone-if-this-is-not-your-scenario-you-will-need-to-configure-ml-git-outside-this-notebook-at-the-moment-the-api-does-not-have-the-necessary-methods-to-perform-this-configuration" title="Permanent link">&para;</a></h4>
 <h4 id="or-you-can-manually-configure-the-repository-using-the-command-line-following-the-steps-in-the-first-project-documentation">Or you can manually configure the repository using the command line, following the steps in the <a href="https://github.com/HPInc/ml-git/blob/development/docs/first_project.md">First Project</a> documentation.<a class="headerlink" href="#or-you-can-manually-configure-the-repository-using-the-command-line-following-the-steps-in-the-first-project-documentation" title="Permanent link">&para;</a></h4>
@@ -712,7 +850,7 @@ INFO - Metadata: Successfully loaded configuration files!
 </code></pre>
 <h4 id="create-the-people-dataset">Create the people dataset<a class="headerlink" href="#create-the-people-dataset" title="Permanent link">&para;</a></h4>
 <p><img alt="dataset" src="../people_faces/people_faces.jpg" /></p>
-<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">ml</span><span class="o">-</span><span class="n">git</span> <span class="n">datasets</span> <span class="n">create</span> <span class="n">people_faces</span> <span class="o">--</span><span class="n">categories</span><span class="o">=</span><span class="s2">&quot;computer-vision, images&quot;</span> <span class="o">--</span><span class="n">bucket</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">faces_bucket</span> <span class="o">--</span><span class="n">mutability</span><span class="o">=</span><span class="n">strict</span> <span class="o">--</span><span class="n">import</span><span class="o">=</span><span class="s1">&#39;people_faces&#39;</span> <span class="o">--</span><span class="n">unzip</span>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">ml</span><span class="o">-</span><span class="n">git</span> <span class="n">datasets</span> <span class="n">create</span> <span class="n">peopleFaces</span> <span class="o">--</span><span class="n">categories</span><span class="o">=</span><span class="s2">&quot;computer-vision, images&quot;</span> <span class="o">--</span><span class="n">bucket</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">faces_bucket</span> <span class="o">--</span><span class="n">mutability</span><span class="o">=</span><span class="n">strict</span> <span class="o">--</span><span class="n">import</span><span class="o">=</span><span class="s1">&#39;people_faces&#39;</span> <span class="o">--</span><span class="n">unzip</span>
 </code></pre></div>
 <pre><code>[?25h⠋ Importing files⠙ Importing filesINFO - MLGit: Unzipping files
 INFO - MLGit: Dataset artifact created.
@@ -769,7 +907,7 @@ INFO - Metadata Manager: Commit repo[/api_scripts/multiple_datasets_notebook/.ml
 <h4 id="create-the-famous-dataset">Create the famous dataset<a class="headerlink" href="#create-the-famous-dataset" title="Permanent link">&para;</a></h4>
 <p>Let's create our second dataset that has some images equals to the first dataset.</p>
 <p><img alt="dataset" src="../famous_faces/famous_faces.jpg" /></p>
-<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">ml</span><span class="o">-</span><span class="n">git</span> <span class="n">datasets</span> <span class="n">create</span> <span class="n">famous_faces</span> <span class="o">--</span><span class="n">categories</span><span class="o">=</span><span class="s2">&quot;computer-vision, images&quot;</span> <span class="o">--</span><span class="n">bucket</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">faces_bucket</span> <span class="o">--</span><span class="n">mutability</span><span class="o">=</span><span class="n">strict</span> <span class="o">--</span><span class="n">import</span><span class="o">=</span><span class="s1">&#39;famous_faces&#39;</span> <span class="o">--</span><span class="n">unzip</span>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">ml</span><span class="o">-</span><span class="n">git</span> <span class="n">datasets</span> <span class="n">create</span> <span class="n">famousFaces</span> <span class="o">--</span><span class="n">categories</span><span class="o">=</span><span class="s2">&quot;computer-vision, images&quot;</span> <span class="o">--</span><span class="n">bucket</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">faces_bucket</span> <span class="o">--</span><span class="n">mutability</span><span class="o">=</span><span class="n">strict</span> <span class="o">--</span><span class="n">import</span><span class="o">=</span><span class="s1">&#39;famous_faces&#39;</span> <span class="o">--</span><span class="n">unzip</span>
 </code></pre></div>
 <pre><code>[?25h⠋ Importing files⠙ Importing filesINFO - MLGit: Unzipping files
 INFO - MLGit: Dataset artifact created.
